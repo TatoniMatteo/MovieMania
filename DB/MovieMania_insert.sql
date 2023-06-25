@@ -1,53 +1,53 @@
 USE moviemania;
 
 -- Inserimento dei film
-INSERT INTO Film (titolo, data_pubblicazione, descrizione, trailer, durata, copertina)
+INSERT INTO Film (titolo, data_pubblicazione, descrizione, trailer, durata)
 VALUES ('Titanic', '1997-12-19',
         'Un grande transatlantico, il Titanic, in viaggio verso gli Stati Uniti, affonda nel 1912 dopo essersi scontrato con un iceberg.',
-        'https://www.youtube.com/watch?v=kVrqfYjkTdQ', 194, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=kVrqfYjkTdQ', 194),
        ('Il Signore degli Anelli: La Compagnia dell\'Anello', '2001-12-19',
         'Un giovane hobbit di nome Frodo Baggins intraprende un pericoloso viaggio per distruggere un potente anello e salvare la Terra di Mezzo.',
-        'https://www.youtube.com/watch?v=Pki6jbSbXIY', 178, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=Pki6jbSbXIY', 178),
        ('Il Padrino', '1972-03-24',
         'La storia del potente padrino della mafia italo-americana, Don Vito Corleone, e della sua famiglia.',
-        'https://www.youtube.com/watch?v=sY1S34973zA', 175, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=sY1S34973zA', 175),
        ('Forrest Gump', '1994-07-06', 'La vita straordinaria di Forrest Gump, un uomo semplice ma con un cuore grande.',
-        'https://www.youtube.com/watch?v=uPIEn0M8su0', 142, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=uPIEn0M8su0', 142),
        ('Pulp Fiction', '1994-10-14',
         'Una serie di storie interconnesse che coinvolgono personaggi violenti, bizzarri e indimenticabili.',
-        'https://www.youtube.com/watch?v=s7EdQ4FqbhY', 154, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=s7EdQ4FqbhY', 154),
        ('Inception', '2010-07-16',
         'Un esperto di furto di informazioni inserisce segretamente idee nella mente delle persone mentre dormono.',
-        'https://www.youtube.com/watch?v=YoHD9XEInc0', 148, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=YoHD9XEInc0', 148),
        ('Schindler\'s List', '1993-11-30',
         'La storia vera di Oskar Schindler, un uomo d''affari tedesco che ha salvato la vita a oltre mille ebrei durante l''Olocausto.',
-        'https://www.youtube.com/watch?v=gG22XNhtnoY', 195, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=gG22XNhtnoY', 195),
        ('Fight Club', '1999-09-21',
         'La storia di un uomo che si unisce a un club clandestino dove le persone combattono tra loro.',
-        'https://www.youtube.com/watch?v=_XgQA9Ab0Gw', 139, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=_XgQA9Ab0Gw', 139),
        ('Il Cavaliere Oscuro', '2008-07-18',
         'Batman affronta il suo più grande nemico, il Joker, in una lotta per il destino di Gotham City.',
-        'https://www.youtube.com/watch?v=EXeTwQWrcwY', 152, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=EXeTwQWrcwY', 152),
        ('Il Gladiatore', '2000-05-05',
         'La storia di un generale romano che viene ridotto in schiavitù e diventa un gladiatore in cerca di vendetta.',
-        'https://www.youtube.com/watch?v=owK1qxDselE', 155, 'copertina.jpg');
+        'https://www.youtube.com/watch?v=owK1qxDselE', 155);
 
 -- Inserimento delle serie
-INSERT INTO Serie (titolo, descrizione, trailer, conclusa, copertina)
+INSERT INTO Serie (titolo, descrizione, trailer, conclusa)
 VALUES ('Breaking Bad',
         'La trasformazione di un insegnante di chimica, Walter White, in un pericoloso produttore di metanfetamine.',
-        'https://www.youtube.com/watch?v=HhesaQXLuRY', 1, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=HhesaQXLuRY', 1),
        ('Game of Thrones',
         'La lotta per il trono di Westeros tra nobili famiglie in un mondo fantastico pieno di intrighi, battaglie e tradimenti.',
-        'https://www.youtube.com/watch?v=rlR4PJn8b8I', 1, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=rlR4PJn8b8I', 1),
        ('Stranger Things',
         'Una serie di misteri e avventure ambientata negli anni ''80, con un gruppo di ragazzi che si imbatte in fenomeni soprannaturali.',
-        'https://www.youtube.com/watch?v=XWxyRG_tckY', 0, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=XWxyRG_tckY', 0),
        ('Friends', 'Le vicende di un gruppo di amici che vivono a New York, affrontando amori, lavoro e molte risate.',
-        'https://www.youtube.com/watch?v=m4L6RU4eDC8', 1, 'copertina.jpg'),
+        'https://www.youtube.com/watch?v=m4L6RU4eDC8', 1),
        ('Breaking Bad',
         'La trasformazione di un insegnante di chimica, Walter White, in un pericoloso produttore di metanfetamine.',
-        'https://www.youtube.com/watch?v=HhesaQXLuRY', 1, 'copertina.jpg');
+        'https://www.youtube.com/watch?v=HhesaQXLuRY', 1);
 
 -- Inserimento degli utenti
 INSERT INTO Utenti (nome, cognome, username, email, password)

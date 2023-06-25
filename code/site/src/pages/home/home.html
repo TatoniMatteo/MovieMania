@@ -201,14 +201,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="slick-multiItemSlider">
-					<?php foreach($allFilms as $film) { ?>
-					<!--Rimpiazza tutti i movie-item con un foreach-->
+					<?php foreach($programmi as $programma) { ?>
 					<div class="movie-item">
 						<div class="mv-img">
 							<a href="#">
 								<?php 
-								if ($film['copertina'] != 'copertina.jpg') {
-								  echo '<img src="data:image/jpeg;base64,' . base64_encode($film['copertina']) . '" alt="" width="285" height="437">';
+								if ($programma['copertina'] != null) {
+								  echo '<img src="data:image/jpeg;base64,' . base64_encode($programma['copertina']) . '" alt="" width="285" height="437">';
 								} else {
 								  echo '<img src="../../images/uploads/slider1.jpg" alt="" width="285" height="437">';
 								}
@@ -217,17 +216,24 @@
 						</div>
 						<div class="title-in">
 							<div class="cate">
-								<?php foreach($filmController->getCategoriesOfFilm($film['id']) as $categoria) { ?>
+								<?php 
+								if($programma['tipo'] == 'film'){
+									$categorie = $filmController->getCategoriesOfFilm($programma['id']);
+								}
+								else{
+									$categorie = $serieController->getCategoriesOfSerie($programma['id']);
+								}
+								foreach($categorie as $categoria) { ?>
 								<span class="<?php echo $categoria['colore']; ?>"><a href="#">
 										<?php echo $categoria['categoria']; ?>
 									</a></span><span> </span>
 								<?php } ?>
 							</div>
 							<h6><a href="#">
-									<?php echo $film['titolo']; ?>
+									<?php echo $programma['titolo']; ?>
 								</a></h6>
 							<p><i class="ion-android-star"></i><span>
-									<?php echo $film['media_voti']; ?>
+									<?php echo $programma['media_voti']; ?>
 								</span> /10</p>
 						</div>
 					</div>

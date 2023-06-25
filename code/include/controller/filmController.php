@@ -11,7 +11,7 @@ class FilmController
 
     public function getAllFilms()
     {
-        $query = "SELECT f.*, IFNULL(ROUND(AVG(r.voto), 1), 0) AS media_voti
+        $query = "SELECT f.*, IFNULL(ROUND(AVG(r.voto), 1), 0) AS media_voti, 'film' as tipo
         FROM Film as f
         LEFT JOIN Recensione as r ON f.id = r.id_film
         GROUP BY f.id";
@@ -29,7 +29,7 @@ class FilmController
 
     public function getCategoriesOfFilm($id)
     {
-        $query = "SELECT c.categoria, c.colore, f.titolo
+        $query = "SELECT c.categoria, c.colore
         FROM caratterizza
         LEFT JOIN film as f ON f.id = caratterizza.id_film
         LEFT JOIN categoria as c ON c.id = caratterizza.id_categoria

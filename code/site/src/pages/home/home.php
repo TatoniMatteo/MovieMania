@@ -3,6 +3,12 @@ require_once '../../../../include/config.php';
 $config = Config::getInstance();
 
 $filmController = $config->getFilmController();
-$allFilms = $filmController->getAllFilms();
+$serieController = $config->getSerieController();
+
+$film = $filmController->getAllFilms();
+$serie = $serieController->getAllSeries();
+
+$programmi = array_merge($film, $serie);
+shuffle($programmi);
 
 include 'home.html';

@@ -12,7 +12,7 @@ CREATE TABLE Film
     descrizione        TEXT         NOT NULL,
     trailer            VARCHAR(255),
     durata             INT          NOT NULL,
-    copertina          MEDIUMBLOB         NOT NULL,
+    copertina          MEDIUMBLOB,
     CONSTRAINT chk_durata_positive CHECK (durata > 0),
     CONSTRAINT unique_titolo_data_pubblicazione UNIQUE (titolo, data_pubblicazione)
 );
@@ -24,7 +24,7 @@ CREATE TABLE Serie
     titolo      VARCHAR(255) NOT NULL,
     descrizione TEXT         NOT NULL,
     trailer     VARCHAR(255),
-    copertina   MEDIUMBLOB         NOT NULL,
+    copertina   MEDIUMBLOB,
     conclusa    BOOLEAN      NOT NULL
 );
 
@@ -46,10 +46,10 @@ CREATE TABLE Utenti
 CREATE TABLE Stagione
 (
     id                 INT PRIMARY KEY AUTO_INCREMENT,
-    data_pubblicazione DATE NOT NULL,
+    data_pubblicazione DATE       NOT NULL,
     copertina          MEDIUMBLOB NOT NULL,
-    id_serie           INT  NOT NULL,
-    numero_stagione    INT  NOT NULL,
+    id_serie           INT        NOT NULL,
+    numero_stagione    INT        NOT NULL,
     CONSTRAINT fk_appartiene_stagione FOREIGN KEY (id_serie) REFERENCES Stagione (id) ON DELETE RESTRICT ON UPDATE CASCADE
 
 );
