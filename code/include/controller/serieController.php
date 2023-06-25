@@ -1,7 +1,5 @@
 <?php
 
-require_once "../dbm/dbm.php";
-
 class SerieController
 {
     private $dbConnection;

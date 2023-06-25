@@ -1,8 +1,8 @@
 <?php
 
-require_once "/dbm/dbm.php";
-require_once "/controller/filmController.php";
-require_once "/controller/serieController.php";
+require_once 'dbm/dbm.php';
+require_once 'controller/filmController.php';
+require_once 'controller/serieController.php';
 
 class Config
 {

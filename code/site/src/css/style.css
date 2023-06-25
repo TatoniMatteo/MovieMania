@@ -4220,7 +4220,7 @@ ul {
 .cate .blue {
   background-color: #1692bb;
 }
-.cate .yell {
+.cate .yellow {
   background-color: #f5b50a;
 }
 .cate .green {
@@ -4228,6 +4228,45 @@ ul {
 }
 .cate .orange {
   background-color: #ec5a1a;
+}
+.cate .purple {
+  background-color: #8a56ac;
+}
+.cate .pink {
+  background-color: #e671b8;
+}
+.cate .red {
+  background-color: #d23c3c;
+}
+.cate .teal {
+  background-color: #1abc9c;
+}
+.cate .gray {
+  background-color: #808080;
+}
+.cate .brown {
+  background-color: #8b4513;
+}
+.cate .navy {
+  background-color: #000080;
+}
+.cate .maroon {
+  background-color: #800000;
+}
+.cate .olive {
+  background-color: #808000;
+}
+.cate .indigo {
+  background-color: #4b0082;
+}
+.cate .lime {
+  background-color: #00ff00;
+}
+.cate .gold {
+  background-color: #ffd700;
+}
+.cate .orchid {
+  background-color: #da70d6;
 }
 .movie_list .movie-item-style-2 img,
 .movie_single .movie-item-style-2 img,

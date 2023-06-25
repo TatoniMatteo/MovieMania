@@ -10,7 +10,7 @@
 
 <head>
 	<!-- Basic need -->
-	<title>Open Pediatrics</title>
+	<title>MovieMania</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="">
 	<meta name="keywords" content="">
@@ -24,15 +24,15 @@
 	<meta name="format-detection" content="telephone-no">
 
 	<!-- CSS files -->
-	<link rel="stylesheet" href="css/plugins.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="../../css/plugins.css">
+	<link rel="stylesheet" href="../../css/style.css">
 
 </head>
 
 <body>
 	<!--preloading-->
 	<div id="preloader">
-		<img class="logo" src="images/logo1.png" alt="" width="119" height="58">
+		<img class="logo" src="../../images/logo1.png" alt="" width="119" height="58">
 		<div id="status">
 			<span></span>
 			<span></span>
@@ -128,7 +128,8 @@
 							<span></span>
 						</div>
 					</div>
-					<a href="index.html"><img class="logo" src="images/logo1.png" alt="" width="119" height="58"></a>
+					<a href="home.php"><img class="logo" src="../../images/logo1.png" alt="" width="119"
+							height="58"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -141,7 +142,7 @@
 								Home <i class="fa fa-angle-down" aria-hidden="true"></i>
 							</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="index.html">Home 01</a></li>
+								<li><a href="home.php">Home 01</a></li>
 								<li><a href="homev2.html">Home 02</a></li>
 								<li><a href="homev3.html">Home 03</a></li>
 							</ul>
@@ -200,117 +201,37 @@
 		<div class="container">
 			<div class="row">
 				<div class="slick-multiItemSlider">
+					<?php foreach($allFilms as $film) { ?>
 					<!--Rimpiazza tutti i movie-item con un foreach-->
 					<div class="movie-item">
 						<div class="mv-img">
-							<a href="#"><img src="images/uploads/slider1.jpg" alt="" width="285" height="437"></a>
+							<a href="#">
+								<?php 
+								if ($film['copertina'] != 'copertina.jpg') {
+								  echo '<img src="data:image/jpeg;base64,' . base64_encode($film['copertina']) . '" alt="" width="285" height="437">';
+								} else {
+								  echo '<img src="../../images/uploads/slider1.jpg" alt="" width="285" height="437">';
+								}
+								?>
+							</a>
 						</div>
 						<div class="title-in">
 							<div class="cate">
-								<span class="blue"><a href="#">Sci-fi</a></span>
+								<?php foreach($filmController->getCategoriesOfFilm($film['id']) as $categoria) { ?>
+								<span class="<?php echo $categoria['colore']; ?>"><a href="#">
+										<?php echo $categoria['categoria']; ?>
+									</a></span><span> </span>
+								<?php } ?>
 							</div>
-							<h6><a href="#">Interstellar</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+							<h6><a href="#">
+									<?php echo $film['titolo']; ?>
+								</a></h6>
+							<p><i class="ion-android-star"></i><span>
+									<?php echo $film['media_voti']; ?>
+								</span> /10</p>
 						</div>
 					</div>
-					<div class="movie-item">
-						<div class="mv-img">
-							<a href="#"><img src="images/uploads/slider2.jpg" alt="" width="285" height="437"></a>
-						</div>
-						<div class="title-in">
-							<div class="cate">
-								<span class="yell"><a href="#">action</a></span>
-							</div>
-							<h6><a href="#">The revenant</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-						</div>
-					</div>
-					<div class="movie-item">
-						<div class="mv-img">
-							<a href="#"><img src="images/uploads/slider3.jpg" alt="" width="285" height="437"></a>
-						</div>
-						<div class="title-in">
-							<div class="cate">
-								<span class="green"><a href="#">comedy</a></span>
-							</div>
-							<h6><a href="#">Die hard</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-						</div>
-					</div>
-					<div class="movie-item">
-						<div class="mv-img">
-							<a href="#"><img src="images/uploads/slider4.jpg" alt="" width="285" height="437"></a>
-						</div>
-						<div class="title-in">
-							<div class="cate">
-								<span class="blue"><a href="#">Sci-fi</a></span> <span class="orange"><a
-										href="#">advanture</a></span>
-							</div>
-							<h6><a href="#">The walk</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-						</div>
-					</div>
-					<div class="movie-item">
-						<div class="mv-img">
-							<a href="#"><img src="images/uploads/slider1.jpg" alt="" width="285" height="437"></a>
-						</div>
-						<div class="title-in">
-							<div class="cate">
-								<span class="blue"><a href="#">Sci-fi</a></span>
-							</div>
-							<h6><a href="#">Interstellar</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-						</div>
-					</div>
-					<div class="movie-item">
-						<div class="mv-img">
-							<a href="#"><img src="images/uploads/slider2.jpg" alt="" width="285" height="437"></a>
-						</div>
-						<div class="title-in">
-							<div class="cate">
-								<span class="yell"><a href="#">action</a></span>
-							</div>
-							<h6><a href="#">The revenant</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-						</div>
-					</div>
-					<div class="movie-item">
-						<div class="mv-img">
-							<img src="images/uploads/slider3.jpg" alt="" width="285" height="437">
-						</div>
-						<div class="title-in">
-							<div class="cate">
-								<span class="green"><a href="#">comedy</a></span>
-							</div>
-							<h6><a href="#">Die hard</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-						</div>
-					</div>
-					<div class="movie-item">
-						<div class="mv-img">
-							<img src="images/uploads/slider4.jpg" alt="" width="285" height="437">
-						</div>
-						<div class="title-in">
-							<div class="cate">
-								<span class="blue"><a href="#">Sci-fi</a></span> <span class="orange"><a
-										href="#">advanture</a></span>
-							</div>
-							<h6><a href="#">The walk</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-						</div>
-					</div>
-					<div class="movie-item">
-						<div class="mv-img">
-							<img src="images/uploads/slider3.jpg" alt="" width="285" height="437">
-						</div>
-						<div class="title-in">
-							<div class="cate">
-								<span class="green"><a href="#">comedy</a></span>
-							</div>
-							<h6><a href="#">Die hard</a></h6>
-							<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-						</div>
-					</div>
+					<?php }?>
 				</div>
 			</div>
 		</div>
@@ -345,7 +266,7 @@
 											<!--Rimpiazza tutti i movie-item con un foreach-->
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item1.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item1.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -361,7 +282,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item2.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item2.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -377,7 +298,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -393,7 +314,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item4.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item4.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -409,7 +330,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item5.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item5.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -425,7 +346,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item6.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item6.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -441,7 +362,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item7.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item7.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -457,7 +378,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item8.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item8.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -473,7 +394,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -495,7 +416,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item5.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item5.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -511,7 +432,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item6.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item6.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -527,7 +448,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item7.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item7.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -543,7 +464,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item8.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item8.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -559,7 +480,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -581,7 +502,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item1.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item1.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -597,7 +518,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item2.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item2.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -613,7 +534,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -629,7 +550,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item4.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item4.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -645,7 +566,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -667,7 +588,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item5.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item5.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -683,7 +604,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item6.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item6.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -699,7 +620,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item7.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item7.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -715,7 +636,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item8.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item8.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -731,7 +652,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -767,7 +688,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item1.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item1.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -783,7 +704,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item2.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item2.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -799,7 +720,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -815,7 +736,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item4.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item4.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -831,7 +752,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -853,7 +774,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item5.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item5.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -869,7 +790,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item6.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item6.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -885,7 +806,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item7.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item7.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -901,7 +822,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item8.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item8.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -917,7 +838,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item1.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item1.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -933,7 +854,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item2.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item2.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -949,7 +870,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -965,7 +886,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item4.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item4.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -981,7 +902,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item5.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item5.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -997,7 +918,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item6.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item6.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1019,7 +940,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item1.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item1.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1035,7 +956,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item2.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item2.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1051,7 +972,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1067,7 +988,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item4.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item4.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1083,7 +1004,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item5.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item5.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1099,7 +1020,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item6.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item6.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1115,7 +1036,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item7.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item7.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1131,7 +1052,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item8.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item8.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1147,7 +1068,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1169,7 +1090,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item5.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item5.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1185,7 +1106,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item6.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item6.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1201,7 +1122,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item7.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item7.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1217,7 +1138,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item8.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item8.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1233,7 +1154,7 @@
 										<div class="slide-it">
 											<div class="movie-item">
 												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185"
+													<img src="../../images/uploads/mv-item3.jpg" alt="" width="185"
 														height="284">
 												</div>
 												<div class="hvr-inner">
@@ -1257,28 +1178,28 @@
 						<div class="celebrities">
 							<h4 class="sb-title">Spotlight Celebrities</h4>
 							<div class="celeb-item">
-								<a href="#"><img src="images/uploads/ava1.jpg" alt="" width="70" height="70"></a>
+								<a href="#"><img src="../../images/uploads/ava1.jpg" alt="" width="70" height="70"></a>
 								<div class="celeb-author">
 									<h6><a href="#">Samuel N. Jack</a></h6>
 									<span>Actor</span>
 								</div>
 							</div>
 							<div class="celeb-item">
-								<a href="#"><img src="images/uploads/ava2.jpg" alt="" width="70" height="70"></a>
+								<a href="#"><img src="../../images/uploads/ava2.jpg" alt="" width="70" height="70"></a>
 								<div class="celeb-author">
 									<h6><a href="#">Benjamin Carroll</a></h6>
 									<span>Actor</span>
 								</div>
 							</div>
 							<div class="celeb-item">
-								<a href="#"><img src="images/uploads/ava3.jpg" alt="" width="70" height="70"></a>
+								<a href="#"><img src="../../images/uploads/ava3.jpg" alt="" width="70" height="70"></a>
 								<div class="celeb-author">
 									<h6><a href="#">Beverly Griffin</a></h6>
 									<span>Actor</span>
 								</div>
 							</div>
 							<div class="celeb-item">
-								<a href="#"><img src="images/uploads/ava4.jpg" alt="" width="70" height="70"></a>
+								<a href="#"><img src="../../images/uploads/ava4.jpg" alt="" width="70" height="70"></a>
 								<div class="celeb-author">
 									<h6><a href="#">Justin Weaver</a></h6>
 									<span>Actor</span>
@@ -1333,7 +1254,7 @@
 							<!--Rimpiazzare item con foreach-->
 							<div class="item">
 								<div class="trailer-img">
-									<img src="images/uploads/trailer7.jpg" alt="photo by Barn Images" width="4096"
+									<img src="../../images/uploads/trailer7.jpg" alt="photo by Barn Images" width="4096"
 										height="2737">
 								</div>
 								<div class="trailer-infor">
@@ -1343,7 +1264,7 @@
 							</div>
 							<div class="item">
 								<div class="trailer-img">
-									<img src="images/uploads/trailer2.jpg" alt="photo by Barn Images" width="350"
+									<img src="../../images/uploads/trailer2.jpg" alt="photo by Barn Images" width="350"
 										height="200">
 								</div>
 								<div class="trailer-infor">
@@ -1353,7 +1274,7 @@
 							</div>
 							<div class="item">
 								<div class="trailer-img">
-									<img src="images/uploads/trailer6.jpg" alt="photo by Joshua Earle">
+									<img src="../../images/uploads/trailer6.jpg" alt="photo by Joshua Earle">
 								</div>
 								<div class="trailer-infor">
 									<h4 class="desc">Exclusive Interview: Skull Island</h4>
@@ -1362,8 +1283,8 @@
 							</div>
 							<div class="item">
 								<div class="trailer-img">
-									<img src="images/uploads/trailer3.png" alt="photo by Alexander Dimitrov" width="100"
-										height="56">
+									<img src="../../images/uploads/trailer3.png" alt="photo by Alexander Dimitrov"
+										width="100" height="56">
 								</div>
 								<div class="trailer-infor">
 									<h4 class="desc">Logan: Director James Mangold Interview</h4>
@@ -1372,8 +1293,8 @@
 							</div>
 							<div class="item">
 								<div class="trailer-img">
-									<img src="images/uploads/trailer4.png" alt="photo by Wojciech Szaturski" width="100"
-										height="56">
+									<img src="../../images/uploads/trailer4.png" alt="photo by Wojciech Szaturski"
+										width="100" height="56">
 								</div>
 								<div class="trailer-infor">
 									<h4 class="desc">Beauty and the Beast: Official Teaser Trailer 2</h4>
@@ -1382,8 +1303,8 @@
 							</div>
 							<div class="item">
 								<div class="trailer-img">
-									<img src="images/uploads/trailer5.jpg" alt="photo by Wojciech Szaturski" width="360"
-										height="189">
+									<img src="../../images/uploads/trailer5.jpg" alt="photo by Wojciech Szaturski"
+										width="360" height="189">
 								</div>
 								<div class="trailer-infor">
 									<h4 class="desc">Fast&Furious 8</h4>
@@ -1402,7 +1323,7 @@
 		<div class="container">
 			<div class="flex-parent-ft">
 				<div class="flex-child-ft item1">
-					<a href="index.html"><img class="logo" src="images/logo1.png" alt=""></a>
+					<a href="home.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
 					<p>5th Avenue st, manhattan<br>
 						New York, NY 10001</p>
 					<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
@@ -1447,7 +1368,7 @@
 		</div>
 		<div class="ft-copyright">
 			<div class="ft-left">
-				<p>© 2017 Blockbuster. All Rights Reserved. Designed by leehari.</p>
+				<p>© 2023 MovieMania. All Rights Reserved.</p>
 			</div>
 			<div class="backtotop">
 				<p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
@@ -1456,10 +1377,10 @@
 	</footer>
 	<!-- end of footer section-->
 
-	<script src="js/jquery.js"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/plugins2.js"></script>
-	<script src="js/custom.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/plugins.js"></script>
+	<script src="../../js/plugins2.js"></script>
+	<script src="../../js/custom.js"></script>
 </body>
 
 </html>
