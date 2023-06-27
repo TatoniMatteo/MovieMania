@@ -5,6 +5,7 @@ require_once 'controller/filmController.php';
 require_once 'controller/serieController.php';
 require_once 'controller/personaggiController.php';
 require_once 'controller/recensioniController.php';
+require_once 'controller/utentiController.php';
 
 class Config
 {
@@ -42,5 +43,10 @@ class Config
     public function getRecensioniController()
     {
         return new RecensioniController($this->database);
+    }
+
+    public function getUtentiController()
+    {
+        return new UtentiController($this->database);
     }
 }

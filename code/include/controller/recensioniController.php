@@ -46,4 +46,34 @@ class RecensioniController
         }
         return $recensioni;
     }
+
+    public function getNumeroRecesioniByFilm($id)
+    {
+        $query = "SELECT COUNT(Film.*) AS numero_recensioni 
+        FROM Film;
+        WHERE Recensione.id_film =" . $id;
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            return mysqli_fetch_array($result);
+        } else {
+            return null;
+        }
+    }
+
+    public function getNumeroRecesioniBySerie($id)
+    {
+        $query = "SELECT COUNT(Serie.*) AS numero_recensioni 
+        FROM Serie;
+        WHERE Recensione.id_serie =" . $id;
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            return mysqli_fetch_array($result);
+        } else {
+            return null;
+        }
+    }
 }

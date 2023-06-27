@@ -7,6 +7,7 @@ $config = Config::getInstance();
 $filmController = $config->getFilmController();
 $personaggiController = $config->getPersonaggiController();
 $recensioniController = $config->getRecensioniController();
+$utentiController = $config->getUtentiController();
 
 
 if (!isset($_GET['id'])) {
@@ -19,7 +20,7 @@ if (!isset($_GET['id'])) {
     } else {
         $categorie = $filmController->getCategoriesOfFilm($film['id']);
         $personaggi = $personaggiController->getPersonaggiByFilm($filmId);
-        $recensioni = $recensioniController->getRecensioniByFilm($filmId);
+        $recensioni = $recensioniController->getRecensioniByFilm($filmId, 0);
         include 'moviesingle.html';
     }
 }

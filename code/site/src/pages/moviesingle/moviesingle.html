@@ -152,7 +152,7 @@
             <!-- top search form -->
             <div class="top-search">
                 <select>
-                    <option value="flm">Film</option>
+                    <option value="film">Film</option>
                     <option value="serie">Serie</option>
                     <option value="celebrita">Celebrità</option>
                 </select>
@@ -192,11 +192,11 @@
                             </div>
 
                             <div class="btn-transform transform-vertical yellow">
-                                <div><a href="#" class="item item-1 yellowbtn"> <i class="ion-heart"></i>
+                                <div><a href="#" class="item item-1 yellowbtn"> <i class="ion-edit"></i>
                                         Scrivi una recensione</a>
                                 </div>
                                 <div><a href="#" class="item item-2 yellowbtn fancybox-media hvr-grow"><i
-                                            class="ion-heart"></i></a>
+                                            class="ion-edit"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -455,237 +455,51 @@
                                                     <option value="date">Meno recente</option>
                                                 </select>
                                             </div>
-                                            <?php foreach ($recensioni as $recensione) { ?>
+                                            <?php 
+                                                foreach ($recensioni as $recensione) { 
+                                                    $utente = $utentiController->getUtenteById($recensione['id_utente'])
+                                            ?>
                                             <div class="mv-user-review-item">
                                                 <div class="user-infor">
-                                                    <img src="images/uploads/userava1.jpg" alt="">
+                                                    <?php
+                                                        if ($utente['foto'] != null) {
+                                                            echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="41" height="41">';
+                                                        } else {
+                                                            echo '<img src="../../images/uploads/userava1.jpg" alt="" width="41" height="41">';
+                                                        }
+                                                    ?>
                                                     <div>
-                                                        <h3>Best Marvel movie in my opinion</h3>
+                                                        <h3>
+                                                            <?php echo $recensione['titolo']; ?>
+                                                        </h3>
                                                         <div class="no-star">
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i>
+                                                            <?php
+                                                                $voto_intero = intval($recensione['voto']);
+                                                                for ($i = 1; $i <= 10; $i++) {
+                                                                    if ($i <= $voto_intero) {
+                                                                        echo '<i class="ion-android-star"></i>';
+                                                                    } else {
+                                                                        echo '<i class="ion-android-star last"></i>';
+                                                                    }
+                                                                }
+                                                            ?>
                                                         </div>
                                                         <p class="time">
                                                             <?php
-                                                                $date = new DateTime($film['data_pubblicazione']);
+                                                                $date = new DateTime($recensione['data_recensione']);
                                                                 $date_formatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
                                                                 $formatted_date = $date_formatter->format($date);
-                                                                echo $formatted_date . ' di <a>' . $recensione['nome_utente'] . ' ' . $recensione['cognome_utente'] . '</a>';
+                                                                echo $formatted_date . ' di <a>' . $utente['nome'] . ' ' . $utente['cognome'] . '</a>';
                                                             ?>
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <p>This is by far one of my favorite movies from the MCU. The
-                                                    introduction of new Characters both good and bad also makes
-                                                    the
-                                                    movie more exciting. giving the characters more of a back
-                                                    story can
-                                                    also help audiences relate more to different characters
-                                                    better, and
-                                                    it connects a bond between the audience and actors or
-                                                    characters.
-                                                    Having seen the movie three times does not bother me here as
-                                                    it is
-                                                    as thrilling and exciting every time I am watching it. In
-                                                    other
-                                                    words, the movie is by far better than previous movies (and
-                                                    I do
-                                                    love everything Marvel), the plotting is splendid (they
-                                                    really do
-                                                    out do themselves in each film, there are no problems
-                                                    watching it
-                                                    more than once.</p>
+                                                <p>
+                                                    <?php echo $recensione['descrizione']; ?>
+                                                </p>
                                             </div>
                                             <?php } ?>
-                                            <div class="mv-user-review-item">
-                                                <div class="user-infor">
-                                                    <img src="images/uploads/userava2.jpg" alt="">
-                                                    <div>
-                                                        <h3>Just about as good as the first one!</h3>
-                                                        <div class="no-star">
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                        </div>
-                                                        <p class="time">
-                                                            17 December 2016 by <a href="#"> hawaiipierson</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <p>Avengers Age of Ultron is an excellent sequel and a worthy
-                                                    MCU title!
-                                                    There are a lot of good and one thing that feels off in my
-                                                    opinion.
-                                                </p>
 
-                                                <p>THE GOOD:</p>
-
-                                                <p>First off the action in this movie is amazing, to buildings
-                                                    crumbling, to evil blue eyed robots tearing stuff up, this
-                                                    movie has
-                                                    the action perfectly handled. And with that action comes
-                                                    visuals.
-                                                    The visuals are really good, even though you can see clearly
-                                                    where
-                                                    they are through the movie, but that doesn't detract from
-                                                    the
-                                                    experience. While all the CGI glory is taking place, there
-                                                    are
-                                                    lovable characters that are in the mix. First off the
-                                                    original
-                                                    characters, Iron Man, Captain America, Thor, Hulk, Black
-                                                    Widow, and
-                                                    Hawkeye, are just as brilliant as they are always. And Joss
-                                                    Whedon
-                                                    fixed my main problem in the first Avengers by putting in
-                                                    more
-                                                    Hawkeye and him more fleshed out. Then there is the new
-                                                    Avengers,
-                                                    Quicksilver, Scarletwich, and Vision, they are pretty cool
-                                                    in my
-                                                    opinion. Vision in particular is pretty amazing in all his
-                                                    scenes.
-                                                </p>
-
-                                                <p>THE BAD:</p>
-
-                                                <p>The beginning of the film it's fine until towards the second
-                                                    act and
-                                                    there is when it starts to feel a little rushed. Also I do
-                                                    feel like
-                                                    there are scenes missing but there was talk of an extended
-                                                    version
-                                                    on Blu-Ray so that's cool.</p>
-                                            </div>
-                                            <div class="mv-user-review-item">
-                                                <div class="user-infor">
-                                                    <img src="images/uploads/userava3.jpg" alt="">
-                                                    <div>
-                                                        <h3>One of the most boring exepirences from watching a
-                                                            movie
-                                                        </h3>
-                                                        <div class="no-star">
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                        </div>
-                                                        <p class="time">
-                                                            26 March 2017 by<a href="#"> christopherfreeman</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <p>I can't right much... it's just so forgettable...Okay, from
-                                                    what I
-                                                    remember, I remember just sitting down on my seat and
-                                                    waiting for
-                                                    the movie to begin. 5 minutes into the movie, boring scene
-                                                    of Tony
-                                                    Stark just talking to his "dead" friends saying it's his
-                                                    fault. 10
-                                                    minutes in: Boring scene of Ultron and Jarvis having robot
-                                                    space
-                                                    battles(I dunno:/). 15 minutes in: I leave the theatre.2nd
-                                                    attempt
-                                                    at watching it: I fall asleep. What woke me up is the next
-                                                    movie on
-                                                    Netflix when the movie was over.</p>
-
-                                                <p>Bottemline: It's boring...</p>
-
-                                                <p>10/10 because I'm a Marvel Fanboy</p>
-                                            </div>
-                                            <div class="mv-user-review-item ">
-                                                <div class="user-infor">
-                                                    <img src="images/uploads/userava4.jpg" alt="">
-                                                    <div>
-                                                        <h3>That spirit of fun</h3>
-                                                        <div class="no-star">
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                        </div>
-                                                        <p class="time">
-                                                            26 March 2017 by <a href="#"> juliawest</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <p>If there were not an audience for Marvel comic heroes than
-                                                    clearly
-                                                    these films would not be made, to answer one other reviewer
-                                                    although
-                                                    I sympathize with him somewhat. The world is indeed an
-                                                    infinitely
-                                                    more complex place than the world of Marvel comics with
-                                                    clearly
-                                                    identifiable heroes and villains. But I get the feeling that
-                                                    from
-                                                    Robert Downey, Jr. on down the organizer and prime mover as
-                                                    Iron Man
-                                                    behind the Avengers these players do love doing these roles
-                                                    because
-                                                    it's a lot of fun. If they didn't show that spirit of fun to
-                                                    the
-                                                    audience than these films would never be made.</p>
-
-                                                <p>So in that spirit of fun Avengers: Age Of Ultron comes before
-                                                    us and
-                                                    everyone looks like they're having a good time saving the
-                                                    world. A
-                                                    computer program got loose and took form in this dimension
-                                                    named
-                                                    Ultron and James Spader who is completely unrecognizable is
-                                                    running
-                                                    amuck in the earth. No doubt Star Trek fans took notice that
-                                                    this
-                                                    guy's mission is to cleanse the earth much like that old
-                                                    earth probe
-                                                    NOMAD which got its programming mixed up in that classic
-                                                    Star Trek
-                                                    prime story. Wouldst Captain James T. Kirk of the Enterprise
-                                                    had a
-                                                    crew like Downey has at his command.</p>
-                                                <p>My favorite is always Chris Evans because of the whole cast
-                                                    he best
-                                                    gets into the spirit of being a superhero. Of all of them,
-                                                    he's
-                                                    already played two superheroes, Captain America and Johnny
-                                                    Storm the
-                                                    Human Torch. I'll be before he's done Evans will play a
-                                                    couple of
-                                                    more as long as the money's good and he enjoys it.</p>
-
-                                                <p>Pretend you're a kid again and enjoy, don't take it so
-                                                    seriously.</p>
-                                            </div>
                                             <div class="mv-user-review-item last">
                                                 <div class="user-infor">
                                                     <img src="images/uploads/userava5.jpg" alt="">
