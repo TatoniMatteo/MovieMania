@@ -50,7 +50,8 @@ CREATE TABLE Stagione
     copertina          MEDIUMBLOB NOT NULL,
     id_serie           INT        NOT NULL,
     numero_stagione    INT        NOT NULL,
-    CONSTRAINT fk_appartiene_stagione FOREIGN KEY (id_serie) REFERENCES Stagione (id) ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT fk_appartiene_stagione FOREIGN KEY (id_serie) REFERENCES Stagione (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT unique_numero_stagione UNIQUE (id_serie, numero_stagione)
 
 );
 

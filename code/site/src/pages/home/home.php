@@ -11,4 +11,12 @@ $serie = $serieController->getAllSeries();
 $programmi = array_merge($film, $serie);
 shuffle($programmi);
 
+$ultimiFilm = $filmController->getLastFilms();
+$miglioriFilm = $filmController->getBestFilms();
+$votatiFilm = $filmController->getBestReviewedFilms();
+
+$ultimeSerie = $serieController->getLastSeries();
+$miglioriSerie = $serieController->getBestSeries();
+$votateSerie = $serieController->getBestReviewedSeries();
+
 include 'home.html';
