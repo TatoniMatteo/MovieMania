@@ -7,7 +7,7 @@ class Database
     {
         $host = "localhost";
         $username = "root";
-        $password = "12345";
+        $password = "";
         $database = "moviemania";
         $this->conn = mysqli_connect($host, $username, $password, $database);
 
@@ -19,10 +19,5 @@ class Database
     public function getConnection()
     {
         return $this->conn;
-    }
-
-    public function closeConnection()
-    {
-        mysqli_close($this->conn);
     }
 }

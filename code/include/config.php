@@ -3,6 +3,8 @@
 require_once 'dbm/dbm.php';
 require_once 'controller/filmController.php';
 require_once 'controller/serieController.php';
+require_once 'controller/personaggiController.php';
+require_once 'controller/recensioniController.php';
 
 class Config
 {
@@ -32,20 +34,13 @@ class Config
         return new SerieController($this->database);
     }
 
-    private function onClose()
+    public function getPersonaggiController()
     {
-        $this->database->closeConnection();
+        return new PersonaggiController($this->database);
+    }
+
+    public function getRecensioniController()
+    {
+        return new RecensioniController($this->database);
     }
 }
-
-/* 
-
-COME USARE?
-
-$filmController = Config::getFilmController();
-$serieController = Config::getSerieController();
-
-// Utilizza i controller per eseguire le operazioni desiderate
-$filmController->getAllFilms();
-$serieController->getAllSeries();
-*/
