@@ -9,6 +9,20 @@ class PersonaggiController
         $this->dbConnection = $db;
     }
 
+    public function getPersonaggioById($id)
+    {
+        $query = "SELECT Personaggi.*
+        FROM Personaggi
+        WHERE Personaggi.id =" . $id;
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            return mysqli_fetch_assoc($result);
+        }
+        return null;
+    }
+
     public function getPersonaggiByFilm($id)
     {
         $query = "SELECT Personaggi.*, Ruolo.ruolo, Partecipa.star, Partecipa.interpreta
