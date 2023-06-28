@@ -9,6 +9,26 @@ class SerieController
         $this->dbConnection = $db;
     }
 
+    public function getSerieById($id)
+    {
+        $query = "SELECT S.*, MIN(St.data_pubblicazione) AS inizio_serie, ROUND(COALESCE(AVG(R.voto), 0), 1) AS media_voti,
+        CASE
+            WHEN S.conclusa = 1 THEN MAX(St.data_pubblicazione)
+            END AS fine_serie
+        
+        FROM Serie S
+        LEFT JOIN Stagione St ON S.id = St.id_serie
+        LEFT JOIN Recensione R ON S.id = R.id_serie
+        WHERE S.id =" . $id;
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            return mysqli_fetch_assoc($result);
+        } else {
+            return null;
+        }
+    }
 
     public function getAllSeries()
     {
@@ -124,6 +144,50 @@ class SerieController
         
         ORDER BY numero_recensioni DESC, ultima_data_pubblicazione DESC
         LIMIT 10;";
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $series = array();
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $series[] = $row;
+            }
+        }
+        return $series;
+    }
+
+    public function getAllSeasonBySerieId($id)
+    {
+        $query = "SELECT *
+        FROM Stagione
+        WHERE id_serie = " . $id . "
+        ORDER BY numero_stagione DESC";
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $seasons = array();
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $seasons[] = $row;
+            }
+        }
+        return $seasons;
+    }
+
+    public function getSerieCorrelate($id)
+    {
+        $query = "SELECT S1.*, COUNT(*) AS categorie_comuni, ROUND(COALESCE(AVG(R.voto), 0),1) AS media_voti, MIN(St.data_pubblicazione) AS inizio_serie
+        FROM Serie S1
+        LEFT JOIN Stagione St ON S1.id = St.id_serie
+        JOIN Caratterizza C1 ON S1.id = C1.id_serie
+        JOIN (SELECT C2.id_categoria 
+                FROM Caratterizza C2
+                WHERE C2.id_serie = " . $id . ") AS Subquery ON C1.id_categoria = Subquery.id_categoria
+        LEFT JOIN Recensione R ON S1.id = R.id_serie
+        GROUP BY S1.id, S1.titolo
+        HAVING categorie_comuni >= 1 AND S1.id <> " . $id . "
+        ORDER BY categorie_comuni DESC, media_voti DESC
+        LIMIT 5;";
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
         $series = array();

@@ -11,16 +11,17 @@ $utentiController = $config->getUtentiController();
 
 
 if (!isset($_GET['id'])) {
-    include '../error/404.html';
+    include '../service/404.html';
 } else {
     $filmId = $_GET['id'];
     $film = $filmController->getFilmById($filmId);
     if ($film == null) {
-        include '../error/404.html';
+        include '../service/404.html';
     } else {
-        $categorie = $filmController->getCategoriesOfFilm($film['id']);
+        $categorie = $filmController->getCategoriesOfFilm($filmId);
         $personaggi = $personaggiController->getPersonaggiByFilm($filmId);
-        $recensioni = $recensioniController->getRecensioniByFilm($filmId, 0);
+        $numero_recensioni = $recensioniController->getNumeroRecesioniByFilm($filmId);
+        $film_correlati = $filmController->getFilmCorrelati($filmId);
         include 'moviesingle.html';
     }
 }

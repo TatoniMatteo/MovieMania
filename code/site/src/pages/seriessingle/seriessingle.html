@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="it" class="no-js">
+
+<head>
+	<!-- Basic need -->
+	<title>MovieMania</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="profile" href="#">
+
+	<!--Google Font-->
+	<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="../../css/plugins.css">
+	<link rel="stylesheet" href="../../css/style.css">
+
+</head>
+
+<body>
+	<!--preloading-->
+	<div id="preloader">
+		<img class="logo" src="../../images/logo1.png" alt="" width="119" height="58">
+		<div id="status">
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<!--end of preloading-->
+	<!--login form popup-->
+	<div class="login-wrapper" id="login-content">
+		<div class="login-content">
+			<a href="#" class="close">x</a>
+			<h3>Login</h3>
+			<form method="post" action="login.php">
+				<div class="row">
+					<label for="username">
+						Username:
+						<input type="text" name="username" id="username" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"
+							required="required" />
+					</label>
+				</div>
+
+				<div class="row">
+					<label for="password">
+						Password:
+						<input type="password" name="password" id="password"
+							pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+							required="required" />
+					</label>
+				</div>
+				<div class="row">
+					<button type="submit">Login</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!--end of login form popup-->
+	<!--signup form popup-->
+	<div class="login-wrapper" id="signup-content">
+		<div class="login-content">
+			<a href="#" class="close">x</a>
+			<h3>sign up</h3>
+			<form method="post" action="signup.php">
+				<div class="row">
+					<label for="username-2">
+						Username:
+						<input type="text" name="username" id="username-2" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"
+							required="required" />
+					</label>
+				</div>
+
+				<div class="row">
+					<label for="email-2">
+						your email:
+						<input type="password" name="email" id="email-2" placeholder=""
+							pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+							required="required" />
+					</label>
+				</div>
+				<div class="row">
+					<label for="password-2">
+						Password:
+						<input type="password" name="password" id="password-2" placeholder=""
+							pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+							required="required" />
+					</label>
+				</div>
+				<div class="row">
+					<label for="repassword-2">
+						re-type Password:
+						<input type="password" name="password" id="repassword-2" placeholder=""
+							pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+							required="required" />
+					</label>
+				</div>
+				<div class="row">
+					<button type="submit">sign up</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!--end of signup form popup-->
+
+	<!-- BEGIN | Header -->
+	<header class="ht-header">
+		<div class="container">
+			<nav class="navbar navbar-default navbar-custom">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header logo">
+					<div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<div id="nav-icon1">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</div>
+					<a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt="" width="119"
+							height="58"></a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav flex-child-menu menu-left">
+						<li class="hidden">
+							<a href="#page-top"></a>
+						</li>
+						<li><a href="../../index.php">Home</a></li>
+						<li><a href="../../index.php"> File & Serie </a></li>
+						<li><a href="../../index.php"> Celebrità </a></li>
+					</ul>
+					<ul class="nav navbar-nav flex-child-menu menu-right">
+						<li class="loginLink"><a href="#">LOG In</a></li>
+						<li class="btn signupLink"><a href="#">sign up</a></li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</nav>
+
+			<!-- top search form -->
+			<div class="top-search">
+				<select>
+					<option value="film">Film</option>
+					<option value="serie">Serie</option>
+					<option value="celebrita">Celebrità</option>
+				</select>
+				<input type="text" placeholder="Scrivi il nome di un film, una serie o una celebrità che stai cercando">
+			</div>
+		</div>
+	</header>
+	<!-- END | Header -->
+
+	<div class="hero sr-single-hero sr-single">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="page-single movie-single movie_single">
+		<div class="container">
+			<div class="row ipad-width2">
+				<div class="col-md-4 col-sm-12 col-xs-12">
+					<div class="movie-img sticky-sb">
+						<?php
+							if ($serie['copertina'] != null) {
+							    echo '<img src="data:image/jpeg;base64,' . base64_encode($serie['copertina']) . '" alt="" width="340" height="521">';
+                            } else {
+                                echo '<img src="../../images/uploads/slider1.jpg" alt="" width="340" height="521">';
+                            }
+                        ?>
+						<div class="movie-btn">
+							<div class="btn-transform transform-vertical red">
+								<div><a href="#" class="item item-1 redbtn"> <i class="ion-play"></i>
+										Guarda il Trailer</a>
+								</div>
+								<div><a href="<?php echo $serie['trailer']; ?>"
+										class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a>
+								</div>
+							</div>
+
+							<div class="btn-transform transform-vertical yellow">
+								<div><a href="#" class="item item-1 yellowbtn"> <i class="ion-edit"></i>
+										Scrivi una recensione</a>
+								</div>
+								<div><a href="#" class="item item-2 yellowbtn fancybox-media hvr-grow"><i
+											class="ion-edit"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<div class="movie-single-ct main-content">
+						<h1 class="bd-hd">
+							<?php echo $serie['titolo']; ?> <span>
+								<?php
+									$inizio = date('Y', strtotime($serie['inizio_serie']));
+									if($serie['conclusa']){
+										$fine = date('Y', strtotime($serie['fine_serie']));
+									}
+									else{
+										$fine = "OGGI";
+									}
+									echo  $inizio . " - " . $fine ;
+								?>
+							</span>
+						</h1>
+						<div class="social-btn">
+							<a href="#" class="parent-btn"><i class="ion-heart"></i> Aggiungi ai preferiti</a>
+						</div>
+						<div class="movie-rate">
+							<div class="rate">
+								<i class="ion-android-star"></i>
+								<p><span>
+										<?php echo $serie['media_voti']; ?>
+									</span> /10<br>
+									<span class="rv">
+										<?php echo $numero_recensioni . ' Recensioni'; ?>
+									</span>
+								</p>
+							</div>
+							<div class="rate-star">
+								<p>Dai un voto a questo film: </p>
+								<i class="ion-ios-star" data-rating=1></i>
+								<i class="ion-ios-star-outline" data-rating=2></i>
+								<i class="ion-ios-star-outline" data-rating=3></i>
+								<i class="ion-ios-star-outline" data-rating=4></i>
+								<i class="ion-ios-star-outline" data-rating=5></i>
+								<i class="ion-ios-star-outline" data-rating=6></i>
+								<i class="ion-ios-star-outline" data-rating=7></i>
+								<i class="ion-ios-star-outline" data-rating=8></i>
+								<i class="ion-ios-star-outline" data-rating=9></i>
+								<i class="ion-ios-star-outline" data-rating=10></i>
+							</div>
+							<script>
+								const stars = document.querySelectorAll('.rate-star i');
+
+								stars.forEach(star => {
+									star.addEventListener('click', function () {
+										const rating = parseInt(this.getAttribute('data-rating'));
+										window.location.href = "#";
+									});
+
+									star.addEventListener('mouseover', function () {
+										const rating = parseInt(this.getAttribute('data-rating'));
+
+										for (let i = 1; i <= stars.length; i++) {
+											if (i <= rating) {
+												stars[i - 1].classList.remove('ion-ios-star-outline');
+												stars[i - 1].classList.add('ion-ios-star');
+											} else {
+												stars[i - 1].classList.remove('ion-ios-star');
+												stars[i - 1].classList.add('ion-ios-star-outline');
+											}
+										}
+									});
+								});
+							</script>
+						</div>
+						<div class="movie-tabs">
+							<div class="tabs">
+								<ul class="tab-links tabs-mv tabs-series">
+									<li class="active"><a href="#overview">Panoramica </a></li>
+									<li><a href="#season"> Stagioni </a></li>
+									<li><a href="#reviews"> Recensioni </a></li>
+									<li><a href="#cast"> Cast & Troupe </a></li>
+									<li><a href="#moviesrelated"> Serie correlate</a></li>
+								</ul>
+								<div class="tab-content">
+									<div id="overview" class="tab active">
+										<div class="row">
+											<div class="col-md-8 col-sm-12 col-xs-12">
+												<p>
+													<?php echo $serie['descrizione']?>
+												</p>
+												<div class="title-hd-sm">
+													<h4>Ultima Stagione</h4>
+													<a href="#season" class="link-to-tab time">Vedi tutte le stagioni <i
+															class="ion-ios-arrow-right"></i></a>
+												</div>
+												<!-- movie cast -->
+												<div class="mvcast-item">
+													<div class="cast-it">
+														<div class="cast-left series-it">
+															<?php
+																if ($ultima_stagione['copertina'] != null) {
+																	echo '<img src="data:image/jpeg;base64,' . base64_encode($ultima_stagione['copertina']) . '" alt="" width="100" height="153">';
+																} else {
+																	echo '<img src="../../images/uploads/slider1.jpg" alt="" width="100" height="153">';
+																}
+															?>
+															<div>
+																<a>
+																	<?php echo "Stagione " . $ultima_stagione['numero_stagione']; ?>
+																</a>
+																<p>
+																	<?php echo $ultima_stagione['data_pubblicazione'] . " episodi"; ?>
+																</p>
+																<p>
+																	<?php echo "Pubblicata il: " . $ultima_stagione['data_pubblicazione']; ?>
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="title-hd-sm">
+													<h4>Cast</h4>
+													<a href="#cast" class="time link-to-tab">Scopri tutto il Cast e la
+														Troupe <i class="ion-ios-arrow-right"></i></a>
+												</div>
+												<!-- movie cast -->
+												<div class="mvcast-item">
+													<?php 
+                                                        foreach($personaggi as $personaggio){ 
+                                                            if($personaggio['star']){ ?>
+													<div class="cast-it">
+														<div class="cast-left">
+															<?php
+                                                                    if ($personaggio['foto'] != null) {
+                                                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($personaggio['foto']) . '" alt="" width="41" height="41">';
+                                                                    } else {
+                                                                        echo '<img src="../../images/uploads/cast1.jpg" alt="" width="41" height="41">';
+                                                                    }
+                                                                ?>
+															<a href="#">
+																<?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
+															</a>
+														</div>
+														<p>
+															<?php echo '... ' . $personaggio['interpreta']; ?>
+														</p>
+													</div>
+													<?php 
+                                                            }
+                                                        } 
+                                                    ?>
+												</div>
+												<div class="title-hd-sm">
+													<h4>Recensioni degli utenti</h4>
+													<a href="#reviews" class="time link-to-tab">
+														<?php echo 'Vedi tutte le ' . $numero_recensioni . ' recensioni'; ?>
+														<i class="ion-ios-arrow-right"></i>
+													</a>
+												</div>
+												<!-- movie user review -->
+												<?php
+                                                    $recensioni = $recensioniController->getRecensioniBySerie($serieId, 0);
+                                                    foreach ($recensioni as $recensione){
+                                                ?>
+												<div class="mv-user-review-item">
+													<h3>
+														<?php echo $recensione['titolo']; ?>
+													</h3>
+													<div class="no-star">
+														<?php
+                                                            $voto_intero = intval($recensione['voto']);
+                                                            for ($i = 1; $i <= 10; $i++) {
+                                                                if ($i <= $voto_intero) {
+                                                                    echo '<i class="ion-android-star"></i>';
+                                                                } else {
+                                                                    echo '<i class="ion-android-star last"></i>';
+                                                                }
+                                                            }
+                                                        ?>
+													</div>
+													<p class="time">
+														<?php
+                                                            $date = new DateTime($recensione['data_recensione']);
+                                                            $date_formatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+                                                            $formatted_date = $date_formatter->format($date);
+                                                            $utente = $utentiController->getUtenteById($recensione['id_utente']);
+                                                            echo $formatted_date . ' di <a>' . $utente['nome'] . ' ' . $utente['cognome'] . '</a>';
+                                                        ?>
+													</p>
+													<p>
+														<?php echo $recensione['descrizione']; ?>
+													</p>
+												</div>
+												<div style="height: 5vh;"></div>
+												<?php } ?>
+											</div>
+											<div class="col-md-4 col-xs-12 col-sm-12">
+												<div class="sb-it">
+													<h6>Regista:</h6>
+													<p>
+														<?php
+                                                            $registi = [];
+                                                            foreach ($personaggi as $personaggio) {
+                                                                if ($personaggio['ruolo'] === 'Regista') {
+                                                                    $registi[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+                                                                }
+                                                            }
+                                                            echo implode(', ', $registi);
+                                                        ?>
+													</p>
+												</div>
+												<div class="sb-it">
+													<h6>Scrittore:</h6>
+													<p>
+														<?php
+															$scrittori = [];
+															foreach ($personaggi as $personaggio) {
+																if ($personaggio['ruolo'] === 'Scrittore') {
+																	$scrittori[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+																}
+															}
+															echo implode(', ', $scrittori);
+														?>
+													</p>
+												</div>
+												<div class="sb-it">
+													<h6>Stars: </h6>
+													<p>
+														<?php
+                                                            $star = [];
+                                                            foreach ($personaggi as $personaggio) {
+                                                                if ($personaggio['star']) {
+                                                                    $star[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+                                                                }
+                                                            }
+                                                            echo implode(', ', $star);
+                                                        ?>
+													</p>
+												</div>
+												<div class="sb-it">
+													<h6>Generi:</h6>
+													<p>
+														<?php
+                                                            $categorieCount = count($categorie);
+                                                            $counter = 0;
+                                                            foreach ($categorie as $categoria) {
+                                                                echo '<a>' . $categoria['categoria'] . '</a>';
+                                                                $counter++;
+                                                                if ($counter < $categorieCount) {
+                                                                    echo ', ';
+                                                                }
+                                                            }
+                                                        ?>
+													</p>
+												</div>
+												<div class="sb-it">
+													<h6>Data pubblicazione:</h6>
+													<p>
+														<?php
+                                                            $date = new DateTime($serie['inizio_serie']);
+                                                            $date_formatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+                                                            $formatted_date = $date_formatter->format($date);
+                                                            echo $formatted_date;
+                                                        ?>
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="reviews" class="tab review">
+										<div class="row">
+											<div style="height: 5vh;"></div>
+											<div class="topbar-filter">
+												<p>Trovate <span>56 recensioni</span> in totale</p>
+												<label>Ordina per:</label>
+												<select>
+													<option value="miglior_voto">Voto migliore</option>
+													<option value="peggior_voto">Voto peggiore</option>
+													<option value="date">Più recente</option>
+													<option value="date">Meno recente</option>
+												</select>
+											</div>
+											<?php 
+                                                $recensioni = $recensioniController->getRecensioniBySerie($serieId, 0);
+                                                $max = count($recensioni);
+                                                $count=0;
+                                                foreach ($recensioni as $recensione) { 
+                                                    $count++;
+                                                    $utente = $utentiController->getUtenteById($recensione['id_utente'])
+                                            ?>
+											<div class="<?php 
+												if($count == $max) {
+													echo 'mv-user-review-item last';
+												}
+												else{
+													echo 'mv-user-review-item';
+												}?>">
+												<div class="user-infor">
+													<?php
+                                                        if ($utente['foto'] != null) {
+                                                            echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="41" height="41">';
+                                                        } else {
+                                                            echo '<img src="../../images/uploads/userava1.jpg" alt="" width="41" height="41">';
+                                                        }
+                                                    ?>
+													<div>
+														<h3>
+															<?php echo $recensione['titolo']; ?>
+														</h3>
+														<div class="no-star">
+															<?php
+															$voto_intero = intval($recensione['voto']);
+															for ($i = 1; $i <= 10; $i++) {
+																if ($i <= $voto_intero) {
+																	echo '<i class="ion-android-star"></i>';
+																} else {
+																	echo '<i class="ion-android-star last"></i>';
+																}
+															}
+														?>
+														</div>
+														<p class="time">
+															<?php
+                                                                $date = new DateTime($recensione['data_recensione']);
+                                                                $date_formatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+                                                                $formatted_date = $date_formatter->format($date);
+                                                                echo $formatted_date . ' di <a>' . $utente['nome'] . ' ' . $utente['cognome'] . '</a>';
+                                                            ?>
+														</p>
+													</div>
+												</div>
+												<p>
+													<?php echo $recensione['descrizione']; ?>
+												</p>
+											</div>
+											<?php } ?>
+											<?php
+                                                if($numero_recensioni == 0){
+                                                    echo '<div style="height:37vh"></div>';
+                                                }
+                                            ?>
+											<div class="topbar-filter">
+												<label>Recensioni per pagina:</label>
+												<select>
+													<option value="range">5 Recensioni</option>
+													<option value="saab">10 Recensioni</option>
+												</select>
+												<div class="pagination2">
+													<span>Pagina 1 di
+														<?php 
+															echo max(ceil($numero_recensioni/5),1);
+														?>:
+													</span> <!-- Da fare con AJAX-->
+													<?php 
+														for($i=1; $i<=$numero_recensioni/5; $i++) {
+													?>
+
+													<a href="#">
+														<?php echo $i ?>
+													</a>
+													<?php } ?>
+													<a href="#"><i class="ion-arrow-right-b"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="cast" class="tab">
+										<div class="row">
+											<div style="height: 5vh;"></div>
+											<!-- //== -->
+											<div class="title-hd-sm">
+												<h4>Produttori</h4>
+											</div>
+											<div class="mvcast-item">
+												<?php 
+                                                    foreach($personaggi as $personaggio){ 
+                                                        if($personaggio['ruolo'] === 'Regista' || $personaggio['ruolo'] === 'Scrittore'){
+                                                ?>
+												<div class="cast-it">
+													<div class="cast-left">
+														<h4>
+															<?php echo substr($personaggio['nome'], 0, 1) . substr($personaggio['cognome'], 0, 1); ?>
+														</h4>
+														<a href="#">
+															<?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
+														</a>
+													</div>
+													<p>
+														<?php echo '... ' . $personaggio['ruolo']; ?>
+													</p>
+												</div>
+												<?php 
+                                                        }
+                                                    } 
+                                                ?>
+											</div>
+											<!-- //== -->
+											<div class="title-hd-sm">
+												<h4>Attori</h4>
+											</div>
+											<div class="mvcast-item">
+												<?php 
+                                                    foreach($personaggi as $personaggio){ 
+                                                        if($personaggio['ruolo'] === 'Attore'){
+                                                ?>
+												<div class="cast-it">
+													<div class="cast-left">
+														<h4>
+															<?php echo substr($personaggio['nome'], 0, 1) . substr($personaggio['cognome'], 0, 1); ?>
+														</h4>
+														<a href="#">
+															<?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
+														</a>
+													</div>
+													<p>
+														<?php echo '... ' . $personaggio['interpreta']; ?>
+													</p>
+												</div>
+												<?php 
+                                                        }
+                                                    } 
+                                                ?>
+											</div>
+											<!-- //== -->
+											<div class="title-hd-sm">
+												<h4>Troupe</h4>
+											</div>
+											<div class="mvcast-item">
+												<?php 
+                                                    foreach($personaggi as $personaggio){ 
+                                                        if($personaggio['ruolo'] !== 'Regista' && $personaggio['ruolo'] !== 'Scrittore' && $personaggio['ruolo'] !== 'Attore'){
+                                                ?>
+												<div class="cast-it">
+													<div class="cast-left">
+														<h4>
+															<?php echo substr($personaggio['nome'], 0, 1) . substr($personaggio['cognome'], 0, 1); ?>
+														</h4>
+														<a href="#">
+															<?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
+														</a>
+													</div>
+													<p>
+														<?php echo '... ' . $personaggio['ruolo']; ?>
+													</p>
+												</div>
+												<?php 
+                                                        }
+                                                    } 
+                                                ?>
+											</div>
+										</div>
+									</div>
+									<div id="season" class="tab">
+										<div class="row">
+											<?php
+												foreach ($stagioni as $stagione){
+											?>
+											<div class="mvcast-item">
+												<div class="cast-it">
+													<div class="cast-left series-it">
+														<?php
+															if ($stagione['copertina'] != null) {
+																echo '<img src="data:image/jpeg;base64,' . base64_encode($stagione['copertina']) . '" alt="" width="100" height="153">';
+															} else {
+																echo '<img src="../../images/uploads/slider1.jpg" alt="" width="100" height="153">';
+															}
+														?>
+														<div>
+															<a>
+																<?php echo "Stagione " . $stagione['numero_stagione']; ?>
+															</a>
+															<p>
+																<?php echo $stagione['data_pubblicazione'] . " episodi"; ?>
+															</p>
+															<p>
+																<?php echo "Pubblicata il: " . $stagione['data_pubblicazione']; ?>
+															</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<?php } ?>
+										</div>
+									</div>
+									<div id="moviesrelated" class="tab">
+										<div class="row">
+											<div style="height: 5vh;"></div>
+											<?php 
+                                                foreach($serie_correlate as $serie){
+													$personaggi = $personaggiController->getPersonaggiBySerie($serie['id']);
+													$numero_stagioni = count($serieController->getAllSeasonBySerieId($serie['id']))
+                                            ?>
+											<div class="movie-item-style-2">
+												<?php
+													if ($serie['copertina'] != null) {
+														echo '<img src="data:image/jpeg;base64,' . base64_encode($serie['copertina']) . '" alt="" width="170" height="261">';
+													} else {
+														echo '<img src="../../images/uploads/slider1.jpg" alt="" width="170" height="261">';
+													}
+												?>
+												<div class="mv-item-infor">
+													<h6>
+														<a href="seriessingle.php?id=<?php echo $serie['id'];?>">
+															<?php echo $serie['titolo'];?>
+															<span>
+																<?php echo "(" . date('Y', strtotime($serie['inizio_serie'])) . ")";?>
+															</span>
+														</a>
+													</h6>
+													<p class="rate"><i class="ion-android-star"></i>
+														<span>
+															<?php echo $serie['media_voti'];?>
+														</span>
+														/10
+													</p>
+													<p class="describe">
+														<?php echo $serie['descrizione'];?>
+													</p>
+													<p class="run-time">
+														<?php 
+															echo $numero_stagioni . " stagioni"; ?>
+														<span>
+															<?php
+                                                                $date = new DateTime($serie['inizio_serie']);
+                                                                $date_formatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+                                                                $formatted_date = $date_formatter->format($date);
+                                                                echo $formatted_date;
+                                                            ?>
+														</span>
+													</p>
+													<p>
+														<?php
+                                                            echo "Regia di: ";
+                                                            $registi = [];
+                                                            foreach ($personaggi as $personaggio) {
+                                                                if ($personaggio['ruolo'] === 'Regista') {
+                                                                    $registi[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+                                                                }
+                                                            }
+                                                            echo implode(', ', $registi);
+                                                        ?>
+													</p>
+													<p>
+														<?php
+                                                            echo "Stars: ";
+                                                            $star = [];
+                                                            foreach ($personaggi as $personaggio) {
+                                                                if ($personaggio['star']) {
+                                                                    $star[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+                                                                }
+                                                            }
+                                                            echo implode(', ', $star);
+                                                        ?>
+													</p>
+												</div>
+											</div>
+											<div style="height: 5vh;"></div>
+											<?php } ?>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- footer section-->
+	<footer class="ht-footer">
+		<div class="container">
+			<div class="flex-parent-ft">
+				<div class="flex-child-ft item1">
+					<a href="index.html"><img class="logo" src="images/logo1.png" alt=""></a>
+					<p>5th Avenue st, manhattan<br>
+						New York, NY 10001</p>
+					<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
+				</div>
+				<div class="flex-child-ft item2">
+					<h4>Resources</h4>
+					<ul>
+						<li><a href="#">About</a></li>
+						<li><a href="#">Blockbuster</a></li>
+						<li><a href="#">Contact Us</a></li>
+						<li><a href="#">Forums</a></li>
+						<li><a href="#">Blog</a></li>
+						<li><a href="#">Help Center</a></li>
+					</ul>
+				</div>
+				<div class="flex-child-ft item3">
+					<h4>Legal</h4>
+					<ul>
+						<li><a href="#">Terms of Use</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Security</a></li>
+					</ul>
+				</div>
+				<div class="flex-child-ft item4">
+					<h4>Account</h4>
+					<ul>
+						<li><a href="#">My Account</a></li>
+						<li><a href="#">Watchlist</a></li>
+						<li><a href="#">Collections</a></li>
+						<li><a href="#">User Guide</a></li>
+					</ul>
+				</div>
+				<div class="flex-child-ft item5">
+					<h4>Newsletter</h4>
+					<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
+					<form action="#">
+						<input type="text" placeholder="Enter your email...">
+					</form>
+					<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="ft-copyright">
+			<div class="ft-left">
+				<p>© 2017 Blockbuster. All Rights Reserved. Designed by leehari.</p>
+			</div>
+			<div class="backtotop">
+				<p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
+			</div>
+		</div>
+	</footer>
+	<!-- end of footer section-->
+
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/plugins.js"></script>
+	<script src="../../js/plugins2.js"></script>
+	<script src="../../js/custom.js"></script>
+</body>
+
+</html>

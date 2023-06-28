@@ -9,13 +9,14 @@ class RecensioniController
         $this->dbConnection = $db;
     }
 
-    public function getRecensioniByFilm($id)
+    public function getRecensioniByFilm($id, $offset)
     {
-        $query = "SELECT Recensione.*, Utenti.foto as foto_utente, Utenti.nome as nome_utente, Utenti.cognome as cognome_utente
+        $query = "SELECT Recensione.*
         FROM Recensione
         INNER JOIN Utenti ON Recensione.id_utente = Utenti.id
         WHERE Recensione.id_film =" . $id . "
-        ORDER BY Recensione.voto DESC";
+        ORDER BY Recensione.voto DESC
+        LIMIT " . $offset . ",5";
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
         $recensioni = array();
@@ -28,13 +29,14 @@ class RecensioniController
         return $recensioni;
     }
 
-    public function getRecesioniBySerie($id)
+    public function getRecensioniBySerie($id, $offset)
     {
-        $query = "SELECT Recensione.*, Utenti.foto, Utenti.nome, Utenti.cognome
+        $query = "SELECT Recensione.*
         FROM Recensione
         INNER JOIN Utenti ON Recensione.id_utente = Utenti.id
         WHERE Recensione.id_serie =" . $id . "
-        ORDER BY Recensione.voto DESC";
+        ORDER BY Recensione.voto DESC
+        LIMIT " . $offset . ",5";
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
         $recensioni = array();
@@ -49,14 +51,16 @@ class RecensioniController
 
     public function getNumeroRecesioniByFilm($id)
     {
-        $query = "SELECT COUNT(Film.*) AS numero_recensioni 
-        FROM Film;
+        $query = "SELECT COUNT(*) AS numero_recensioni 
+        FROM Recensione
+        INNER JOIN Film ON Recensione.id_film = Film.id
         WHERE Recensione.id_film =" . $id;
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
 
         if (mysqli_num_rows($result) > 0) {
-            return mysqli_fetch_array($result);
+            $res = mysqli_fetch_array($result);
+            return $res['numero_recensioni'];
         } else {
             return null;
         }
@@ -64,14 +68,16 @@ class RecensioniController
 
     public function getNumeroRecesioniBySerie($id)
     {
-        $query = "SELECT COUNT(Serie.*) AS numero_recensioni 
-        FROM Serie;
+        $query = "SELECT COUNT(*) AS numero_recensioni 
+        FROM Recensione
+        INNER JOIN Serie ON Recensione.id_serie = Serie.id
         WHERE Recensione.id_serie =" . $id;
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
 
         if (mysqli_num_rows($result) > 0) {
-            return mysqli_fetch_array($result);
+            $res = mysqli_fetch_array($result);
+            return $res['numero_recensioni'];
         } else {
             return null;
         }

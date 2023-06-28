@@ -27,4 +27,4 @@ INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, 
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (3, 3, null, 2, 2, 'Tony Stark / Iron Man', 1);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (4, 4, null, 2, 1, null, 0);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (5, 5, 3, null, 2, 'Eleven', 1);
-INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (6, 6, 3, null, 2, 'Rachel Green', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (6, 6, 4, null, 2, 'Rachel Green', 1);

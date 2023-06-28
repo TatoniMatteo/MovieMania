@@ -121,4 +121,29 @@ class FilmController
         }
         return $films;
     }
+
+    public function getFilmCorrelati($id)
+    {
+        $query = "SELECT F1.*, COUNT(*) AS categorie_comuni, ROUND(COALESCE(AVG(R.voto), 0),1) AS media_voti
+        FROM Film F1
+        JOIN Caratterizza C1 ON F1.id = C1.id_film
+        JOIN (SELECT C2.id_categoria 
+                FROM Caratterizza C2
+                WHERE C2.id_film = " . $id . ") AS Subquery ON C1.id_categoria = Subquery.id_categoria
+        LEFT JOIN Recensione R ON F1.id = R.id_film
+        GROUP BY F1.id, F1.titolo
+        HAVING categorie_comuni >= 1 AND F1.id <> " . $id . "
+        ORDER BY categorie_comuni DESC, media_voti DESC
+        LIMIT 5;";
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $films = array();
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $films[] = $row;
+            }
+        }
+        return $films;
+    }
 }
