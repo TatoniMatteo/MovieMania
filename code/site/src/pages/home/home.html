@@ -238,14 +238,12 @@
                                             <div class="movie-item">
                                                 <div class="mv-img">
                                                     <?php
-                                                    if ($film['copertina'] != null) {
-                                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($film['copertina']) . '" alt="" width="185" height="284">
-                                                ';
-                                                } else {
-                                                echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185"
-                                                           height="284">';
-                                                }
-                                                ?>
+                                                        if ($film['copertina'] != null) {
+                                                                echo '<img src="data:image/jpeg;base64,' . base64_encode($film['copertina']) . '" alt="" width="185" height="284"> ';
+                                                        } else {
+                                                            echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185" height="284">';
+                                                        }
+                                                    ?>
                                                 </div>
                                                 <div class="hvr-inner">
                                                     <a
@@ -275,13 +273,11 @@
                                                 <div class="mv-img">
                                                     <?php
 														if ($film['copertina'] != null) {
-															echo '<img src="data:image/jpeg;base64,' . base64_encode($film['copertina']) . '" alt="" width="185" height="284">
-                                                ';
-                                                } else {
-                                                echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185"
-                                                           height="284">';
-                                                }
-                                                ?>
+															echo '<img src="data:image/jpeg;base64,' . base64_encode($film['copertina']) . '" alt="" width="185" height="284">';
+                                                        } else {
+                                                            echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185" height="284">';
+                                                        }
+                                                    ?>
                                                 </div>
                                                 <div class="hvr-inner">
                                                     <a
@@ -360,17 +356,16 @@
                                                 <div class="mv-img">
                                                     <?php
 														if ($serie['copertina'] != null) {
-															echo '<img src="data:image/jpeg;base64,' . base64_encode($serie['copertina']) . '" alt="" width="185" height="284">
-                                                ';
-                                                } else {
-                                                echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185"
-                                                           height="284">';
-                                                }
-                                                ?>
+															echo '<img src="data:image/jpeg;base64,' . base64_encode($serie['copertina']) . '" alt="" width="185" height="284"> ';
+                                                        } else {
+                                                            echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185" height="284">';
+                                                        }
+                                                    ?>
                                                 </div>
                                                 <div class="hvr-inner">
-                                                    <a href="moviesingle.html"> Scopri <i
-                                                            class="ion-android-arrow-dropright"></i> </a>
+                                                    <a
+                                                        href="../seriessingle/seriessingle.php?id=<?php echo $serie['id']; ?>">
+                                                        Scopri <i class="ion-android-arrow-dropright"></i> </a>
                                                 </div>
                                                 <div class="title-in">
                                                     <h6><a href="#">
@@ -395,17 +390,16 @@
                                                 <div class="mv-img">
                                                     <?php
 														if ($serie['copertina'] != null) {
-															echo '<img src="data:image/jpeg;base64,' . base64_encode($serie['copertina']) . '" alt="" width="185" height="284">
-                                                ';
-                                                } else {
-                                                echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185"
-                                                           height="284">';
-                                                }
-                                                ?>
+															echo '<img src="data:image/jpeg;base64,' . base64_encode($serie['copertina']) . '" alt="" width="185" height="284">';
+                                                        } else {
+                                                            echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185" height="284">';
+                                                        }
+                                                    ?>
                                                 </div>
                                                 <div class="hvr-inner">
-                                                    <a href="moviesingle.html"> Scopri <i
-                                                            class="ion-android-arrow-dropright"></i> </a>
+                                                    <a
+                                                        href="../seriessingle/seriessingle.php?id=<?php echo $serie['id']; ?>">
+                                                        Scopri <i class="ion-android-arrow-dropright"></i> </a>
                                                 </div>
                                                 <div class="title-in">
                                                     <h6><a href="#">
@@ -430,17 +424,16 @@
                                                 <div class="mv-img">
                                                     <?php
 														if ($serie['copertina'] != null) {
-															echo '<img src="data:image/jpeg;base64,' . base64_encode($serie['copertina']) . '" alt="" width="185" height="284">
-                                                ';
-                                                } else {
-                                                echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185"
-                                                           height="284">';
-                                                }
-                                                ?>
+															echo '<img src="data:image/jpeg;base64,' . base64_encode($serie['copertina']) . '" alt="" width="185" height="284">';
+                                                        } else {
+                                                            echo '<img src="../../images/uploads/slider1.jpg" alt="" width="185" height="284">';
+                                                        }
+                                                    ?>
                                                 </div>
                                                 <div class="hvr-inner">
-                                                    <a href="moviesingle.html"> Scopri <i
-                                                            class="ion-android-arrow-dropright"></i> </a>
+                                                    <a
+                                                        href="../seriessingle/seriessingle.php?id=<?php echo $serie['id']; ?>">
+                                                        Scopri <i class="ion-android-arrow-dropright"></i> </a>
                                                 </div>
                                                 <div class="title-in">
                                                     <h6><a href="#">
@@ -463,35 +456,36 @@
                     <div class="sidebar">
                         <div class="celebrities">
                             <h4 class="sb-title">Celebrità in evidenza</h4>
+                            <?php 
+                                foreach ($starEvidenza as $star){
+                            ?>
                             <div class="celeb-item">
-                                <a href="#"><img src="../../images/uploads/ava1.jpg" alt="" width="70" height="70"></a>
+                                <a href="../celebritysingle/celebritysingle.php?id=<?php echo $star['id']; ?>">
+                                    <?php
+                                        if ($star['foto'] != null) {
+                                            echo '<img src="data:image/jpeg;base64,' . base64_encode($star['foto']) . '" alt="" width="70" height="70">';
+                                        } else {
+                                            echo '<img src="../../images/uploads/slider1.jpg" alt="" width="70" height="70">';
+                                        }
+                                    ?>
+                                </a>
                                 <div class="celeb-author">
-                                    <h6><a href="#">Samuel N. Jack</a></h6>
-                                    <span>Actor</span>
+                                    <h6>
+                                        <a href="../celebritysingle/celebritysingle.php?id=<?php echo $star['id']; ?>">
+                                            <?php echo $star['nome'] . " " . $star['cognome'] ?>
+                                        </a>
+                                    </h6>
+                                    <span>
+                                        <?php 
+                                            if ($star['interpreta'] != null) { 
+                                                echo $star['interpreta'];
+                                            }
+                                        ?>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="celeb-item">
-                                <a href="#"><img src="../../images/uploads/ava2.jpg" alt="" width="70" height="70"></a>
-                                <div class="celeb-author">
-                                    <h6><a href="#">Benjamin Carroll</a></h6>
-                                    <span>Actor</span>
-                                </div>
-                            </div>
-                            <div class="celeb-item">
-                                <a href="#"><img src="../../images/uploads/ava3.jpg" alt="" width="70" height="70"></a>
-                                <div class="celeb-author">
-                                    <h6><a href="#">Beverly Griffin</a></h6>
-                                    <span>Actor</span>
-                                </div>
-                            </div>
-                            <div class="celeb-item">
-                                <a href="#"><img src="../../images/uploads/ava4.jpg" alt="" width="70" height="70"></a>
-                                <div class="celeb-author">
-                                    <h6><a href="#">Justin Weaver</a></h6>
-                                    <span>Actor</span>
-                                </div>
-                            </div>
-                            <a href="#" class="btn">See all celebrities<i class="ion-ios-arrow-right"></i></a>
+                            <?php } ?>
+                            <a href="#" class="btn">Vedi tutte le celebrità <i class="ion-ios-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

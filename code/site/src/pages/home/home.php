@@ -4,9 +4,10 @@ $config = Config::getInstance();
 
 $filmController = $config->getFilmController();
 $serieController = $config->getSerieController();
+$personaggiController = $config->getPersonaggiController();
 
-$film = $filmController->getAllFilms();
-$serie = $serieController->getAllSeries();
+$film = $filmController->getAllFilms(8);
+$serie = $serieController->getAllSeries(8);
 
 $programmi = array_merge($film, $serie);
 shuffle($programmi);
@@ -18,5 +19,7 @@ $votatiFilm = $filmController->getBestReviewedFilms();
 $ultimeSerie = $serieController->getLastSeries();
 $miglioriSerie = $serieController->getBestSeries();
 $votateSerie = $serieController->getBestReviewedSeries();
+
+$starEvidenza = $personaggiController->getStarinEvidenza();
 
 include 'home.html';

@@ -41,3 +41,10 @@ INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_se
 INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (18, 'Intrigante e misteriosa', 'Questa serie mi ha catturato fin dall\'inizio. Ogni episodio ti lascia con il desiderio di scoprire di più.', 9.0, null, 4, 4, '2019-06-26');
 INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (19, 'Capolavoro assoluto', 'Un film che rimarrà nella storia. Interpretazioni straordinarie e una trama avvincente.', 9.0, 8, null, 2, '2019-07-18');
 INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (20, 'Una serie indimenticabile', 'Ho seguito questa serie per anni e non potrei essere più soddisfatto del suo finale.', 9.0, null, 5, 1, '2021-07-30');
+INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (21, 'Un capolavoro che affascina e sorprende', 'Ho appena visto "Forrest Gump" e mi ha davvero colpito. È un film coinvolgente che ti terrà incollato allo schermo dall\'inizio alla fine.
+
+La trama è piena di colpi di scena che ti terranno con il fiato sospeso. Gli attori sono incredibili, interpretano i loro personaggi in modo autentico e coinvolgente. La fotografia è stupefacente, con colori vibranti e inquadrature ben curate. La colonna sonora è emozionante e si integra perfettamente nelle scene.
+
+Ciò che mi ha colpito di più di "Forrest Gump" è il modo in cui affronta temi universali come l\'amore e la ricerca della felicità. Mi ha fatto riflettere e mi ha emozionato.
+
+In sintesi, se ti piacciono i film coinvolgenti e indimenticabili, ti consiglio "Forrest Gump". È un\'esperienza cinematografica da non perdere.', 10.0, 4, null, 3, '2015-02-17');

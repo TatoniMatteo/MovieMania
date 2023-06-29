@@ -19,7 +19,7 @@ if (!isset($_GET['id'])) {
         include '../service/404.html';
     } else {
         $stagioni = $serieController->getAllSeasonBySerieId($serieId);
-        $ultima_stagione = $stagioni[0];
+        $ultima_stagione = $stagioni[count($stagioni) - 1];
         $categorie = $serieController->getCategoriesOfSerie($serieId);
         $personaggi = $personaggiController->getPersonaggiBySerie($serieId);
         $numero_recensioni = $recensioniController->getNumeroRecesioniBySerie($serieId);

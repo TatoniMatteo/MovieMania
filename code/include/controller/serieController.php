@@ -30,12 +30,22 @@ class SerieController
         }
     }
 
-    public function getAllSeries()
+    public function getAllSeries($l)
     {
+
+        if ($l > 0) {
+            $limit = "LIMIT " . $l;
+        } else {
+            $limit = "";
+        }
+
         $query = "SELECT s.*, IFNULL(ROUND(AVG(r.voto), 1), 0) AS media_voti, 'serie' as tipo
         FROM Serie as s
         LEFT JOIN Recensione as r ON s.id = r.id_serie
-        GROUP BY s.id";
+        LEFT JOIN Stagione as st ON s.id = st.id_serie
+        GROUP BY s.id
+        ORDER BY MAX(st.data_pubblicazione) DESC " . $limit;
+
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
         $series = array();
@@ -161,7 +171,7 @@ class SerieController
         $query = "SELECT *
         FROM Stagione
         WHERE id_serie = " . $id . "
-        ORDER BY numero_stagione DESC";
+        ORDER BY numero_stagione";
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
         $seasons = array();

@@ -25,12 +25,19 @@ class FilmController
         }
     }
 
-    public function getAllFilms()
+    public function getAllFilms($l)
     {
+        if ($l > 0) {
+            $limit = "LIMIT " . $l;
+        } else {
+            $limit = "";
+        }
+
         $query = "SELECT f.*, IFNULL(ROUND(AVG(r.voto), 1), 0) AS media_voti, 'film' as tipo
         FROM Film as f
         LEFT JOIN Recensione as r ON f.id = r.id_film
-        GROUP BY f.id";
+        GROUP BY f.id 
+        ORDER BY f.data_pubblicazione DESC " . $limit;
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
         $films = array();

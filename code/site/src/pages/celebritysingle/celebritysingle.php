@@ -14,6 +14,8 @@ if (!isset($_GET['id'])) {
     if ($personaggio == null) {
         include '../service/404.html';
     } else {
+        $filmografia = $personaggiController->getFilmographyById($personaggioId);
+        $ruoli = $personaggiController->getRuoliInterpretati($personaggioId);
         include 'celebritysingle.html';
     }
 }
@@ -21,16 +23,11 @@ if (!isset($_GET['id'])) {
 function troncaStringa($stringa, $limite)
 {
     if (strlen($stringa) <= $limite) {
-        return $stringa; // La stringa è già più corta o uguale al limite
+        return $stringa;
     }
 
-    // Trova l'ultima occorrenza di uno spazio prima del limite
     $ultimaOccorrenzaSpazio = strrpos(substr($stringa, 0, $limite), ' ');
-
-    // Tronca la stringa fino all'ultima occorrenza di spazio
     $stringaTroncata = substr($stringa, 0, $ultimaOccorrenzaSpazio);
-
-    // Aggiungi i tre puntini
     $stringaTroncata .= ' ...';
 
     return $stringaTroncata;

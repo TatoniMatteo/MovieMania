@@ -305,13 +305,13 @@
 																}
 															?>
 															<div>
-																<a>
+																<a style="min-width: 200px;">
 																	<?php echo "Stagione " . $ultima_stagione['numero_stagione']; ?>
 																</a>
-																<p>
-																	<?php echo $ultima_stagione['data_pubblicazione'] . " episodi"; ?>
+																<p style="min-width: 200px;">
+																	<?php echo $ultima_stagione['episodi'] . " episodi"; ?>
 																</p>
-																<p>
+																<p style="min-width: 200px;" s>
 																	<?php echo "Pubblicata il: " . $ultima_stagione['data_pubblicazione']; ?>
 																</p>
 															</div>
@@ -337,7 +337,8 @@
                                                                         echo '<img src="../../images/uploads/cast1.jpg" alt="" width="41" height="41">';
                                                                     }
                                                                 ?>
-															<a href="#">
+															<a
+																href="../celebritysingle/celebritysingle.php?id=<?php echo $personaggio['id'] ?>">
 																<?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
 															</a>
 														</div>
@@ -402,7 +403,8 @@
                                                             $registi = [];
                                                             foreach ($personaggi as $personaggio) {
                                                                 if ($personaggio['ruolo'] === 'Regista') {
-                                                                    $registi[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+                                                                    $registi[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
+                                                                        . $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
                                                                 }
                                                             }
                                                             echo implode(', ', $registi);
@@ -416,7 +418,8 @@
 															$scrittori = [];
 															foreach ($personaggi as $personaggio) {
 																if ($personaggio['ruolo'] === 'Scrittore') {
-																	$scrittori[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+																	$scrittori[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
+                                                                        . $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
 																}
 															}
 															echo implode(', ', $scrittori);
@@ -430,7 +433,8 @@
                                                             $star = [];
                                                             foreach ($personaggi as $personaggio) {
                                                                 if ($personaggio['star']) {
-                                                                    $star[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+                                                                    $star[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
+                                                                        . $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
                                                                 }
                                                             }
                                                             echo implode(', ', $star);
@@ -581,7 +585,8 @@
 														<h4>
 															<?php echo substr($personaggio['nome'], 0, 1) . substr($personaggio['cognome'], 0, 1); ?>
 														</h4>
-														<a href="#">
+														<a
+															href="../celebritysingle/celebritysingle.php?id=<?php echo $personaggio['id'] ?>">
 															<?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
 														</a>
 													</div>
@@ -608,7 +613,8 @@
 														<h4>
 															<?php echo substr($personaggio['nome'], 0, 1) . substr($personaggio['cognome'], 0, 1); ?>
 														</h4>
-														<a href="#">
+														<a
+															href="../celebritysingle/celebritysingle.php?id=<?php echo $personaggio['id'] ?>">
 															<?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
 														</a>
 													</div>
@@ -635,7 +641,8 @@
 														<h4>
 															<?php echo substr($personaggio['nome'], 0, 1) . substr($personaggio['cognome'], 0, 1); ?>
 														</h4>
-														<a href="#">
+														<a
+															href="../celebritysingle/celebritysingle.php?id=<?php echo $personaggio['id'] ?>">
 															<?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
 														</a>
 													</div>
@@ -666,13 +673,13 @@
 															}
 														?>
 														<div>
-															<a>
+															<a style="min-width: 200px;">
 																<?php echo "Stagione " . $stagione['numero_stagione']; ?>
 															</a>
-															<p>
-																<?php echo $stagione['data_pubblicazione'] . " episodi"; ?>
+															<p style="min-width: 200px;">
+																<?php echo $stagione['episodi'] . " episodi"; ?>
 															</p>
-															<p>
+															<p style="min-width: 200px;" s>
 																<?php echo "Pubblicata il: " . $stagione['data_pubblicazione']; ?>
 															</p>
 														</div>
@@ -734,7 +741,8 @@
                                                             $registi = [];
                                                             foreach ($personaggi as $personaggio) {
                                                                 if ($personaggio['ruolo'] === 'Regista') {
-                                                                    $registi[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+                                                                    $registi[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
+                                                                        . $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
                                                                 }
                                                             }
                                                             echo implode(', ', $registi);
@@ -746,7 +754,8 @@
                                                             $star = [];
                                                             foreach ($personaggi as $personaggio) {
                                                                 if ($personaggio['star']) {
-                                                                    $star[] = $personaggio['nome'] . ' ' . $personaggio['cognome'];
+                                                                    $star[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
+                                                                        . $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
                                                                 }
                                                             }
                                                             echo implode(', ', $star);
@@ -771,7 +780,7 @@
 		<div class="container">
 			<div class="flex-parent-ft">
 				<div class="flex-child-ft item1">
-					<a href="index.html"><img class="logo" src="images/logo1.png" alt=""></a>
+					<a href="index.html"><img class="logo" src="../../images/logo1.png" alt=""></a>
 					<p>5th Avenue st, manhattan<br>
 						New York, NY 10001</p>
 					<p>Call us: <a href="#">(+01) 202 342 6789</a></p>

@@ -194,7 +194,9 @@
 						<h1 class="bd-hd">
 							<?php echo $personaggio['nome'] . " " . $personaggio['cognome'] ?>
 						</h1>
-						<p class="ceb-single">Actor | Producer</p>
+						<p class="ceb-single">
+							<?php echo implode(' | ', $ruoli); ?>
+						</p>
 						<div class="movie-tabs">
 							<div class="tabs">
 								<ul class="tab-links tabs-mv">
@@ -221,87 +223,46 @@
 												</div>
 												<!-- movie cast -->
 												<div class="mvcast-item">
+													<?php 
+														for ($i = 0; $i<MIN(5, count($filmografia)); $i++) {
+															$programma = $filmografia[$i];
+													?>
 													<div class="cast-it">
 														<div class="cast-left cebleb-film">
-															<img src="../../images/uploads/film1.jpg" alt="">
+															<?php
+																if ($programma['copertina'] != null) {
+																	echo '<img src="data:image/jpeg;base64,' . base64_encode($programma['copertina']) . '" alt=""
+																		width="50" height="90">';
+																} else {
+																	echo '<img src="../../images/uploads/slider1.jpg" alt="" width="50" height="90">';
+																}
+															?>
 															<div>
-																<a href="#">X-Men: Apocalypse </a>
-																<p class="time">Logan</p>
+																<a href="
+																	<?php 
+																		if($programma['tipo'] == 'Film'){
+																			echo '../moviesingle/moviesingle.php?id=' . $programma['id'];
+																		}
+																		else{
+																			echo '../seriessingle/seriessingle.php?id=' . $programma['id'];
+																		}
+																	?>">
+																	<?php echo $programma['titolo'] ?>
+																</a>
+																<p class="time" style="min-width: 100px;">
+																	<?php 
+																		if($programma['interpreta'] != null){
+																		echo $programma['interpreta'];
+																	}?>
+																</p>
 															</div>
 
 														</div>
-														<p>... 2016</p>
+														<p>
+															<?php echo "... " . $programma['ruolo'] ?>
+														</p>
 													</div>
-													<div class="cast-it">
-														<div class="cast-left cebleb-film">
-															<img src="../../images/uploads/film2.jpg" alt="">
-															<div>
-																<a href="#">Eddie the Eagle </a>
-																<p class="time">Bronson Peary</p>
-															</div>
-														</div>
-														<p>... 2015</p>
-													</div>
-													<div class="cast-it">
-														<div class="cast-left cebleb-film">
-															<img src="../../images/uploads/film3.jpg" alt="">
-															<div>
-																<a href="#">Me and Earl and the Dying Girl </a>
-																<p class="time">Hugh Jackman</p>
-															</div>
-														</div>
-														<p>... 2015</p>
-													</div>
-													<div class="cast-it">
-														<div class="cast-left cebleb-film">
-															<img src="../../images/uploads/film4.jpg" alt="">
-															<div>
-																<a href="#">Night at the Museum 3 </a>
-																<p class="time">Blackbeard</p>
-															</div>
-														</div>
-														<p>... 2014</p>
-													</div>
-													<div class="cast-it">
-														<div class="cast-left cebleb-film">
-															<img src="../../images/uploads/film5.jpg" alt="">
-															<div>
-																<a href="#">X-Men: Days of Future Past </a>
-																<p class="time">Wolverine</p>
-															</div>
-														</div>
-														<p>... 2012</p>
-													</div>
-													<div class="cast-it">
-														<div class="cast-left cebleb-film">
-															<img src="../../images/uploads/film6.jpg" alt="">
-															<div>
-																<a href="#">The Wolverine </a>
-																<p class="time">Logan</p>
-															</div>
-														</div>
-														<p>... 2011</p>
-													</div>
-													<div class="cast-it">
-														<div class="cast-left cebleb-film">
-															<img src="../../images/uploads/film7.jpg" alt="">
-															<div>
-																<a href="#">Rise of the Guardians </a>
-																<p class="time">Bunny</p>
-															</div>
-														</div>
-														<p>... 2011</p>
-													</div>
-													<div class="cast-it">
-														<div class="cast-left cebleb-film">
-															<img src="../../images/uploads/film8.jpg" alt="">
-															<div>
-																<a href="#">The Prestige </a>
-																<p class="time">Robert Angier</p>
-															</div>
-														</div>
-														<p>... 2010</p>
-													</div>
+													<?php } ?>
 												</div>
 											</div>
 											<div class="col-md-4 col-xs-12 col-sm-12">
@@ -323,7 +284,7 @@
 													</p>
 												</div>
 												<div class="sb-it">
-													<h6>Height:</h6>
+													<h6>Altezza:</h6>
 													<p>
 														<?php echo $personaggio['altezza'] . ' m' ?>
 													</p>
@@ -340,7 +301,7 @@
 										</div>
 										<div class="row">
 											<div class="rv-hd">
-												<p>
+												<p style="padding-right: 20px;">
 													<?php echo $personaggio['biografia'] ?>
 												</p>
 											</div>
@@ -350,106 +311,51 @@
 										<div class="row">
 											<div class="rv-hd">
 												<div>
-													<h3>Biography of</h3>
-													<h2>Hugh Jackman</h2>
+													<h3>Filmografia di </h3>
+													<h2>
+														<?php echo $personaggio['nome'] . " " . $personaggio['cognome'] ?>
+													</h2>
 												</div>
-
-											</div>
-											<div class="topbar-filter">
-												<p>Found <span>14 movies</span> in total</p>
-												<label>Filter by:</label>
-												<select>
-													<option value="popularity">Popularity Descending</option>
-													<option value="popularity">Popularity Ascending</option>
-													<option value="rating">Rating Descending</option>
-													<option value="rating">Rating Ascending</option>
-													<option value="date">Release date Descending</option>
-													<option value="date">Release date Ascending</option>
-												</select>
 											</div>
 											<!-- movie cast -->
 											<div class="mvcast-item">
+												<?php foreach ($filmografia as $programma){ ?>
 												<div class="cast-it">
 													<div class="cast-left cebleb-film">
-														<img src="../../images/uploads/film1.jpg" alt="">
+														<?php
+															if ($programma['copertina'] != null) {
+																echo '<img src="data:image/jpeg;base64,' . base64_encode($programma['copertina']) . '" alt=""
+																	width="50" height="90">';
+															} else {
+																echo '<img src="../../images/uploads/slider1.jpg" alt="" width="50" height="90">';
+															}
+														?>
 														<div>
-															<a href="#">X-Men: Apocalypse </a>
-															<p class="time">Logan</p>
+															<a href="
+																<?php 
+																	if($programma['tipo'] == 'Film'){
+																		echo '../moviesingle/moviesingle.php?id=' . $programma['id'];
+																	}
+																	else{
+																		echo '../seriessingle/seriessingle.php?id=' . $programma['id'];
+																	}
+																?>">
+																<?php echo $programma['titolo'] ?>
+															</a>
+															<p class="time" style="min-width: 100px;">
+																<?php 
+																	if($programma['interpreta'] != null){
+																	echo $programma['interpreta'];
+																}?>
+															</p>
 														</div>
 
 													</div>
-													<p>... 2016</p>
+													<p>
+														<?php echo "... " . $programma['ruolo'] ?>
+													</p>
 												</div>
-												<div class="cast-it">
-													<div class="cast-left cebleb-film">
-														<img src="../../images/uploads/film2.jpg" alt="">
-														<div>
-															<a href="#">Eddie the Eagle </a>
-															<p class="time">Bronson Peary</p>
-														</div>
-													</div>
-													<p>... 2015</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left cebleb-film">
-														<img src="../../images/uploads/film3.jpg" alt="">
-														<div>
-															<a href="#">Me and Earl and the Dying Girl </a>
-															<p class="time">Hugh Jackman</p>
-														</div>
-													</div>
-													<p>... 2015</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left cebleb-film">
-														<img src="../../images/uploads/film4.jpg" alt="">
-														<div>
-															<a href="#">Night at the Museum 3 </a>
-															<p class="time">Blackbeard</p>
-														</div>
-													</div>
-													<p>... 2014</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left cebleb-film">
-														<img src="../../images/uploads/film5.jpg" alt="">
-														<div>
-															<a href="#">X-Men: Days of Future Past </a>
-															<p class="time">Wolverine</p>
-														</div>
-													</div>
-													<p>... 2012</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left cebleb-film">
-														<img src="../../images/uploads/film6.jpg" alt="">
-														<div>
-															<a href="#">The Wolverine </a>
-															<p class="time">Logan</p>
-														</div>
-													</div>
-													<p>... 2011</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left cebleb-film">
-														<img src="../../images/uploads/film7.jpg" alt="">
-														<div>
-															<a href="#">Rise of the Guardians </a>
-															<p class="time">Bunny</p>
-														</div>
-													</div>
-													<p>... 2011</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left cebleb-film">
-														<img src="../../images/uploads/film8.jpg" alt="">
-														<div>
-															<a href="#">The Prestige </a>
-															<p class="time">Robert Angier</p>
-														</div>
-													</div>
-													<p>... 2010</p>
-												</div>
+												<?php } ?>
 											</div>
 										</div>
 									</div>
