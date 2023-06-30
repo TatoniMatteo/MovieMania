@@ -1,10 +1,17 @@
 <?php
 
 require_once '../../../../include/config.php';
+session_start();
 
 $config = Config::getInstance();
-
 $personaggiController = $config->getPersonaggiController();
+$utentiController = $config->getUtentiController();
+
+if (isset($_SESSION['utente'])) {
+    $utente = $utentiController->getUtenteById($_SESSION['utente']);
+} else {
+    $utente = null;
+}
 
 if (!isset($_GET['id'])) {
     include '../service/404.html';
