@@ -5,7 +5,7 @@ $config = Config::getInstance();
 
 $authController = $config->getAuthController();
 
-if (!isset($_POST['username']) || !isset($_POST['email']) || !isset($_POST['password'])) {
+if (!isset($_POST['nome']) || !isset($_POST['cognome']) || !isset($_POST['username']) || !isset($_POST['email']) || !isset($_POST['password'])) {
     $response = array('success' => false, 'message' => 'Dati mancanti');
 } else {
     $nome = $_POST['nome'];
