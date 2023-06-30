@@ -1,6 +1,7 @@
 <?php
 
 require_once '../../../../include/config.php';
+session_start();
 
 $config = Config::getInstance();
 
@@ -8,6 +9,12 @@ $filmController = $config->getFilmController();
 $personaggiController = $config->getPersonaggiController();
 $recensioniController = $config->getRecensioniController();
 $utentiController = $config->getUtentiController();
+
+if (isset($_SESSION['utente'])) {
+    $utente = $utentiController->getUtenteById($_SESSION['utente']);
+} else {
+    $utente = null;
+}
 
 
 if (!isset($_GET['id'])) {

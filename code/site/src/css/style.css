@@ -8317,9 +8317,10 @@ p.ceb-single {
   background-color: #dd003f;
   color: #ffffff;
   opacity: 1;
+
   padding: 4px 10px 6px 10px;
   font-size: 16px;
-  display: none;
+  display: block;
   margin-bottom: 0;
 }
 
@@ -8335,6 +8336,17 @@ p.ceb-single {
   border: 1px solid #e1e1e1;
   height: auto;
   background-color: #ffffff;
+
+  .error {
+    color: red;
+    font-family: 'Dosis', sans-serif;
+    text-align: center;
+    margin-bottom: 45px;
+    font-size: 14px;
+    text-transform: uppercase;
+    visibility: hidden;
+    font-weight: bold;
+  }
 }
 
 @media (max-width: 767px) {
@@ -8415,7 +8427,6 @@ p.ceb-single {
   font-size: 14px;
   color: #222222;
   font-weight: bold;
-  text-transform: capitalize;
   margin-top: 10px;
   height: 42px;
   border: 1px solid #e1e1e1;
@@ -8426,7 +8437,6 @@ p.ceb-single {
   font-size: 14px;
   color: #222222;
   font-weight: bold;
-  text-transform: capitalize;
 }
 
 .overlay .login-content button {

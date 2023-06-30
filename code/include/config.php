@@ -6,6 +6,7 @@ require_once 'controller/serieController.php';
 require_once 'controller/personaggiController.php';
 require_once 'controller/recensioniController.php';
 require_once 'controller/utentiController.php';
+require_once 'controller/authController.php';
 
 class Config
 {
@@ -48,5 +49,10 @@ class Config
     public function getUtentiController()
     {
         return new UtentiController($this->database);
+    }
+
+    public function getAuthController()
+    {
+        return new AuthController($this->database);
     }
 }

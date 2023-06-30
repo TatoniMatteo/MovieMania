@@ -1,10 +1,19 @@
 <?php
 require_once '../../../../include/config.php';
+session_start();
+
 $config = Config::getInstance();
 
 $filmController = $config->getFilmController();
 $serieController = $config->getSerieController();
 $personaggiController = $config->getPersonaggiController();
+$utentiController = $config->getUtentiController();
+
+if (isset($_SESSION['utente'])) {
+    $utente = $utentiController->getUtenteById($_SESSION['utente']);
+} else {
+    $utente = null;
+}
 
 $film = $filmController->getAllFilms(8);
 $serie = $serieController->getAllSeries(8);

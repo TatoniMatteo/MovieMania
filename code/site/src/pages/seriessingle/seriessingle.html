@@ -42,76 +42,177 @@
 	<!--login form popup-->
 	<div class="login-wrapper" id="login-content">
 		<div class="login-content">
-			<a href="#" class="close">x</a>
-			<h3>Login</h3>
-			<form method="post" action="login.php">
+			<a class="close">x</a>
+			<h3>Accedi</h3>
+			<form method="post" action="../service/login.php" id="login-form">
 				<div class="row">
 					<label for="username">
-						Username:
-						<input type="text" name="username" id="username" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"
-							required="required" />
+						Username o email:
+						<input type="text" name="username" id="username" />
 					</label>
 				</div>
 
 				<div class="row">
 					<label for="password">
 						Password:
-						<input type="password" name="password" id="password"
-							pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-							required="required" />
+						<input type="password" name="password" id="password" />
 					</label>
 				</div>
+				<p id="login-error-message" class="error"></p>
 				<div class="row">
-					<button type="submit">Login</button>
+					<button type="submit">Accedi</button>
 				</div>
 			</form>
 		</div>
 	</div>
+	<script>
+		document.getElementById('login-form').addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			var username = document.getElementById('username').value;
+			var password = document.getElementById('password').value;
+
+			fetch('../service/login.php', {
+				method: 'POST',
+				body: new URLSearchParams({ username: username, password: password })
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						// Login riuscito, ricarica la pagina
+						window.location.reload();
+					} else {
+						// Login fallito, mostra il messaggio di errore
+						document.getElementById('login-error-message').style.visibility = 'visible';
+						document.getElementById('login-error-message').textContent = data.message;
+						document.getElementById('password').value = '';
+					}
+				})
+				.catch(error => {
+					console.error('Errore durante la richiesta di login:', error);
+					// Gestisci l'errore in base alle tue esigenze
+				});
+		});
+
+		var usernameInput = document.getElementById('username');
+		var passwordInput = document.getElementById('password');
+
+		usernameInput.addEventListener('input', hideErrorMessage);
+		passwordInput.addEventListener('input', hideErrorMessage);
+
+		function hideErrorMessage() {
+			document.getElementById('login-error-message').style.visibility = 'hidden';
+		}
+	</script>
+
 	<!--end of login form popup-->
 	<!--signup form popup-->
 	<div class="login-wrapper" id="signup-content">
 		<div class="login-content">
-			<a href="#" class="close">x</a>
-			<h3>sign up</h3>
-			<form method="post" action="signup.php">
-				<div class="row">
+			<a class="close">x</a>
+			<h3>Registrazione</h3>
+			<form method="post" action="../service/signup.php" id="signup-form">
+				<div class="row social-btn-2">
+					<label for="name">
+						Nome:
+						<input type="text" name="name" id="name" required="required" />
+					</label>
+					<div style="width: 10px;"></div>
+					<label for="surname">
+						Cognome:
+						<input type="text" name="surname" id="surname" required="required" />
+					</label>
+				</div>
+
+				<div class="row social-btn-2">
 					<label for="username-2">
 						Username:
 						<input type="text" name="username" id="username-2" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"
 							required="required" />
 					</label>
-				</div>
-
-				<div class="row">
+					<div style="width: 10px;"></div>
 					<label for="email-2">
-						your email:
-						<input type="password" name="email" id="email-2" placeholder=""
-							pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+						Email:
+						<input type="text" name="email" id="email-2" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
 							required="required" />
 					</label>
 				</div>
 				<div class="row">
 					<label for="password-2">
 						Password:
-						<input type="password" name="password" id="password-2" placeholder=""
-							pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-							required="required" />
+						<input type="password" name="password" id="password-2" required="required" />
 					</label>
 				</div>
 				<div class="row">
 					<label for="repassword-2">
-						re-type Password:
-						<input type="password" name="password" id="repassword-2" placeholder=""
-							pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-							required="required" />
+						Conferma Password:
+						<input type="password" name="password" id="repassword-2" required="required" />
 					</label>
 				</div>
+				<p id="signup-error-message" class="error"></p>
 				<div class="row">
-					<button type="submit">sign up</button>
+					<button type="submit">Registrati</button>
 				</div>
 			</form>
 		</div>
 	</div>
+	<script>
+		document.getElementById('signup-form').addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			var nome = document.getElementById('name').value;
+			var cognome = document.getElementById('surname').value;
+			var username = document.getElementById('username-2').value;
+			var email = document.getElementById('email-2').value;
+			var password = document.getElementById('password-2').value;
+			var repassword = document.getElementById('repassword-2').value;
+
+			if (password !== repassword) {
+				document.getElementById('signup-error-message').textContent = 'Le password non corrispondono';
+				document.getElementById('signup-error-message').style.visibility = 'visible';
+				return;
+			}
+
+			fetch('../service/signup.php', {
+				method: 'POST',
+				body: new URLSearchParams({ nome: nome, cognome: cognome, username: username, email: email, password: password })
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						// Registrazione riuscita
+						window.location.reload();
+					} else {
+						// Registrazione fallita, mostra il messaggio di errore
+						document.getElementById('signup-error-message').textContent = data.message;
+						document.getElementById('signup-error-message').style.visibility = 'visible';
+					}
+				})
+				.catch(error => {
+					console.error('Errore durante la richiesta di registrazione:', error);
+					// Gestisci l'errore in base alle tue esigenze
+				});
+		});
+
+		// Aggiungi event listener agli input per nascondere il messaggio d'errore
+		var nomeInput = document.getElementById('name');
+		var cognomeInput = document.getElementById('surname');
+		var usernameInput = document.getElementById('username-2');
+		var emailInput = document.getElementById('email-2');
+		var passwordInput = document.getElementById('password-2');
+		var repasswordInput = document.getElementById('repassword-2');
+
+		nome.addEventListener('input', hideErrorMessage);
+		cognome.addEventListener('input', hideErrorMessage);
+		usernameInput.addEventListener('input', hideErrorMessage);
+		emailInput.addEventListener('input', hideErrorMessage);
+		passwordInput.addEventListener('input', hideErrorMessage);
+		repasswordInput.addEventListener('input', hideErrorMessage);
+
+		function hideErrorMessage() {
+			document.getElementById('signup-error-message').style.visibility = 'hidden';
+		}
+	</script>
 	<!--end of signup form popup-->
 
 	<!-- BEGIN | Header -->
@@ -128,8 +229,9 @@
 							<span></span>
 						</div>
 					</div>
-					<a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt="" width="119"
-							height="58"></a>
+					<a href="../../index.php">
+						<img class="logo" src="../../images/logo1.png" alt="" width="119" height="58">
+					</a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -142,8 +244,20 @@
 						<li><a href="../../index.php"> Celebrità </a></li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
-						<li class="loginLink"><a href="#">LOG In</a></li>
-						<li class="btn signupLink"><a href="#">sign up</a></li>
+						<?php 
+                            if($utente == null) {
+                                echo '<li class="loginLink"><a>Accedi</a></li>';
+                                echo '<li class="btn signupLink"><a>Registrati</a></li>';
+                            } else {
+                                if ($utente['foto'] != null) {
+                                    echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="40" height="40">';
+                                } else {
+                                    echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
+                                }
+                                echo '<li><a href="#">' . $utente['nome'] . '</a></li>';
+                                echo '<li><a href="../service/logout.php">Disconetti</a></li>';
+                            }
+                        ?>
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -152,7 +266,6 @@
 			<!-- top search form -->
 			<div class="top-search">
 				<select>
-					<option value="all">Tutti</option>
 					<option value="film">Film</option>
 					<option value="serie">Serie</option>
 					<option value="celebrita">Celebrità</option>
