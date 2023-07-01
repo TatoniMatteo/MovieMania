@@ -65,46 +65,6 @@
             </form>
         </div>
     </div>
-    <script>
-        document.getElementById('login-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-
-            fetch('../service/login.php', {
-                method: 'POST',
-                body: new URLSearchParams({ username: username, password: password })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Login riuscito, ricarica la pagina
-                        window.location.reload();
-                    } else {
-                        // Login fallito, mostra il messaggio di errore
-                        document.getElementById('login-error-message').style.visibility = 'visible';
-                        document.getElementById('login-error-message').textContent = data.message;
-                        document.getElementById('password').value = '';
-                    }
-                })
-                .catch(error => {
-                    console.error('Errore durante la richiesta di login:', error);
-                    // Gestisci l'errore in base alle tue esigenze
-                });
-        });
-
-        var usernameInput = document.getElementById('username');
-        var passwordInput = document.getElementById('password');
-
-        usernameInput.addEventListener('input', hideErrorMessage);
-        passwordInput.addEventListener('input', hideErrorMessage);
-
-        function hideErrorMessage() {
-            document.getElementById('login-error-message').style.visibility = 'hidden';
-        }
-    </script>
-
     <!--end of login form popup-->
     <!--signup form popup-->
     <div class="login-wrapper" id="signup-content">
@@ -156,63 +116,6 @@
             </form>
         </div>
     </div>
-    <script>
-        document.getElementById('signup-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            var nome = document.getElementById('name').value;
-            var cognome = document.getElementById('surname').value;
-            var username = document.getElementById('username-2').value;
-            var email = document.getElementById('email-2').value;
-            var password = document.getElementById('password-2').value;
-            var repassword = document.getElementById('repassword-2').value;
-
-            if (password !== repassword) {
-                document.getElementById('signup-error-message').textContent = 'Le password non corrispondono';
-                document.getElementById('signup-error-message').style.visibility = 'visible';
-                return;
-            }
-
-            fetch('../service/signup.php', {
-                method: 'POST',
-                body: new URLSearchParams({ nome: nome, cognome: cognome, username: username, email: email, password: password })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Registrazione riuscita
-                        window.location.reload();
-                    } else {
-                        // Registrazione fallita, mostra il messaggio di errore
-                        document.getElementById('signup-error-message').textContent = data.message;
-                        document.getElementById('signup-error-message').style.visibility = 'visible';
-                    }
-                })
-                .catch(error => {
-                    console.error('Errore durante la richiesta di registrazione:', error);
-                    // Gestisci l'errore in base alle tue esigenze
-                });
-        });
-
-        // Aggiungi event listener agli input per nascondere il messaggio d'errore
-        var nomeInput = document.getElementById('name');
-        var cognomeInput = document.getElementById('surname');
-        var usernameInput = document.getElementById('username-2');
-        var emailInput = document.getElementById('email-2');
-        var passwordInput = document.getElementById('password-2');
-        var repasswordInput = document.getElementById('repassword-2');
-
-        nome.addEventListener('input', hideErrorMessage);
-        cognome.addEventListener('input', hideErrorMessage);
-        usernameInput.addEventListener('input', hideErrorMessage);
-        emailInput.addEventListener('input', hideErrorMessage);
-        passwordInput.addEventListener('input', hideErrorMessage);
-        repasswordInput.addEventListener('input', hideErrorMessage);
-
-        function hideErrorMessage() {
-            document.getElementById('signup-error-message').style.visibility = 'hidden';
-        }
-    </script>
     <!--end of signup form popup-->
 
     <!-- BEGIN | Header -->
@@ -341,41 +244,17 @@
                             </div>
                             <div class="rate-star">
                                 <p>Dai un voto a questo film: </p>
-                                <i class="ion-ios-star" data-rating=1></i>
-                                <i class="ion-ios-star-outline" data-rating=2></i>
-                                <i class="ion-ios-star-outline" data-rating=3></i>
-                                <i class="ion-ios-star-outline" data-rating=4></i>
-                                <i class="ion-ios-star-outline" data-rating=5></i>
-                                <i class="ion-ios-star-outline" data-rating=6></i>
-                                <i class="ion-ios-star-outline" data-rating=7></i>
-                                <i class="ion-ios-star-outline" data-rating=8></i>
-                                <i class="ion-ios-star-outline" data-rating=9></i>
-                                <i class="ion-ios-star-outline" data-rating=10></i>
+                                <i class="ion-ios-star editable-star" data-rating=1></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=2></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=3></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=4></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=5></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=6></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=7></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=8></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=9></i>
+                                <i class="ion-ios-star-outline editable-star" data-rating=10></i>
                             </div>
-                            <script>
-                                const stars = document.querySelectorAll('.rate-star i');
-
-                                stars.forEach(star => {
-                                    star.addEventListener('click', function () {
-                                        const rating = parseInt(this.getAttribute('data-rating'));
-                                        window.location.href = "#";
-                                    });
-
-                                    star.addEventListener('mouseover', function () {
-                                        const rating = parseInt(this.getAttribute('data-rating'));
-
-                                        for (let i = 1; i <= stars.length; i++) {
-                                            if (i <= rating) {
-                                                stars[i - 1].classList.remove('ion-ios-star-outline');
-                                                stars[i - 1].classList.add('ion-ios-star');
-                                            } else {
-                                                stars[i - 1].classList.remove('ion-ios-star');
-                                                stars[i - 1].classList.add('ion-ios-star-outline');
-                                            }
-                                        }
-                                    });
-                                });
-                            </script>
                         </div>
                         <div class="movie-tabs">
                             <div class="tabs">
@@ -885,6 +764,7 @@
     <script src="../../js/plugins.js"></script>
     <script src="../../js/plugins2.js"></script>
     <script src="../../js/custom.js"></script>
+    <script src="../../js/moviemania.js"></script>
 </body>
 
 </html>
