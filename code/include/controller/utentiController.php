@@ -110,4 +110,30 @@ class UtentiController
         }
         return false;
     }
+
+    public function updatePassword($id, $old, $new)
+    {
+        $query = "SELECT Utenti.password 
+        FROM Utenti
+        WHERE Utenti.id =" . $id;
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $check =  mysqli_fetch_assoc($result)['password'];
+        } else {
+            return false;
+        }
+
+        if ($old == $check) {
+            $query = "UPDATE utenti
+            SET password = '" . $new . "'
+            WHERE id = " . $id;
+
+            if (mysqli_query($this->dbConnection->getConnection(), $query)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

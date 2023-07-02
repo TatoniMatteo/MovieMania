@@ -20,7 +20,7 @@ if (!isset($_POST['nome']) || !isset($_POST['cognome']) || !isset($_POST['userna
     if ($result === true) {
         $response = array('success' => true);
     } else {
-        $response = array('success' => false, 'message' => 'Errore durante la registrazione');
+        $response = array('success' => false, 'message' => 'Errore durante la registrazione: username e/o email già in uso!');
     }
 }
 

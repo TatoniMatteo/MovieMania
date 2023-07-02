@@ -8336,17 +8336,6 @@ p.ceb-single {
   border: 1px solid #e1e1e1;
   height: auto;
   background-color: #ffffff;
-
-  .error {
-    color: red;
-    font-family: 'Dosis', sans-serif;
-    text-align: center;
-    margin-bottom: 45px;
-    font-size: 14px;
-    text-transform: uppercase;
-    visibility: hidden;
-    font-weight: bold;
-  }
 }
 
 @media (max-width: 767px) {
@@ -10009,4 +9998,15 @@ footer.full-width-ft .ft-copyright {
   color: #8c9296;
   font-family: 'Dosis', sans-serif;
   font-weight: 700;
+}
+
+.error {
+  font-family: 'Dosis', sans-serif;
+  text-align: center;
+  margin-bottom: 45px;
+  font-size: 14px;
+  text-transform: uppercase;
+  visibility: hidden;
+  font-weight: bold;
+  color: red !important;
 }

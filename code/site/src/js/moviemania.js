@@ -1,15 +1,19 @@
+function hideErrorMessage(elemento) {
+    var element = document.getElementById(elemento);
+    if (element) {
+        element.style.visibility = 'hidden';
+    }
+}
+
 /**
  * CAMBIA FOTO
  */
-// Verifica se l'elemento <input type="file" id="fotoInput"> esiste
 if (document.getElementById('fotoInput')) {
-    // Aggiungi un listener per l'evento "change" sull'elemento input
     document.getElementById('fotoInput').addEventListener('change', function () {
-        // Crea un oggetto FormData per inviare l'immagine al server
+
         var formData = new FormData();
         formData.append('foto', this.files[0]);
 
-        // Effettua la chiamata fetch per invocare lo script PHP
         fetch('../service/cambiaFoto.php', {
             method: 'POST',
             body: formData
@@ -18,11 +22,7 @@ if (document.getElementById('fotoInput')) {
                 return response.json();
             })
             .then(function (data) {
-                // Interpreta il file JSON ricevuto in risposta
-                var success = data.success;
-                // Verifica il valore della variabile 'success'
-                if (success) {
-                    // Ricarica la pagina se 'success' è true
+                if (data.success) {
                     window.location.reload();
                 } else {
                     throw new Error(data.message);
@@ -71,6 +71,7 @@ if (loginForm) {
     loginForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
+        var errorLabel = document.getElementById('login-error-message');
         var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
 
@@ -83,28 +84,22 @@ if (loginForm) {
                 if (data.success) {
                     window.location.reload();
                 } else {
-                    // Login fallito, mostra il messaggio di errore
-                    document.getElementById('login-error-message').style.visibility = 'visible';
-                    document.getElementById('login-error-message').textContent = data.message;
-                    document.getElementById('password').value = '';
+                    throw new Error(data.message);
                 }
             })
             .catch(error => {
-                console.error('Errore durante la richiesta di login:', error);
+                errorLabel.style.visibility = 'visible';
+                errorLabel.textContent = error.message;
             });
     });
+
+    var textInputs = loginForm.querySelectorAll('input[type="text"]');
+    textInputs.forEach(input => {
+        input.addEventListener('input', function handleInput(event) {
+            hideErrorMessage('login-error-message');
+        });
+    });
 }
-
-document.getElementById('username');
-document.getElementById('password');
-
-if (usernameInput) usernameInput.addEventListener('input', hideErrorMessage1);
-if (passwordInput) passwordInput.addEventListener('input', hideErrorMessage1);
-
-function hideErrorMessage1() {
-    document.getElementById('login-error-message').style.visibility = 'hidden';
-}
-
 
 /**
  * REGISTRAZIONE
@@ -114,6 +109,7 @@ if (signupForm) {
     signupForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
+        var errorLabel = document.getElementById('signup-error-message')
         var nome = document.getElementById('name').value;
         var cognome = document.getElementById('surname').value;
         var username = document.getElementById('username-2').value;
@@ -122,8 +118,8 @@ if (signupForm) {
         var repassword = document.getElementById('repassword-2').value;
 
         if (password !== repassword) {
-            document.getElementById('signup-error-message').textContent = 'Le password non corrispondono';
-            document.getElementById('signup-error-message').style.visibility = 'visible';
+            errorLabel.textContent = 'Le password non corrispondono';
+            errorLabel.style.visibility = 'visible';
             return;
         }
 
@@ -137,48 +133,35 @@ if (signupForm) {
                     // Registrazione riuscita
                     window.location.reload();
                 } else {
-                    // Registrazione fallita, mostra il messaggio di errore
-                    document.getElementById('signup-error-message').textContent = data.message;
-                    document.getElementById('signup-error-message').style.visibility = 'visible';
+                    throw new Error(data.message);
                 }
             })
             .catch(error => {
-                console.error('Errore durante la richiesta di registrazione:', error);
+                errorLabel.textContent = error.message;
+                errorLabel.style.visibility = 'visible';
             });
     });
+
+    var textInputs = signupForm.querySelectorAll('input[type="text"]');
+    textInputs.forEach(input => {
+        input.addEventListener('input', function handleInput(event) {
+            hideErrorMessage('signup-error-message');
+        });
+    });
 }
-// Aggiungi event listener agli input per nascondere il messaggio d'errore
-var nomeInput = document.getElementById('name');
-var cognomeInput = document.getElementById('surname');
-var usernameInput = document.getElementById('username-2');
-var emailInput = document.getElementById('email-2');
-var passwordInput = document.getElementById('password-2');
-var repasswordInput = document.getElementById('repassword-2');
-
-if (nomeInput) nomeInput.addEventListener('input', hideErrorMessage2);
-if (cognomeInput) cognomeInput.addEventListener('input', hideErrorMessage2);
-if (usernameInput) usernameInput.addEventListener('input', hideErrorMessage2);
-if (emailInput) emailInput.addEventListener('input', hideErrorMessage2);
-if (passwordInput) passwordInput.addEventListener('input', hideErrorMessage2);
-if (repasswordInput) repasswordInput.addEventListener('input', hideErrorMessage2);
-
-function hideErrorMessage2() {
-    document.getElementById('signup-error-message').style.visibility = 'hidden';
-}
-
 /**
  * AGGIORNA DATI UTENTE
  */
-
 var datiForm = document.getElementById('dati-form');
 if (datiForm) {
     datiForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        var username = document.getElementById('user-username').value;
-        var email = document.getElementById('user-email').value;
-        var nome = document.getElementById('user-nome').value;
-        var cognome = document.getElementById('user-cognome').value;
+        var errorLabel = document.getElementById('dati-error')
+        var username = document.getElementById('user-username').value
+        var email = document.getElementById('user-email').value
+        var nome = document.getElementById('user-nome').value
+        var cognome = document.getElementById('user-cognome').value
 
         fetch('../service/aggiornaUtente.php', {
             method: 'POST',
@@ -189,11 +172,57 @@ if (datiForm) {
                 if (data.success) {
                     window.location.reload();
                 } else {
-                    console.log(data.message)
+                    throw new Error(data.message)
                 }
             })
             .catch(error => {
-                console.error('Errore durante la richiesta di login:', error);
+                errorLabel.textContent = error.message
+                errorLabel.style.visibility = 'visible'
             });
+    });
+
+    var textInputs = datiForm.querySelectorAll('input[type="text"]');
+    textInputs.forEach(input => {
+        input.addEventListener('input', function handleInput(event) {
+            hideErrorMessage('dati-error');
+        });
+    });
+}
+
+/**
+ * AGGIORNA PASSWORD
+ */
+var passwordForm = document.getElementById('password-form');
+if (passwordForm) {
+    passwordForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var errorLabel = document.getElementById('password-error');
+        var vecchia = document.getElementById('old').value;
+        var nuova = document.getElementById('new').value;
+        var retype = document.getElementById('retype').value;
+
+        fetch('../service/aggiornaPassword.php', {
+            method: 'POST',
+            body: new URLSearchParams({ old: vecchia, new: nuova, retype: retype })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    throw new Error(data.message)
+                }
+            })
+            .catch(error => {
+                errorLabel.textContent = error.message
+                errorLabel.style.visibility = 'visible'
+            });
+    });
+    var textInputs = passwordForm.querySelectorAll('input[type="password"]');
+    textInputs.forEach(input => {
+        input.addEventListener('input', function handleInput(event) {
+            hideErrorMessage('password-error');
+        });
     });
 }
