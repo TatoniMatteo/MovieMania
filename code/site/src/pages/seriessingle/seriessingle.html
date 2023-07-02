@@ -65,7 +65,6 @@
 			</form>
 		</div>
 	</div>
-
 	<!--end of login form popup-->
 	<!--signup form popup-->
 	<div class="login-wrapper" id="signup-content">
@@ -714,7 +713,7 @@
 														/10
 													</p>
 													<p class="describe">
-														<?php echo $serie['descrizione'];?>
+														<?php echo troncaStringa($serie['descrizione'], 300);?>
 													</p>
 													<p class="run-time">
 														<?php 

@@ -148,19 +148,19 @@
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
 						<?php 
-                            if($utente == null) {
-                                echo '<li class="loginLink"><a>Accedi</a></li>';
-                                echo '<li class="btn signupLink"><a>Registrati</a></li>';
-                            } else {
-                                if ($utente['foto'] != null) {
-                                    echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="40" height="40">';
-                                } else {
-                                    echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
-                                }
-                                echo '<li><a href="../profilo/profilo.php">' . $utente['nome'] . '</a></li>';
-                                echo '<li><a href="../service/logout.php">Disconetti</a></li>';
-                            }
-                        ?>
+								if($utente == null) {
+									echo '<li class="loginLink"><a>Accedi</a></li>';
+									echo '<li class="btn signupLink"><a>Registrati</a></li>';
+								} else {
+									if ($utente['foto'] != null) {
+										echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="40" height="40">';
+									} else {
+										echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
+									}
+									echo '<li><a href="../profilo/profilo.php">' . $utente['nome'] . '</a></li>';
+									echo '<li><a href="../service/logout.php">Disconetti</a></li>';
+								}
+							?>
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -192,17 +192,17 @@
 			</div>
 		</div>
 	</div>
-	<div class="page-single">
+	<div class="page-single userfav_list">
 		<div class="container">
-			<div class="row ipad-width">
+			<div class="row ipad-width2">
 				<div class="col-md-3 col-sm-12 col-xs-12">
 					<div class="user-information">
 						<div class="user-img">
 							<?php
 								if ($utente['foto'] != null) {
-									echo '<a><img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="120" height="120"></a><br>';
+									echo '<a><img id="foto" src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="120" height="120"></a><br>';
 								} else {
-									echo '<img src="../../images/uploads/user.jpg" alt="" width="120" height="120"></a><br>';
+									echo '<img id="foto" src="../../images/uploads/user.jpg" alt="" width="120" height="120"></a><br>';
 								}
 							?>
 							<label class="redbtn" for="fotoInput" class="upload-button">
@@ -210,73 +210,87 @@
 							</label>
 							<input type="file" style="display: none;" id="fotoInput" accept=".jpg, .jpeg">
 						</div>
-						<div class=" user-fav">
+						<div class="user-fav">
 							<p>Le mie sezioni</p>
 							<ul>
-								<li class="active"><a href="profilo.php">Profilo</a></li>
+								<li><a href="profilo.php">Profilo</a></li>
 								<li><a href="preferiti.php">I miei preferiti</a></li>
-								<li><a href="recensioni.php">Le mie recensioni</a></li>
+								<li class="active"><a href="recensioni.php">Le mie recensioni</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<div class="form-style-1 user-pro" action="">
-						<form id="dati-form" class="user">
-							<h4>01. Dettagli profilo</h4>
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Username</label>
-									<input id="user-username" type="text"
-										placeholder="<?php echo $utente['username'];?>">
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Email</label>
-									<input id="user-email" type="text" placeholder="<?php echo $utente['email'];?>">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Nome</label>
-									<input id="user-nome" type="text" placeholder="<?php echo $utente['nome'];?>">
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Cognome</label>
-									<input id="user-cognome" type="text" placeholder="<?php echo $utente['cognome'];?>">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2">
-									<input class="submit" type="submit" value="Salva">
-								</div>
-							</div>
-						</form>
-						<form action="" class="password">
-							<h4>02. Cambia Password</h4>
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Vecchia Password</label>
-									<input type="password">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Nuova Password</label>
-									<input type="password">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Conferma Nuova Password</label>
-									<input type="password">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2">
-									<input class="submit" type="submit" value="Salva">
-								</div>
-							</div>
-						</form>
+					<div class="topbar-filter">
+						<p><span>
+								<?php echo $numero_recensioni . ' recensioni'?>
+							</span> in totale</p>
+					</div>
+					<?php
+						foreach($recensioni as $recensione){
+					?>
+					<div class="movie-item-style-2 userrate">
+						<?php
+							if ($recensione['copertina'] != null) {
+								echo '<img src="data:image/jpeg;base64,' . base64_encode($recensione['copertina']) . '" alt="" width="170" height="261">';
+							} else {
+								echo '<img src="../../images/uploads/slider1.jpg" alt="" width="170" height="261">';
+							}
+						?>
+						<div class="mv-item-infor">
+							<h6>
+								<a href="
+								<?php
+									if($recensione['id_film'] != null){ 
+										echo '../moviesingle/moviesingle.php?id=' . $recensione['id_film'];
+									}else{
+										echo '../seriessingle/seriessingle.php?id=' . $recensione['id_serie'];
+									}
+								?>">
+									<?php echo $recensione['titolo'] ?> <span>
+										<?php echo '(' . date('Y', strtotime($recensione['data_pubblicazione'])) . ')'; ?>
+									</span>
+								</a>
+							</h6>
+							<p class="time sm-text">Voto:</p>
+							<p class="rate"><i class="ion-android-star"></i><span>
+									<?php echo $recensione['voto'] ?>
+								</span> /10</p>
+							<p class="time sm-text">Recensione:</p>
+							<h6>
+								<?php echo $recensione['titolo'] ?>
+							</h6>
+							<p class="time sm">
+								<?php echo $recensione['data_recensione'] ?>
+							</p>
+							<p>
+								<?php echo $recensione['descrizione'] ?>
+							</p>
+						</div>
+					</div>
+					<?php } ?>
+					<div class="topbar-filter">
+						<label>Recensioni per pagina:</label>
+						<select>
+							<option value="range">5 Recensioni</option>
+							<option value="saab">10 Recensioni</option>
+						</select>
+
+						<div class="pagination2">
+							<span>Pagina 1 di
+								<?php 
+									echo max(ceil($numero_recensioni/5),1);
+								?>:
+							</span> <!-- Da fare con AJAX-->
+							<?php 
+								for($i=1; $i<=$numero_recensioni/5; $i++) {
+							?>
+							<a href="#">
+								<?php echo $i ?>
+							</a>
+							<?php } ?>
+							<a href="#"><i class="ion-arrow-right-b"></i></a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -287,7 +301,7 @@
 		<div class="container">
 			<div class="flex-parent-ft">
 				<div class="flex-child-ft item1">
-					<a href="index.html"><img class="logo" src="../../images/logo1.png" alt=""></a>
+					<a href="home.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
 					<p>5th Avenue st, manhattan<br>
 						New York, NY 10001</p>
 					<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
@@ -332,7 +346,7 @@
 		</div>
 		<div class="ft-copyright">
 			<div class="ft-left">
-				<p>© 2017 Blockbuster. All Rights Reserved. Designed by leehari.</p>
+				<p>© 2023 MovieMania. All Rights Reserved.</p>
 			</div>
 			<div class="backtotop">
 				<p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>

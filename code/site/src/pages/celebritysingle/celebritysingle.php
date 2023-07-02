@@ -1,6 +1,7 @@
 <?php
 
 require_once '../../../../include/config.php';
+require_once '../../php/utility.php';
 session_start();
 
 $config = Config::getInstance();
@@ -25,17 +26,4 @@ if (!isset($_GET['id'])) {
         $ruoli = $personaggiController->getRuoliInterpretati($personaggioId);
         include 'celebritysingle.html';
     }
-}
-
-function troncaStringa($stringa, $limite)
-{
-    if (strlen($stringa) <= $limite) {
-        return $stringa;
-    }
-
-    $ultimaOccorrenzaSpazio = strrpos(substr($stringa, 0, $limite), ' ');
-    $stringaTroncata = substr($stringa, 0, $ultimaOccorrenzaSpazio);
-    $stringaTroncata .= ' ...';
-
-    return $stringaTroncata;
 }

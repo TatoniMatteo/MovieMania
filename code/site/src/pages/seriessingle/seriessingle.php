@@ -1,6 +1,7 @@
 <?php
 
 require_once '../../../../include/config.php';
+require_once '../../php/utility.php';
 session_start();
 
 $config = Config::getInstance();

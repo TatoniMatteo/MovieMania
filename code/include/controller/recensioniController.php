@@ -82,4 +82,26 @@ class RecensioniController
             return null;
         }
     }
+
+
+    public function getRecesioniByUtente($id)
+    {
+        $query = "SELECT R.*, COALESCE(F.copertina, S.copertina) AS copertina, COALESCE(F.titolo, S.titolo) AS titolo, COALESCE(F.data_pubblicazione, MIN(St.data_pubblicazione)) AS data_pubblicazione
+        FROM Recensione R
+        LEFT JOIN Film F ON R.id_film = F.id
+        LEFT JOIN Serie S ON R.id_serie = S.id
+        LEFT JOIN Stagione St ON S.id = St.id_serie
+        WHERE R.id_utente = " . $id . "
+        GROUP BY R.id, F.id, S.id";
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $recensioni = array();
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $recensioni[] = $row;
+            }
+        }
+        return $recensioni;
+    }
 }

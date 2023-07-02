@@ -1,18 +1,17 @@
 <?php
 require_once '../../../../include/config.php';
-require_once '../../php/utility.php';
 session_start();
 
 $config = Config::getInstance();
-$personaggiController = $config->getPersonaggiController();
+$recensioniController = $config->getRecensioniController();
 $utentiController = $config->getUtentiController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
     if ($utente != null) {
-        $programmiPreferiti = $utentiController->getPreferiti($utente['id']);
-        $numero_preferiti = count($programmiPreferiti);
-        include 'userfavoritelist.html';
+        $recensioni = $recensioniController->getRecesioniByUtente($utente['id']);
+        $numero_recensioni = count($recensioni);
+        include 'userrate.html';
     } else {
         include '../service/404.html';
     }

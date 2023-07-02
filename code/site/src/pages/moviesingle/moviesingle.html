@@ -284,12 +284,12 @@
                                                     <div class="cast-it">
                                                         <div class="cast-left">
                                                             <?php
-                                                                    if ($personaggio['foto'] != null) {
-                                                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($personaggio['foto']) . '" alt="" width="41" height="41">';
-                                                                    } else {
-                                                                        echo '<img src="../../images/uploads/cast1.jpg" alt="" width="41" height="41">';
-                                                                    }
-                                                                ?>
+                                                                if ($personaggio['foto'] != null) {
+                                                                    echo '<img src="data:image/jpeg;base64,' . base64_encode($personaggio['foto']) . '" alt="" width="41" height="41">';
+                                                                } else {
+                                                                    echo '<img src="../../images/uploads/cast1.jpg" alt="" width="41" height="41">';
+                                                                }
+                                                            ?>
                                                             <a
                                                                 href="../celebritysingle/celebritysingle.php?id= <?php echo $personaggio['id'] ?>">
                                                                 <?php echo $personaggio['nome'] . ' ' . $personaggio['cognome']; ?>
@@ -648,7 +648,7 @@
                                                         /10
                                                     </p>
                                                     <p class="describe">
-                                                        <?php echo $film['descrizione']?>
+                                                        <?php echo troncaStringa($film['descrizione'], 300)?>
                                                     </p>
                                                     <p class="run-time">
                                                         <?php echo " Durata: " . $film['durata'] . " minuti" ?>

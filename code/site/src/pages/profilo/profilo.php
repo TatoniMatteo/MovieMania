@@ -7,7 +7,11 @@ $utentiController = $config->getUtentiController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
-    include 'userprofile.html';
+    if ($utente != null) {
+        include 'userprofile.html';
+    } else {
+        include '../service/404.html';
+    }
 } else {
     include '../service/404.html';
 }
