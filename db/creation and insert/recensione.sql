@@ -2,13 +2,13 @@ create table recensione
 (
     id              int auto_increment
         primary key,
-    titolo          varchar(255)  not null,
-    descrizione     text          null,
-    voto            decimal(3, 1) not null,
-    id_film         int           null,
-    id_serie        int           null,
-    id_utente       int           not null,
-    data_recensione date          null,
+    titolo          varchar(255)           not null,
+    descrizione     text                   null,
+    voto            decimal(3, 1)          not null,
+    id_film         int                    null,
+    id_serie        int                    null,
+    id_utente       int                    not null,
+    data_recensione date default curdate() null,
     constraint fk_recensione_film
         foreign key (id_film) references film (id)
             on update cascade,

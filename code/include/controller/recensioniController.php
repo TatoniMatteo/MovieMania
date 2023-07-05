@@ -104,4 +104,62 @@ class RecensioniController
         }
         return $recensioni;
     }
+
+    public function getRecensione($id_utente, $id_programma, $tipo)
+    {
+        if ($tipo == "film") {
+            $query = "SELECT * FROM recensione
+            WHERE id_film =" . $id_programma . "
+            AND id_utente = " . $id_utente;
+        } else if ($tipo == "serie") {
+            $query = "SELECT * FROM recensione
+            WHERE id_serie =" . $id_programma . "
+            AND id_utente = " . $id_utente;
+        } else {
+            return false;
+        }
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        if (mysqli_num_rows($result) > 0) {
+            return mysqli_fetch_array($result);
+        } else {
+            return null;
+        }
+    }
+
+    public function addRecensione($id_utente, $id_programma, $tipo, $titolo, $descrizione, $voto)
+    {
+        if ($tipo == "film") {
+            $query = "INSERT INTO Recensione (titolo, descrizione, voto, id_film, id_serie, id_utente) 
+            VALUES ('" . $titolo . "', '" . $descrizione . "', " . $voto . ", " . $id_programma . ", null, " . $id_utente . ")";
+        } else if ($tipo == "serie") {
+            $query = "INSERT INTO Recensione (titolo, descrizione, voto, id_film, id_serie, id_utente) 
+            VALUES ('" . $titolo . "', '" . $descrizione . "', " . $voto . ", null, " . $id_programma . ", " . $id_utente . ")";
+        } else {
+            return false;
+        }
+
+        return mysqli_query($this->dbConnection->getConnection(), $query);
+    }
+
+    public function editRecensione($id_utente, $id_programma,  $tipo, $titolo, $descrizione, $voto)
+    {
+        if ($tipo == "film") {
+            $query = "UPDATE Recensione 
+            SET titolo = '" . $titolo . "',
+                descrizione = '" . $descrizione . "', 
+                voto = " . $voto . "
+                WHERE id_film = " . $id_programma . " AND id_utente = " . $id_utente;
+        } else if ($tipo == "serie") {
+            $query = "UPDATE Recensione 
+            SET titolo ='" . $titolo . "',
+                descrizione = '" . $descrizione . "', 
+                voto = " . $voto . "
+                WHERE id_serie = " . $id_programma . " AND id_utente = " . $id_utente;
+        } else {
+            return false;
+        }
+
+        return mysqli_query($this->dbConnection->getConnection(), $query);
+    }
 }

@@ -13,7 +13,6 @@ $utentiController = $config->getUtentiController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
-    $preferito = $utentiController->isPreferito($utente['id'], $filmId, 'film');
 } else {
     $utente = null;
 }
@@ -31,6 +30,11 @@ if (!isset($_GET['id'])) {
         $personaggi = $personaggiController->getPersonaggiByFilm($filmId);
         $numero_recensioni = $recensioniController->getNumeroRecesioniByFilm($filmId);
         $film_correlati = $filmController->getFilmCorrelati($filmId);
+        $recensione = null;
+        if ($utente != null) {
+            $preferito = $utentiController->isPreferito($utente['id'], $filmId, 'film');
+            $recensione = $recensioniController->getRecensione($utente['id'], $filmId, 'film');
+        }
         include 'moviesingle.html';
     }
 }

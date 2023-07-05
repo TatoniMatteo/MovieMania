@@ -30,6 +30,8 @@
 </head>
 
 <body>
+    <!--toast-->
+    <div id="toast-container"></div>
     <!--preloading-->
     <div id="preloader">
         <img class="logo" src="../../images/logo1.png" alt="" width="119" height="58">
@@ -117,16 +119,6 @@
         </div>
     </div>
     <!--end of signup form popup-->
-    <!--recensione form popup-->
-    <div class="login-wrapper" id="review-content">
-        <div class="login-content">
-            <a class="close">x</a>
-            <h3>Recensione</h3>
-            <form method="post" action="" id="review-form">
-            </form>
-        </div>
-    </div>
-    <!--END recensione-->
     <!-- BEGIN | Header -->
     <header class="ht-header">
         <div class="container">
@@ -227,7 +219,10 @@
                                 <div>
                                     <a href="#" class="item item-1 yellowbtn">
                                         <i class="ion-edit"></i>
-                                        Scrivi una recensione
+                                        <?php 
+                                            if($recensione) echo 'Modifica recensione';
+                                            else echo 'Scrivi una recensione';
+                                        ?>
                                     </a>
                                 </div>
                                 <div>
@@ -268,17 +263,29 @@
                                 </p>
                             </div>
                             <div class="rate-star">
-                                <p>Dai un voto a questo film: </p>
-                                <i class="ion-ios-star editable-star" data-rating=1></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=2></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=3></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=4></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=5></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=6></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=7></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=8></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=9></i>
-                                <i class="ion-ios-star-outline editable-star" data-rating=10></i>
+                                <p>
+                                    <?php 
+                                        if($recensione) echo 'Hai valutato questo film:';
+                                        else echo 'Dai un voto a questo film:';
+                                    ?>
+                                </p>
+                                <?php 
+                                    if($recensione){
+                                        $rate = intval($recensione['voto']);
+                                        $classe = '';  
+                                    }
+                                    else{
+                                        $rate =1;
+                                        $classe = 'editable-star';
+                                    }
+                                    for($i = 0; $i < 10; $i++) {
+                                        if($i < $rate) { ?>
+                                <i class="ion-ios-star <?php echo $classe ?>" data-rating="<?php echo $i + 1 ?>"></i>
+                                <?php } else { ?>
+                                <i class="ion-ios-star-outline <?php echo $classe ?>"
+                                    data-rating="<?php echo $i + 1 ?>"></i>
+                                <?php }
+                                } ?>
                             </div>
                         </div>
                         <div class="movie-tabs">
@@ -796,6 +803,7 @@
         </div>
     </footer>
     <!-- end of footer section-->
+
 
     <script src="../../js/jquery.js"></script>
     <script src="../../js/plugins.js"></script>

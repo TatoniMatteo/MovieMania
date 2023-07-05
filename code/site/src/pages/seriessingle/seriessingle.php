@@ -32,6 +32,11 @@ if (!isset($_GET['id'])) {
         $personaggi = $personaggiController->getPersonaggiBySerie($serieId);
         $numero_recensioni = $recensioniController->getNumeroRecesioniBySerie($serieId);
         $serie_correlate = $serieController->getSerieCorrelate($serieId);
+        $recensione = null;
+        if ($utente != null) {
+            $preferito = $utentiController->isPreferito($utente['id'], $serieId, 'serie');
+            $recensione = $recensioniController->getRecensione($utente['id'], $serieId, 'serie');
+        }
         include 'seriessingle.html';
     }
 }
