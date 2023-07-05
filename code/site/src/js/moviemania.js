@@ -47,7 +47,6 @@ stars.forEach(star => {
     });
 
     star.addEventListener('mouseover', function () {
-        console.log('over');
         const rating = parseInt(this.getAttribute('data-rating'));
 
         for (let i = 1; i <= stars.length; i++) {
@@ -226,3 +225,103 @@ if (passwordForm) {
         });
     });
 }
+
+
+/**
+ * FANCYBOX
+ */
+
+var trailerLink = document.getElementById("trailer");
+
+trailerLink.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    var src = this.getAttribute("href");
+
+    if (src) {
+        var options = {
+            type: "iframe",
+            iframe: {
+                preload: false
+            }
+        };
+
+        Fancybox.open(src, options);
+    }
+});
+
+
+/**
+*   PREFERITI
+*/
+
+var preferitiBtn = document.getElementById("preferiti");
+
+if (preferitiBtn) {
+    var url = window.location.href;
+
+    var urlParams = new URLSearchParams(url.substring(url.indexOf('?')));
+    var id_programma = urlParams.get('id');
+    if (id_programma.includes('#')) {
+        id_programma = id_programma.split('#')[0];
+    }
+
+    // Determinare se si tratta di un film o una serie
+    var isFilm = url.includes('moviesingle.php');
+    var isSerie = url.includes('seriessingle.php');
+
+    var tipo = null;
+    if (isFilm) { tipo = 'film' }
+    else if (isSerie) { tipo = 'serie' }
+
+    preferitiBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        fetch('../service/aggiornaPreferito.php', {
+            method: 'POST',
+            body: new URLSearchParams({ id_programma: id_programma, tipo: tipo })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    var icona = document.createElement("i");
+                    icona.setAttribute("class", data.preferito ? "ion-android-remove" : "ion-heart");
+                    var testoLink = document.createTextNode(data.preferito ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti");
+                    this.textContent = ""
+                    this.appendChild(icona);
+                    this.appendChild(testoLink);
+                } else {
+                    throw new Error("data.message")
+                }
+            })
+            .catch(error => {
+                console.error(error.message)
+            });
+    });
+}
+
+var recensioneBtn = document.getElementById("recensione");
+if (recensioneBtn) {
+    var recensioneCt = document.getElementById("review-content");
+    console.log(recensioneCt)
+    recensioneBtn.addEventListener('click', function (event) {
+        console.log("sono qui");
+        event.preventDefault();
+        recensioneCt.classList.add("openform");
+
+        document.addEventListener('click', function (e) {
+            var target = e.target;
+            if (target.classList.contains("overlay")) {
+                Array.from(target.querySelectorAll(".openform")).forEach(function (element) {
+                    element.classList.remove("openform");
+                });
+
+                setTimeout(function () {
+                    target.classList.remove("openform");
+                }, 350);
+            }
+        });
+    });
+}
+
+
+

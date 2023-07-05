@@ -117,7 +117,16 @@
         </div>
     </div>
     <!--end of signup form popup-->
-
+    <!--recensione form popup-->
+    <div class="login-wrapper" id="review-content">
+        <div class="login-content">
+            <a class="close">x</a>
+            <h3>Recensione</h3>
+            <form method="post" action="" id="review-form">
+            </form>
+        </div>
+    </div>
+    <!--END recensione-->
     <!-- BEGIN | Header -->
     <header class="ht-header">
         <div class="container">
@@ -200,20 +209,31 @@
                         ?>
                         <div class="movie-btn">
                             <div class="btn-transform transform-vertical red">
-                                <div><a href="#" class="item item-1 redbtn"> <i class="ion-play"></i>
-                                        Guarda il Trailer</a>
+                                <div>
+                                    <a id="trailer" href="<?php echo $film['trailer']; ?>" class="item item-1 redbtn">
+                                        <i class="ion-play"></i>
+                                        Guarda il Trailer
+                                    </a>
                                 </div>
-                                <div><a href="<?php echo $film['trailer']; ?>"
-                                        class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a>
+                                <div>
+                                    <a id="trailer" href="<?php echo $film['trailer']; ?>"
+                                        class="item item-2 redbtn fancybox-media hvr-grow">
+                                        <i class="ion-play"></i>
+                                    </a>
                                 </div>
                             </div>
 
-                            <div class="btn-transform transform-vertical yellow">
-                                <div><a href="#" class="item item-1 yellowbtn"> <i class="ion-edit"></i>
-                                        Scrivi una recensione</a>
+                            <div id="recensione" class="btn-transform transform-vertical yellow">
+                                <div>
+                                    <a href="#" class="item item-1 yellowbtn">
+                                        <i class="ion-edit"></i>
+                                        Scrivi una recensione
+                                    </a>
                                 </div>
-                                <div><a href="#" class="item item-2 yellowbtn fancybox-media hvr-grow"><i
-                                            class="ion-edit"></i></a>
+                                <div>
+                                    <a class="item item-2 yellowbtn hvr-grow">
+                                        <i class="ion-edit"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -228,9 +248,14 @@
 								?>
                             </span>
                         </h1>
+                        <?php if($utente){ ?>
                         <div class="social-btn">
-                            <a href="#" class="parent-btn"><i class="ion-heart"></i> Aggiungi ai preferiti</a>
+                            <a id="preferiti" class="parent-btn"><i
+                                    class="<?php echo $preferito ? 'ion-android-remove' : 'ion-heart' ?>"></i>
+                                <?php echo $preferito ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti' ?>
+                            </a>
                         </div>
+                        <?php } ?>
                         <div class="movie-rate">
                             <div class="rate">
                                 <i class="ion-android-star"></i>
@@ -271,9 +296,21 @@
                                                 <p>
                                                     <?php echo $film['descrizione']?>
                                                 </p>
+                                                <!--TRAILER-->
+                                                <div class="title-hd-sm">
+                                                    <h4>Trailer</h4>
+                                                </div>
+                                                <div>
+                                                    <iframe width="500" height="280"
+                                                        src="<?php echo $film['trailer']; ?>" frameborder="0"
+                                                        allowfullscreen>
+                                                    </iframe>
+                                                </div>
+                                                <!--CAST-->
                                                 <div class="title-hd-sm">
                                                     <h4>Cast</h4>
-                                                    <a href="#cast" class="time link-to-tab">Scopri tutto il Cast e la
+                                                    <a href="#cast" class="time link-to-tab">Scopri tutto il Cast e
+                                                        la
                                                         Troupe <i class="ion-ios-arrow-right"></i></a>
                                                 </div>
                                                 <!-- movie cast -->

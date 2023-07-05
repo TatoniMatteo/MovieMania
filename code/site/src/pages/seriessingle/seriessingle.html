@@ -201,10 +201,11 @@
                         ?>
 						<div class="movie-btn">
 							<div class="btn-transform transform-vertical red">
-								<div><a href="#" class="item item-1 redbtn"> <i class="ion-play"></i>
+								<div><a id="trailer" href="<?php echo $serie['trailer']; ?>" class="item item-1 redbtn">
+										<i class="ion-play"></i>
 										Guarda il Trailer</a>
 								</div>
-								<div><a href="<?php echo $serie['trailer']; ?>"
+								<div><a id="trailer" href="<?php echo $serie['trailer']; ?>"
 										class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a>
 								</div>
 							</div>
@@ -213,8 +214,7 @@
 								<div><a href="#" class="item item-1 yellowbtn"> <i class="ion-edit"></i>
 										Scrivi una recensione</a>
 								</div>
-								<div><a href="#" class="item item-2 yellowbtn fancybox-media hvr-grow"><i
-											class="ion-edit"></i></a>
+								<div><a href="#" class="item item-2 yellowbtn hvr-grow"><i class="ion-edit"></i></a>
 								</div>
 							</div>
 						</div>
@@ -280,6 +280,15 @@
 												<p>
 													<?php echo $serie['descrizione']?>
 												</p>
+												<div class="title-hd-sm">
+													<h4>Trailer</h4>
+												</div>
+												<div>
+													<iframe width="500" height="280"
+														src="<?php echo $serie['trailer']; ?>" frameborder="0"
+														allowfullscreen>
+													</iframe>
+												</div>
 												<div class="title-hd-sm">
 													<h4>Ultima Stagione</h4>
 													<a href="#season" class="link-to-tab time">Vedi tutte le stagioni <i

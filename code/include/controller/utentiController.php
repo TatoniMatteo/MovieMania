@@ -136,4 +136,74 @@ class UtentiController
         }
         return false;
     }
+
+    public function addPreferito($id_utente, $id_programma, $tipo)
+    {
+        if ($tipo == 'film') {
+            $query = "INSERT INTO Preferiti (id_film, id_utente)
+            VALUES (" . $id_programma . ", " . $id_utente . ")";
+        } else {
+            $query = "INSERT INTO Preferiti (id_serie, id_utente)
+            VALUES (" . $id_programma . ", " . $id_utente . ")";
+        }
+
+        if (mysqli_query($this->dbConnection->getConnection(), $query)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function removePreferito($id_utente, $id_programma, $tipo)
+    {
+        if ($tipo == 'film') {
+            $query = "DELETE FROM Preferiti
+            WHERE id_film = " . $id_programma . " AND id_utente = " . $id_utente;
+        } else {
+            $query = "DELETE FROM Preferiti
+            WHERE id_serie = " . $id_programma . " AND id_utente = " . $id_utente;
+        }
+
+        if (mysqli_query($this->dbConnection->getConnection(), $query)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isPreferito($id_utente, $id_programma, $tipo)
+    {
+        if ($tipo == 'film') {
+            $query = "SELECT * FROM Preferiti
+            WHERE id_film = " . $id_programma . " AND id_utente = " . $id_utente;
+        } else {
+            $query = "SELECT * FROM Preferiti
+            WHERE id_serie = " . $id_programma . " AND id_utente = " . $id_utente;
+        }
+
+        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+
+        return mysqli_num_rows($result) > 0;
+    }
+
+    /*
+    public function setPreferito($id_utente, $id_programma, $tipo)
+    {
+        if ($tipo == 'film') {
+            $query = "SELECT * FROM Preferiti
+            WHERE id_film = " . $id_programma . " AND id_utente = " . $id_utente;
+        } else {
+            $query = "SELECT * FROM Preferiti
+            WHERE id_serie = " . $id_programma . " AND id_utente = " . $id_utente;
+        }
+
+        if (mysqli_num_rows(mysqli_query($this->dbConnection->getConnection(), $query)) > 0) {
+            $res = $this->removePreferito($id_utente, $id_programma, $tipo);
+            $preferito = false;
+        } else {
+            $res = $this->addPreferito($id_utente, $id_programma, $tipo);
+            $preferito = true;
+        }
+
+        return array('success' => $res, 'preferito' => $preferito);
+    }
+    */
 }

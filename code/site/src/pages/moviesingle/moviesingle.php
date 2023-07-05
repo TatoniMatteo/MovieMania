@@ -13,6 +13,7 @@ $utentiController = $config->getUtentiController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
+    $preferito = $utentiController->isPreferito($utente['id'], $filmId, 'film');
 } else {
     $utente = null;
 }

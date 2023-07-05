@@ -31,3 +31,17 @@ if (!isset($_POST['old']) or !isset($_POST['new']) or !isset($_POST['retype']) o
 
 header('Content-Type: application/json');
 echo json_encode($response);
+
+
+function setPreferito(&$preferito, $controller, $utente, $programma, $tipo)
+{
+    if ($preferito) {
+        $res = $controller->removePreferito($utente, $programma, $tipo);
+    } else {
+        $res = $controller->addPreferito($utente, $programma, $tipo);
+    }
+
+    if ($res) {
+        $preferito = !$preferito;
+    }
+}
