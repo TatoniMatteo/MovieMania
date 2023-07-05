@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    /**
+     * CONTROLLA AUTENTICAZIONE
+     */
+    async function checkAuth() {
+        return fetch('../service/checkauth.php')
+            .then(response => response.json())
+            .then(data => {
+                return data.loggedIn
+            })
+            .catch(error => {
+                console.error('Errore durante la verifica dell\'autenticazione:', error);
+                return false;
+            });
+    }
+
+
+    /**
+     * TOAST DI CONFERMA
+     */
+
     function showToast(message, icon_class) {
         var toastContainer = document.getElementById("toast-container");
         console.log(toastContainer);
@@ -21,8 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-
+    /**
+     * NASCONDERE ERRORE
+     */
     function hideErrorMessage(elemento) {
         var element = document.getElementById(elemento);
         if (element) {
@@ -30,6 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
+    /**
+     * APRI SCHERMATA RECENSIONE
+     */
     async function goToReview(rate) {
         if (await checkAuth()) {
             var url = window.location.href;
@@ -77,6 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /**
+     * PULSANTE RECENSIONE
+     */
     async function checkAuth() {
         return fetch('../service/checkauth.php')
             .then(response => response.json())
@@ -88,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return false;
             });
     }
-
 
     recensioneBtn = document.getElementById("recensione");
     if (recensioneBtn) {
@@ -336,10 +364,15 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
 
             var errorLabel = document.getElementById('dati-error')
-            var username = document.getElementById('user-username').value
-            var email = document.getElementById('user-email').value
-            var nome = document.getElementById('user-nome').value
-            var cognome = document.getElementById('user-cognome').value
+            var usernameInput = document.getElementById('user-username')
+            var emailInput = document.getElementById('user-email')
+            var nomeInput = document.getElementById('user-nome')
+            var cognomeInput = document.getElementById('user-cognome')
+
+            var username = usernameInput.value
+            var email = emailInput.value
+            var nome = nomeInput.value
+            var cognome = cognomeInput.value
 
             fetch('../service/aggiornaUtente.php', {
                 method: 'POST',
@@ -348,7 +381,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        window.location.reload();
+                        usernameInput.value = ""
+                        emailInput.value = ""
+                        nomeInput.value = ""
+                        cognomeInput.value = ""
+                        if (username.trim().length != 0) usernameInput.placeholder = username
+                        if (email.trim().length != 0) emailInput.placeholder = email
+                        if (nome.trim().length != 0) nomeInput.placeholder = nome
+                        if (cognome.trim().length != 0) cognomeInput.placeholder = cognome
+                        showToast("Dati aggiornati con successo!", "ion-checkmark")
                     } else {
                         throw new Error(data.message)
                     }
@@ -376,18 +417,21 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
 
             var errorLabel = document.getElementById('password-error');
-            var vecchia = document.getElementById('old').value;
-            var nuova = document.getElementById('new').value;
-            var retype = document.getElementById('retype').value;
+            var vecchiaInput = document.getElementById('old');
+            var nuovaInput = document.getElementById('new');
+            var retypeInput = document.getElementById('retype');
 
             fetch('../service/aggiornaPassword.php', {
                 method: 'POST',
-                body: new URLSearchParams({ old: vecchia, new: nuova, retype: retype })
+                body: new URLSearchParams({ old: vecchiaInput.value, new: nuovaInput.value, retype: retypeInput.value })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        window.location.reload();
+                        vecchiaInput.value = ""
+                        nuovaInput.value = ""
+                        retypeInput.value = ""
+                        showToast("Password aggiornata con successo!", "ion-checkmark")
                     } else {
                         throw new Error(data.message)
                     }

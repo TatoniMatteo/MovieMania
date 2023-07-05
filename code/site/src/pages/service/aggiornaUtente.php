@@ -10,10 +10,10 @@ if (!isset($_POST['username']) or !isset($_POST['email']) or !isset($_POST['nome
     $response = array('success' => false, 'message' => 'Dati inseriti non validi!');
 } else {
     $id_utente = $_SESSION['utente'];
-    $username = $_POST['username'] != "" ? $_POST['username'] : null;
-    $email = $_POST['email'] != "" ? $_POST['email'] : null;
-    $nome = $_POST['nome'] != "" ? $_POST['nome'] : null;
-    $cognome = $_POST['cognome'] != "" ? $_POST['cognome'] : null;
+    $username = !empty(trim($_POST['username'])) ? $_POST['username'] : null;
+    $email = !empty(trim($_POST['email'])) ? $_POST['email'] : null;
+    $nome = !empty(trim($_POST['nome'])) ? $_POST['nome'] : null;
+    $cognome = !empty(trim($_POST['cognome'])) ? $_POST['cognome'] : null;
 
     if ($username or $email or $nome or $cognome) {
         if ($utentiController->updateDati($id_utente, $username, $email, $nome, $cognome)) {

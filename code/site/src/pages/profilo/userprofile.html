@@ -30,6 +30,8 @@
 </head>
 
 <body>
+	<!--toast-->
+	<div id="toast-container"></div>
 	<!--preloading-->
 	<div id="preloader">
 		<img class="logo" src="../../images/logo1.png" alt="" width="119" height="58">
@@ -232,7 +234,8 @@
 								</div>
 								<div class="col-md-6 form-it">
 									<label>Email</label>
-									<input id="user-email" type="text" placeholder="<?php echo $utente['email'];?>">
+									<input id="user-email" type="text" placeholder="<?php echo $utente['email'];?>"
+										pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
 								</div>
 							</div>
 							<div class="row">
@@ -261,19 +264,19 @@
 							<div class="row">
 								<div class="col-md-6 form-it">
 									<label>Vecchia Password</label>
-									<input id="old" type="password">
+									<input id="old" type="password" placeholder="*****" required>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6 form-it">
 									<label>Nuova Password</label>
-									<input id="new" type="password">
+									<input id="new" type="password" placeholder="*****" required>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6 form-it">
 									<label>Conferma Nuova Password</label>
-									<input id="retype" type="password">
+									<input id="retype" type="password" placeholder="*****" required>
 								</div>
 							</div>
 							<div class="row">
