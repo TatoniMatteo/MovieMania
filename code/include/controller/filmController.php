@@ -12,11 +12,16 @@ class FilmController
     public function getFilmById($id)
     {
         $query = "SELECT Film.*, IFNULL(ROUND(AVG(Recensione.voto), 1), 0) AS media_voti, IFNULL(COUNT(Recensione.id), 0) AS numero_recensioni
-        FROM Film
-        LEFT JOIN Recensione ON Film.id = Recensione.id_film
-        WHERE Film.id = " . $id . "
-        GROUP BY Film.id;";
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+            FROM Film
+            LEFT JOIN Recensione ON Film.id = Recensione.id_film
+            WHERE Film.id = ?
+            GROUP BY Film.id;";
+
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
 
         if (mysqli_num_rows($result) > 0) {
             return mysqli_fetch_assoc($result);
@@ -25,10 +30,11 @@ class FilmController
         }
     }
 
+
     public function getAllFilms($l)
     {
         if ($l > 0) {
-            $limit = "LIMIT " . $l;
+            $limit = "LIMIT ?";
         } else {
             $limit = "";
         }
@@ -39,7 +45,11 @@ class FilmController
         GROUP BY f.id 
         ORDER BY f.data_pubblicazione DESC " . $limit;
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $l);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $films = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -47,6 +57,7 @@ class FilmController
                 $films[] = $row;
             }
         }
+
         return $films;
     }
 
@@ -56,9 +67,13 @@ class FilmController
         FROM caratterizza
         LEFT JOIN film as f ON f.id = caratterizza.id_film
         LEFT JOIN categoria as c ON c.id = caratterizza.id_categoria
-        WHERE f.id = $id";
+        WHERE f.id = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $categories = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -66,6 +81,7 @@ class FilmController
                 $categories[] = $row;
             }
         }
+
         return $categories;
     }
 
@@ -86,6 +102,7 @@ class FilmController
                 $films[] = $row;
             }
         }
+
         return $films;
     }
 
@@ -106,6 +123,7 @@ class FilmController
                 $films[] = $row;
             }
         }
+
         return $films;
     }
 
@@ -126,6 +144,7 @@ class FilmController
                 $films[] = $row;
             }
         }
+
         return $films;
     }
 
@@ -136,14 +155,18 @@ class FilmController
         JOIN Caratterizza C1 ON F1.id = C1.id_film
         JOIN (SELECT C2.id_categoria 
                 FROM Caratterizza C2
-                WHERE C2.id_film = " . $id . ") AS Subquery ON C1.id_categoria = Subquery.id_categoria
+                WHERE C2.id_film = ?) AS Subquery ON C1.id_categoria = Subquery.id_categoria
         LEFT JOIN Recensione R ON F1.id = R.id_film
         GROUP BY F1.id, F1.titolo
-        HAVING categorie_comuni >= 1 AND F1.id <> " . $id . "
+        HAVING categorie_comuni >= 1 AND F1.id <> ?
         ORDER BY categorie_comuni DESC, media_voti DESC
         LIMIT 5;";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ii", $id, $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $films = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -151,6 +174,7 @@ class FilmController
                 $films[] = $row;
             }
         }
+
         return $films;
     }
 }

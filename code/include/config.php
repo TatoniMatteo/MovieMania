@@ -7,6 +7,7 @@ require_once 'controller/personaggiController.php';
 require_once 'controller/recensioniController.php';
 require_once 'controller/utentiController.php';
 require_once 'controller/authController.php';
+require_once 'controller/searchController.php';
 
 class Config
 {
@@ -54,5 +55,10 @@ class Config
     public function getAuthController()
     {
         return new AuthController($this->database);
+    }
+
+    public function getSearchController()
+    {
+        return new SearchController($this->database);
     }
 }

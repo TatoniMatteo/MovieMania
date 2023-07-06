@@ -21,7 +21,7 @@ create table recensione
     check (`voto` >= 1 and `voto` <= 10)
 );
 
-INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (1, 'Ottimo film', 'Mi è piaciuto molto questo film. La trama è avvincente e gli attori sono fantastici.', 8.0, 1, null, 1, '2022-08-25');
+INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (1, 'Ottimo film', 'Mi è piaciuto molto questo film. La trama è avvincente e gli attori sono fantastici.', 9.0, 1, null, 1, '2022-08-25');
 INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (2, 'Deludente', 'Mi aspettavo di più da questo film. La storia è poco originale e gli effetti speciali sono mediocri.', 5.0, 1, null, 2, '2020-09-17');
 INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (3, 'Da non perdere', 'Questa serie è semplicemente fantastica. Ogni episodio tiene incollato allo schermo.', 9.0, null, 1, 3, '2020-11-26');
 INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (4, 'Un capolavoro', 'Ho amato ogni singola stagione di questa serie. È un mix perfetto di azione, suspense e intrighi.', 9.0, null, 1, 4, '2022-02-19');
@@ -48,3 +48,4 @@ La trama è piena di colpi di scena che ti terranno con il fiato sospeso. Gli at
 Ciò che mi ha colpito di più di "Forrest Gump" è il modo in cui affronta temi universali come l\'amore e la ricerca della felicità. Mi ha fatto riflettere e mi ha emozionato.
 
 In sintesi, se ti piacciono i film coinvolgenti e indimenticabili, ti consiglio "Forrest Gump". È un\'esperienza cinematografica da non perdere.', 10.0, 4, null, 3, '2015-02-17');
+INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (23, 'Film davvero commuovente!', 'Il film mi è molto piaciuto!', 10.0, 1, null, 6, '2023-07-05');

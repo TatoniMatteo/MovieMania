@@ -14,46 +14,50 @@ class AuthController
 
     public function loginControl($username, $password)
     {
+        $query = "SELECT id
+            FROM Utenti
+            WHERE (Utenti.username = ? OR Utenti.email = ?) AND Utenti.password = ?";
 
-        $query = "SELECT Utenti.id
-        FROM Utenti
-        WHERE (Utenti.username = '" . $username . "' OR Utenti.email = '" . $username . "') AND Utenti.password = '" . $password . "'";
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "sss", $username, $username, $password);
+        mysqli_stmt_execute($statement);
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $result = mysqli_stmt_get_result($statement);
 
         if (mysqli_num_rows($result) == 1) {
             $utente = mysqli_fetch_array($result);
             session_start();
             $_SESSION['utente'] = $utente['id'];
-            return True;
+            return true;
         }
-        return False;
+
+        return false;
     }
 
     public function registerUser($nome, $cognome, $username, $email, $password)
     {
-        // Verifica se l'username o l'email esistono già nel database
-        $query = "SELECT id FROM Utenti WHERE username = '" . $username . "' OR email = '" . $email . "'";
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $query = "SELECT id FROM Utenti WHERE username = ? OR email = ?";
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ss", $username, $email);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
 
         if (mysqli_num_rows($result) > 0) {
-            return false; // L'username o l'email esistono già, la registrazione fallisce
+            return false;
         }
 
-        // Esegui l'inserimento del nuovo utente nel database
-        $query = "INSERT INTO Utenti (nome, cognome, username, email, password) VALUES ('" . $nome . "', '" . $cognome . "', '" . $username . "', '" . $email . "', '" . $password . "')";
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $query = "INSERT INTO Utenti (nome, cognome, username, email, password) VALUES (?, ?, ?, ?, ?)";
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "sssss", $nome, $cognome, $username, $email, $password);
+        $result = mysqli_stmt_execute($statement);
 
         if ($result) {
-            // Registrazione avvenuta con successo, ottieni l'ID del nuovo utente
             $newUserId = mysqli_insert_id($this->dbConnection->getConnection());
-
-            // Salva l'ID dell'utente nella variabile di sessione 'utente'
             session_start();
             $_SESSION['utente'] = $newUserId;
-
             return true;
         }
+
         return false;
     }
 }

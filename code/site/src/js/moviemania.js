@@ -524,4 +524,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     }
-});
+
+    /**
+     * BARRA DI RICERCA
+     */
+    var searchBar = document.getElementById("search-input");
+    var searchIcon = document.getElementById("search-icon");
+    var searchType = document.getElementById("search-type");
+
+
+    if (searchBar && searchType && searchIcon) {
+        searchIcon.addEventListener("click", function (event) {
+            event.preventDefault();
+            var text = searchBar.value
+            var type = searchType.value
+
+            if (text.trim().length == 0) { return }
+            var url = window.location.href;
+            var currentURL = new URL(url);
+
+            if (type == "celebrita")
+                currentURL.pathname = '/MovieMania/code/site/src/pages/search/celebritygrid.php';
+            else
+                currentURL.pathname = '/MovieMania/code/site/src/pages/search/moviegrid.php';
+
+            currentURL.search = '?testo=' + text + '&filtro=' + type;
+            window.location.href = currentURL.href;
+        });
+    }
+})

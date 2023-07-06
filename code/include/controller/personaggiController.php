@@ -13,13 +13,18 @@ class PersonaggiController
     {
         $query = "SELECT Personaggi.*
         FROM Personaggi
-        WHERE Personaggi.id =" . $id;
+        WHERE Personaggi.id = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
 
         if (mysqli_num_rows($result) > 0) {
             return mysqli_fetch_assoc($result);
         }
+
         return null;
     }
 
@@ -29,9 +34,13 @@ class PersonaggiController
         FROM Partecipa
         INNER JOIN Personaggi ON Partecipa.id_personaggio = Personaggi.id
         INNER JOIN Ruolo ON Partecipa.ruolo = Ruolo.id
-        WHERE Partecipa.id_film =" . $id;
+        WHERE Partecipa.id_film = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $personaggi = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -39,6 +48,7 @@ class PersonaggiController
                 $personaggi[] = $row;
             }
         }
+
         return $personaggi;
     }
 
@@ -48,9 +58,13 @@ class PersonaggiController
         FROM Partecipa
         INNER JOIN Personaggi ON Partecipa.id_personaggio = Personaggi.id
         INNER JOIN Ruolo ON Partecipa.ruolo = Ruolo.id
-        WHERE Partecipa.id_serie =" . $id;
+        WHERE Partecipa.id_serie = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $personaggi = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -58,6 +72,7 @@ class PersonaggiController
                 $personaggi[] = $row;
             }
         }
+
         return $personaggi;
     }
 
@@ -68,8 +83,8 @@ class PersonaggiController
         JOIN Partecipa ON Film.id = Partecipa.id_film
         JOIN Personaggi ON Partecipa.id_personaggio = Personaggi.id
         JOIN Ruolo ON Ruolo.id = Partecipa.ruolo
-        WHERE Personaggi.id = " . $id . "
-
+        WHERE Personaggi.id = ?
+        
         UNION ALL
  
         SELECT 'Serie' AS tipo, Serie.id, Serie.titolo, Serie.copertina, Partecipa.interpreta, Ruolo.ruolo
@@ -77,9 +92,13 @@ class PersonaggiController
         JOIN Partecipa ON Serie.id = Partecipa.id_serie
         JOIN Personaggi ON Partecipa.id_personaggio = Personaggi.id
         JOIN Ruolo ON Ruolo.id = Partecipa.ruolo
-        WHERE Personaggi.id = " . $id;
+        WHERE Personaggi.id = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ii", $id, $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_getresult($statement);
         $programmi = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -87,6 +106,7 @@ class PersonaggiController
                 $programmi[] = $row;
             }
         }
+
         return $programmi;
     }
 
@@ -95,9 +115,13 @@ class PersonaggiController
         $query = "SELECT R.ruolo
         FROM Ruolo R
         JOIN Partecipa P ON R.id = P.ruolo
-        WHERE P.id_personaggio =" . $id;
+        WHERE P.id_personaggio = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $ruoli = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -105,9 +129,9 @@ class PersonaggiController
                 $ruoli[] = $row['ruolo'];
             }
         }
+
         return $ruoli;
     }
-
 
     public function getStarinEvidenza()
     {
@@ -130,6 +154,7 @@ class PersonaggiController
                 $personaggi[] = $row;
             }
         }
+
         return $personaggi;
     }
 }

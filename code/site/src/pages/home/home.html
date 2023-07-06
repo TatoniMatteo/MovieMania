@@ -30,6 +30,8 @@
 </head>
 
 <body>
+    <!--toast-->
+    <div id="toast-container"></div>
     <!--preloading-->
     <div id="preloader">
         <img class="logo" src="../../images/logo1.png" alt="" width="119" height="58">
@@ -143,8 +145,8 @@
                             <a href="#page-top"></a>
                         </li>
                         <li><a href="../../index.php">Home</a></li>
-                        <li><a href="../../index.php"> File & Serie </a></li>
-                        <li><a href="../../index.php"> Celebrità </a></li>
+                        <li><a href="../search/moviegrid.php"> File & Serie </a></li>
+                        <li><a href="../search/celebritygrid.php"> Celebrità </a></li>
                     </ul>
                     <ul class="nav navbar-nav flex-child-menu menu-right">
                         <?php 
@@ -168,12 +170,15 @@
 
             <!-- top search form -->
             <div class="top-search">
-                <select>
+                <select id="search-type">
+                    <option value="film e serie">Film e Serie</option>
                     <option value="film">Film</option>
                     <option value="serie">Serie</option>
                     <option value="celebrita">Celebrità</option>
                 </select>
-                <input type="text" placeholder="Scrivi il nome di un film, una serie o una celebrità che stai cercando">
+                <input id="search-input" type="text"
+                    placeholder="Scrivi il nome di un film, una serie o una celebrità che stai cercando">
+                <span id="search-icon" class="search-icon"></span>
             </div>
         </div>
     </header>
@@ -237,7 +242,6 @@
                 <div class="col-md-8">
                     <div class="title-hd">
                         <h2>Film in evidenza</h2>
-                        <a href="#" class="viewall">Mostra di più <i class="ion-ios-arrow-right"></i></a>
                     </div>
                     <div class="tabs">
                         <ul class="tab-links">
@@ -298,7 +302,8 @@
                                                 <div class="hvr-inner">
                                                     <a
                                                         href="<?php echo '../moviesingle/moviesingle.php?id=' . $film['id'] ?>">
-                                                        Scopri <i class="ion-android-arrow-dropright"></i> </a>
+                                                        Scopri <i class="ion-android-arrow-dropright"></i>
+                                                    </a>
                                                 </div>
                                                 <div class="title-in">
                                                     <h6><a href="#">
@@ -352,7 +357,6 @@
                     </div>
                     <div class="title-hd">
                         <h2>Serie in evidenza</h2>
-                        <a href="#" class="viewall">Mostra di più <i class="ion-ios-arrow-right"></i></a>
                     </div>
                     <div class="tabs">
                         <ul class="tab-links-2">
@@ -499,7 +503,6 @@
                                 </div>
                             </div>
                             <?php } ?>
-                            <a href="#" class="btn">Vedi tutte le celebrità <i class="ion-ios-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -513,7 +516,6 @@
                 <div class="col-md-12">
                     <div class="title-hd">
                         <h2>Ultime uscite</h2>
-                        <a href="#" class="viewall">Mostra di più <i class="ion-ios-arrow-right"></i></a>
                     </div>
                     <div class="videos">
                         <div class="slider-for-2 video-ft">
@@ -554,7 +556,7 @@
         <div class="container">
             <div class="flex-parent-ft">
                 <div class="flex-child-ft item1">
-                    <a href="home.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
+                    <a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
                     <p>5th Avenue st, manhattan<br>
                         New York, NY 10001</p>
                     <p>Call us: <a href="#">(+01) 202 342 6789</a></p>

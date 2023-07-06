@@ -12,10 +12,14 @@ class UtentiController
     public function getUtenteById($id)
     {
         $query = "SELECT Utenti.* 
-        FROM Utenti
-        WHERE Utenti.id =" . $id;
+    FROM Utenti
+    WHERE Utenti.id = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
 
         if (mysqli_num_rows($result) > 0) {
             return mysqli_fetch_assoc($result);
@@ -24,18 +28,20 @@ class UtentiController
         }
     }
 
-
     public function getPreferiti($id)
     {
         $query = "SELECT ROUND(IFNULL(AVG(R.voto), 0), 1) AS media_voti, 'film' AS tipo, F.*
-        FROM Film F
-        LEFT JOIN Preferiti P ON F.id = P.id_film
-        LEFT JOIN Recensione R ON F.id = R.id_film
-        WHERE P.id_utente = " . $id . " 
-        GROUP BY F.id";
+    FROM Film F
+    LEFT JOIN Preferiti P ON F.id = P.id_film
+    LEFT JOIN Recensione R ON F.id = R.id_film
+    WHERE P.id_utente = ?
+    GROUP BY F.id";
 
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $result = mysqli_stmt_get_result($statement);
         $film = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -45,15 +51,18 @@ class UtentiController
         }
 
         $query = "SELECT ROUND(IFNULL(AVG(R.voto), 0), 1) AS media_voti, MIN(St.data_pubblicazione) AS data_pubblicazione, COUNT(St.id) AS numero_stagioni, 'serie' AS tipo, S.*
-        FROM Serie S
-        LEFT JOIN Preferiti P ON S.id = P.id_serie
-        LEFT JOIN Recensione R ON S.id = R.id_serie
-        LEFT JOIN Stagione St ON St.id_serie = P.id_serie
-        WHERE P.id_utente = " . $id . "
-        GROUP BY S.id";
+    FROM Serie S
+    LEFT JOIN Preferiti P ON S.id = P.id_serie
+    LEFT JOIN Recensione R ON S.id = R.id_serie
+    LEFT JOIN Stagione St ON St.id_serie = P.id_serie
+    WHERE P.id_utente = ?
+    GROUP BY S.id";
 
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $result = mysqli_stmt_get_result($statement);
         $serie = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -78,8 +87,8 @@ class UtentiController
     public function updateFoto($id, $foto)
     {
         $query = "UPDATE utenti
-        SET foto = ?
-        WHERE id = ?";
+    SET foto = ?
+    WHERE id = ?";
 
         $stmt = $this->dbConnection->getConnection()->prepare($query);
         $stmt->bind_param('ss', $foto, $id);
@@ -96,28 +105,55 @@ class UtentiController
     public function updateDati($id, $username, $email, $nome, $cognome)
     {
         $modifiche = array();
-        if ($username != "") $modifiche[] = 'username = \'' . $username . '\'';
-        if ($email != "") $modifiche[] = 'email = \'' . $email . '\'';
-        if ($nome != "") $modifiche[] = 'nome = \'' . $nome . '\'';
-        if ($cognome != "") $modifiche[] = 'cognome = \'' . $cognome . '\'';
+        $types = "";
+        $params = array();
+
+        if ($username != "") {
+            $modifiche[] = 'username = ?';
+            $types .= "s";
+            $params[] = $username;
+        }
+        if ($email != "") {
+            $modifiche[] = 'email = ?';
+            $types .= "s";
+            $params[] = $email;
+        }
+        if ($nome != "") {
+            $modifiche[] = 'nome = ?';
+            $types .= "s";
+            $params[] = $nome;
+        }
+        if ($cognome != "") {
+            $modifiche[] = 'cognome = ?';
+            $types .= "s";
+            $params[] = $cognome;
+        }
 
         $query = "UPDATE utenti
-            SET " . implode(', ', $modifiche) . "
-            WHERE id = " . $id;
+        SET " . implode(', ', $modifiche) . "
+        WHERE id = ?";
 
-        if (mysqli_query($this->dbConnection->getConnection(), $query)) {
-            return true;
-        }
-        return false;
+        $types .= "i";
+        $params[] = $id;
+
+        $stmt = $this->dbConnection->getConnection()->prepare($query);
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+
+        return $stmt->affected_rows > 0;
     }
 
     public function updatePassword($id, $old, $new)
     {
         $query = "SELECT Utenti.password 
-        FROM Utenti
-        WHERE Utenti.id =" . $id;
+    FROM Utenti
+    WHERE Utenti.id = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
 
         if (mysqli_num_rows($result) > 0) {
             $check =  mysqli_fetch_assoc($result)['password'];
@@ -127,12 +163,14 @@ class UtentiController
 
         if ($old == $check) {
             $query = "UPDATE utenti
-            SET password = '" . $new . "'
-            WHERE id = " . $id;
+        SET password = ?
+        WHERE id = ?";
 
-            if (mysqli_query($this->dbConnection->getConnection(), $query)) {
-                return true;
-            }
+            $stmt = $this->dbConnection->getConnection()->prepare($query);
+            $stmt->bind_param('si', $new, $id);
+            $stmt->execute();
+
+            return $stmt->affected_rows > 0;
         }
         return false;
     }
@@ -141,69 +179,52 @@ class UtentiController
     {
         if ($tipo == 'film') {
             $query = "INSERT INTO Preferiti (id_film, id_utente)
-            VALUES (" . $id_programma . ", " . $id_utente . ")";
+        VALUES (?, ?)";
         } else {
             $query = "INSERT INTO Preferiti (id_serie, id_utente)
-            VALUES (" . $id_programma . ", " . $id_utente . ")";
+        VALUES (?, ?)";
         }
 
-        if (mysqli_query($this->dbConnection->getConnection(), $query)) {
-            return true;
-        }
-        return false;
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ii", $id_programma, $id_utente);
+        mysqli_stmt_execute($statement);
+
+        return mysqli_stmt_affected_rows($statement) > 0;
     }
 
     public function removePreferito($id_utente, $id_programma, $tipo)
     {
         if ($tipo == 'film') {
             $query = "DELETE FROM Preferiti
-            WHERE id_film = " . $id_programma . " AND id_utente = " . $id_utente;
+        WHERE id_film = ? AND id_utente = ?";
         } else {
             $query = "DELETE FROM Preferiti
-            WHERE id_serie = " . $id_programma . " AND id_utente = " . $id_utente;
+        WHERE id_serie = ? AND id_utente = ?";
         }
 
-        if (mysqli_query($this->dbConnection->getConnection(), $query)) {
-            return true;
-        }
-        return false;
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ii", $id_programma, $id_utente);
+        mysqli_stmt_execute($statement);
+
+        return mysqli_stmt_affected_rows($statement) > 0;
     }
 
     public function isPreferito($id_utente, $id_programma, $tipo)
     {
         if ($tipo == 'film') {
             $query = "SELECT * FROM Preferiti
-            WHERE id_film = " . $id_programma . " AND id_utente = " . $id_utente;
+        WHERE id_film = ? AND id_utente = ?";
         } else {
             $query = "SELECT * FROM Preferiti
-            WHERE id_serie = " . $id_programma . " AND id_utente = " . $id_utente;
+        WHERE id_serie = ? AND id_utente = ?";
         }
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ii", $id_programma, $id_utente);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
 
         return mysqli_num_rows($result) > 0;
     }
-
-    /*
-    public function setPreferito($id_utente, $id_programma, $tipo)
-    {
-        if ($tipo == 'film') {
-            $query = "SELECT * FROM Preferiti
-            WHERE id_film = " . $id_programma . " AND id_utente = " . $id_utente;
-        } else {
-            $query = "SELECT * FROM Preferiti
-            WHERE id_serie = " . $id_programma . " AND id_utente = " . $id_utente;
-        }
-
-        if (mysqli_num_rows(mysqli_query($this->dbConnection->getConnection(), $query)) > 0) {
-            $res = $this->removePreferito($id_utente, $id_programma, $tipo);
-            $preferito = false;
-        } else {
-            $res = $this->addPreferito($id_utente, $id_programma, $tipo);
-            $preferito = true;
-        }
-
-        return array('success' => $res, 'preferito' => $preferito);
-    }
-    */
 }

@@ -14,11 +14,15 @@ class RecensioniController
         $query = "SELECT Recensione.*
         FROM Recensione
         INNER JOIN Utenti ON Recensione.id_utente = Utenti.id
-        WHERE Recensione.id_film =" . $id . "
+        WHERE Recensione.id_film = ?
         ORDER BY Recensione.voto DESC
-        LIMIT " . $offset . ",5";
+        LIMIT ?, 5";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ii", $id, $offset);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $recensioni = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -26,6 +30,7 @@ class RecensioniController
                 $recensioni[] = $row;
             }
         }
+
         return $recensioni;
     }
 
@@ -34,11 +39,15 @@ class RecensioniController
         $query = "SELECT Recensione.*
         FROM Recensione
         INNER JOIN Utenti ON Recensione.id_utente = Utenti.id
-        WHERE Recensione.id_serie =" . $id . "
+        WHERE Recensione.id_serie = ?
         ORDER BY Recensione.voto DESC
-        LIMIT " . $offset . ",5";
+        LIMIT ?, 5";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ii", $id, $offset);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $recensioni = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -46,6 +55,7 @@ class RecensioniController
                 $recensioni[] = $row;
             }
         }
+
         return $recensioni;
     }
 
@@ -54,9 +64,13 @@ class RecensioniController
         $query = "SELECT COUNT(*) AS numero_recensioni 
         FROM Recensione
         INNER JOIN Film ON Recensione.id_film = Film.id
-        WHERE Recensione.id_film =" . $id;
+        WHERE Recensione.id_film = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
 
         if (mysqli_num_rows($result) > 0) {
             $res = mysqli_fetch_array($result);
@@ -71,9 +85,13 @@ class RecensioniController
         $query = "SELECT COUNT(*) AS numero_recensioni 
         FROM Recensione
         INNER JOIN Serie ON Recensione.id_serie = Serie.id
-        WHERE Recensione.id_serie =" . $id;
+        WHERE Recensione.id_serie = ?";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
 
         if (mysqli_num_rows($result) > 0) {
             $res = mysqli_fetch_array($result);
@@ -83,18 +101,21 @@ class RecensioniController
         }
     }
 
-
     public function getRecesioniByUtente($id)
     {
-        $query = "SELECT R.*, COALESCE(F.copertina, S.copertina) AS copertina, COALESCE(F.titolo, S.titolo) AS titolo, COALESCE(F.data_pubblicazione, MIN(St.data_pubblicazione)) AS data_pubblicazione
+        $query = "SELECT R.*, COALESCE(F.copertina, S.copertina) AS copertina, COALESCE(F.titolo, S.titolo) AS titolo, COALESCE(F.data_pubblicazione, MIN(Stag.data_pubblicazione)) AS data_pubblicazione
         FROM Recensione R
         LEFT JOIN Film F ON R.id_film = F.id
         LEFT JOIN Serie S ON R.id_serie = S.id
         LEFT JOIN Stagione St ON S.id = St.id_serie
-        WHERE R.id_utente = " . $id . "
+        WHERE R.id_utente = ?
         GROUP BY R.id, F.id, S.id";
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         $recensioni = array();
 
         if (mysqli_num_rows($result) > 0) {
@@ -102,6 +123,7 @@ class RecensioniController
                 $recensioni[] = $row;
             }
         }
+
         return $recensioni;
     }
 
@@ -109,17 +131,19 @@ class RecensioniController
     {
         if ($tipo == "film") {
             $query = "SELECT * FROM recensione
-            WHERE id_film =" . $id_programma . "
-            AND id_utente = " . $id_utente;
+            WHERE id_film = ? AND id_utente = ?";
         } else if ($tipo == "serie") {
             $query = "SELECT * FROM recensione
-            WHERE id_serie =" . $id_programma . "
-            AND id_utente = " . $id_utente;
+            WHERE id_serie = ? AND id_utente = ?";
         } else {
             return false;
         }
 
-        $result = mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ii", $id_programma, $id_utente);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
         if (mysqli_num_rows($result) > 0) {
             return mysqli_fetch_array($result);
         } else {
@@ -131,35 +155,35 @@ class RecensioniController
     {
         if ($tipo == "film") {
             $query = "INSERT INTO Recensione (titolo, descrizione, voto, id_film, id_serie, id_utente) 
-            VALUES ('" . $titolo . "', '" . $descrizione . "', " . $voto . ", " . $id_programma . ", null, " . $id_utente . ")";
+            VALUES (?, ?, ?, ?, null, ?)";
         } else if ($tipo == "serie") {
             $query = "INSERT INTO Recensione (titolo, descrizione, voto, id_film, id_serie, id_utente) 
-            VALUES ('" . $titolo . "', '" . $descrizione . "', " . $voto . ", null, " . $id_programma . ", " . $id_utente . ")";
+            VALUES (?, ?, ?, null, ?, ?)";
         } else {
             return false;
         }
 
-        return mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ssisi", $titolo, $descrizione, $voto, $id_programma, $id_utente);
+        return mysqli_stmt_execute($statement);
     }
 
     public function editRecensione($id_utente, $id_programma,  $tipo, $titolo, $descrizione, $voto)
     {
         if ($tipo == "film") {
             $query = "UPDATE Recensione 
-            SET titolo = '" . $titolo . "',
-                descrizione = '" . $descrizione . "', 
-                voto = " . $voto . "
-                WHERE id_film = " . $id_programma . " AND id_utente = " . $id_utente;
+            SET titolo = ?, descrizione = ?, voto = ?
+            WHERE id_film = ? AND id_utente = ?";
         } else if ($tipo == "serie") {
             $query = "UPDATE Recensione 
-            SET titolo ='" . $titolo . "',
-                descrizione = '" . $descrizione . "', 
-                voto = " . $voto . "
-                WHERE id_serie = " . $id_programma . " AND id_utente = " . $id_utente;
+            SET titolo = ?, descrizione = ?, voto = ?
+            WHERE id_serie = ? AND id_utente = ?";
         } else {
             return false;
         }
 
-        return mysqli_query($this->dbConnection->getConnection(), $query);
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ssisi", $titolo, $descrizione, $voto, $id_programma, $id_utente);
+        return mysqli_stmt_execute($statement);
     }
 }
