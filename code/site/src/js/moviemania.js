@@ -552,4 +552,173 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = currentURL.href;
         });
     }
+
+    var pagination = document.querySelector('.pagination2');
+    if (pagination) {
+        var pages = pagination.getElementsByClassName('page');
+        for (var i = 0; i < pages.length; i++) {
+            pages[i].addEventListener('click', function () {
+                var linkValue = parseInt(this.textContent.trim());
+                var urlParams = new URLSearchParams(window.location.search);
+                var currentPage = parseInt(urlParams.get('pagina'));
+                var newPage = linkValue - 1;
+
+                if (isNaN(currentPage)) {
+                    urlParams.append('pagina', newPage);
+                } else {
+                    urlParams.set('pagina', newPage);
+                }
+
+                window.location.search = urlParams.toString();
+            });
+        }
+    }
+
+    var selectOrdinamento = document.querySelector('.ordinamento');
+    if (selectOrdinamento) {
+        var urlParams = new URLSearchParams(window.location.search);
+        var currentOrdValue = parseInt(urlParams.get('ord'));
+        var currentPage = parseInt(urlParams.get('pagina'));
+
+        if (isNaN(currentOrdValue)) {
+            selectOrdinamento.value = "0";
+        } else {
+            selectOrdinamento.value = currentOrdValue.toString();
+        }
+
+        selectOrdinamento.addEventListener('change', function () {
+            var selectedOption = this.options[this.selectedIndex];
+            var selectedValue = selectedOption.value;
+
+            if (isNaN(currentOrdValue)) {
+                urlParams.append('ord', selectedValue);
+            } else {
+                urlParams.set('ord', selectedValue);
+            }
+
+            if (!isNaN(currentPage)) {
+                urlParams.set('pagina', 0);
+            }
+
+            window.location.search = urlParams.toString();
+        });
+    }
+
+    var movieFilterForm = document.getElementById('movie-filter');
+    if (movieFilterForm) {
+        movieFilterForm.addEventListener('submit', function (event) {
+            event.preventDefault()
+            var textInput = document.getElementById('filter-text');
+            var groupInput = document.getElementById('filter-group');
+            var categoriesInput = document.getElementById('filter-categories');
+
+            var text = textInput.value
+            var group = groupInput.value
+            var values = [];
+            for (var option of categoriesInput.options) {
+                if (option.selected) {
+                    values.push(parseInt(option.value));
+                }
+            }
+            var categories = values.toString()
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var currentText = urlParams.get('text');
+            var currentFilter = urlParams.get('filtro');
+            var currentPage = urlParams.get('pagina');
+            var currentOrd = parseInt(urlParams.get('ord'));
+            var currentCategories = urlParams.get('categorie');
+
+            if (isNaN(currentText)) {
+                urlParams.append('testo', text);
+            } else {
+                urlParams.set('testo', text);
+            }
+
+            if (isNaN(currentFilter)) {
+                urlParams.append('filtro', group);
+            } else {
+                urlParams.set('filtro', group);
+            }
+
+            if (!isNaN(currentPage)) {
+                urlParams.delete('pagina');
+            }
+
+            if (!isNaN(currentOrd)) {
+                urlParams.delete('ord');
+            }
+
+            if (isNaN(currentCategories)) {
+                if (categories.length > 0)
+                    urlParams.append('categorie', categories);
+            } else {
+                if (categories.length > 0)
+                    urlParams.set('categorie', categories);
+                else
+                    urlParams.delete('categorie');
+            }
+
+            window.location.search = urlParams.toString();
+        });
+    }
+
+    var celebrityFilterForm = document.getElementById('celebrity-filter');
+    if (celebrityFilterForm) {
+        celebrityFilterForm.addEventListener('submit', function (event) {
+            event.preventDefault()
+            var textInput = document.getElementById('filter-text');
+            var rolesInput = document.getElementById('filter-roles');
+
+            var text = textInput.value
+            var group = "celebrita"
+            var values = [];
+            for (var option of rolesInput.options) {
+                if (option.selected) {
+                    values.push(parseInt(option.value));
+                }
+            }
+            var roles = values.toString()
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var currentText = urlParams.get('text');
+            var currentFilter = urlParams.get('filtro');
+            var currentPage = urlParams.get('pagina');
+            var currentOrd = parseInt(urlParams.get('ord'));
+            var currentRoles = urlParams.get('ruoli');
+
+            console.log(urlParams.toString());
+
+            if (isNaN(currentText)) {
+                urlParams.append('testo', text);
+            } else {
+                urlParams.set('testo', text);
+            }
+
+            if (isNaN(currentFilter)) {
+                urlParams.append('filtro', group);
+            }
+
+            if (!isNaN(currentPage)) {
+                urlParams.delete('pagina');
+            }
+
+            if (!isNaN(currentOrd)) {
+                urlParams.delete('ord');
+            }
+
+            if (isNaN(currentRoles)) {
+                if (roles.length > 0)
+                    urlParams.append('ruoli', roles);
+            } else {
+                if (roles.length > 0)
+                    urlParams.set('ruoli', roles);
+                else
+                    urlParams.delete('ruoli');
+            }
+
+            window.location.search = urlParams.toString();
+        });
+    }
+
 })

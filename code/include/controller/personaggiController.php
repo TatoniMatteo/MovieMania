@@ -98,7 +98,7 @@ class PersonaggiController
         mysqli_stmt_bind_param($statement, "ii", $id, $id);
         mysqli_stmt_execute($statement);
 
-        $result = mysqli_stmt_getresult($statement);
+        $result =  mysqli_stmt_get_result($statement);
         $programmi = array();
 
         if (mysqli_num_rows($result) > 0) {

@@ -16,7 +16,26 @@ if (isset($_SESSION['utente'])) {
 if (isset($_GET['testo']) && isset($_GET['filtro'])) {
     $testo = $_GET['testo'];
     $filtro = $_GET['filtro'];
-    $programmi = $searchController->search($testo, $filtro);
+    $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
+    $limit = 16;
+    $offset = $pagina * $limit;
+    $ordinamento = isset($_GET['ord']) ? $_GET['ord'] : 0;
+    $categorie = array();
+    if (isset($_GET['categorie'])) {
+        $stringa = $_GET['categorie'];
+        if (str_contains($stringa, ',')) {
+            $categorie = explode(",", $stringa);
+        } else {
+            $categorie[] = $stringa;
+        }
+        foreach ($categorie as &$numero) {
+            $numero = intval(trim($numero));
+        }
+    }
+
+    $programmi = $searchController->search($testo, $filtro, $offset, $limit, $ordinamento, $categorie);
+    $totale = $searchController->countSearchResults($testo, $filtro, $categorie);
+    $pagine = ceil($totale / $limit);
 } else {
     $testo = null;
     $filtro = null;

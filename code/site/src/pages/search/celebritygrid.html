@@ -167,24 +167,10 @@
 				</div>
 				<!-- /.navbar-collapse -->
 			</nav>
-
-			<!-- top search form -->
-			<div class="top-search">
-				<select id="search-type">
-					<option value="film e serie">Film e Serie</option>
-					<option value="film">Film</option>
-					<option value="serie">Serie</option>
-					<option value="celebrita">Celebrità</option>
-				</select>
-				<input id="search-input" type="text"
-					placeholder="Scrivi il nome di un film, una serie o una celebrità che stai cercando">
-				<span id="search-icon" class="search-icon"></span>
-			</div>
-		</div>
 	</header>
 	<!-- END | Header -->
 
-	<div class="hero common-hero">
+	<div class="hero common-hero" style="height: 250px;">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -198,84 +184,90 @@
 	<!-- celebrity grid v2 section-->
 	<div class="page-single">
 		<div class="container">
-			<div class="row ipad-width2">
-				<div class="col-md-9 col-sm-12 col-xs-12">
+			<div class="row ipad-width">
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<?php if(count($celebrita) > 0){ ?>
 					<div class="topbar-filter">
-						<p class="pad-change">trovati <span>(numero)</span> risultati</p>
+						<p class="pad-change">trovati <span>
+								<?php echo $totale ?>
+							</span> risultati</p>
 						<label>Ordina per:</label>
-						<select>
-							<option value="popularity">Popularity Descending</option>
-							<option value="popularity">Popularity Ascending</option>
-							<option value="rating">Rating Descending</option>
-							<option value="rating">Rating Ascending</option>
-							<option value="date">Release date Descending</option>
-							<option value="date">Release date Ascending</option>
+						<select class="ordinamento">
+							<option value="0">A-Z</option>
+							<option value="1">Z-A</option>
 						</select>
 					</div>
 					<div class="row">
+						<?php foreach ($celebrita as $personaggio) { ?>
 						<div class="col-md-4">
 							<div class="ceb-item-style-2">
-								<img src="../../images/uploads/ceb21.jpg" alt="">
+								<img src="<?php echo $personaggio['foto'] ? 'data:image/jpeg;base64,'. base64_encode($personaggio['foto']) : '../../images/uploads/slider1.jpg'?>"
+									alt="" width="80" height="100" style="width: 80; height: 100;">
 								<div class="ceb-infor">
-									<h2><a href="celebritysingle.html">Leonardo DiCaprio</a></h2>
-									<span>actor, uk</span>
+									<h2>
+										<a
+											href="<?php echo '../celebritysingle/celebritysingle.php?id=' . $personaggio['id']?>">
+											<?php echo $personaggio['nome'] . " " . $personaggio['cognome']?>
+										</a>
+									</h2>
+									<span>
+										<?php echo $personaggio['nazionalita'] ?>
+									</span>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div class="ceb-item-style-2">
-								<img src="../../images/uploads/ceb22.jpg" alt="">
-								<div class="ceb-infor">
-									<h2><a href="celebritysingle.html">Meryl Streep</a></h2>
-									<span>actor, Iran</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="ceb-item-style-2">
-								<img src="../../images/uploads/ceb23.jpg" alt="">
-								<div class="ceb-infor">
-									<h2><a href="celebritysingle.html">Tom Hanks</a></h2>
-									<span>Director, Sweden</span>
-								</div>
-							</div>
-						</div>
+						<?php } ?>
 					</div>
 					<div class="topbar-filter">
-						<label>Reviews per page:</label>
-						<select>
-							<option value="range">36 Reviews</option>
-							<option value="saab">18 Reviews</option>
-						</select>
-
+						<div style="width: 80px;"></div>
 						<div class="pagination2">
-							<span>Page 1 of 6:</span>
-							<a class="active" href="#">1</a>
-							<a href="#">2</a>
-							<a href="#">3</a>
-							<a href="#">4</a>
-							<a href="#">5</a>
-							<a href="#">6</a>
-							<a href="#"><i class="ion-arrow-right-b"></i></a>
+							<span>Pagina
+								<?php echo ($pagina + 1)?> di
+								<?php echo $pagine ?>:
+							</span>
+							<?php 
+								for ($i = 1; $i <= $pagine; $i++){
+									if($i == $pagina + 1){ 
+							?>
+							<a class="active page">
+								<?php echo $i ?>
+							</a>
+							<?php } else { ?>
+							<a class="page">
+								<?php echo $i ?>
+							</a>
+							<?php 	} 
+								}
+							?>
 						</div>
 					</div>
+					<?php } else {?>
+					<p style="font-size: 2.5em;">Nessuna celebrità trovata</p>
+					<?php } ?>
 				</div>
-				<div class="col-md-3 col-xs-12 col-sm-12">
+				<div class="col-md-4 col-xs-12 col-sm-12">
 					<div class="sidebar">
-						<div class="searh-form">
-							<h4 class="sb-title">Search celebrity</h4>
-							<form class="form-style-1 celebrity-form" action="#">
+						<div class="search-form">
+							<h4 class="sb-title">Filtri di ricerca</h4>
+							<form class="form-style-1" id="celebrity-filter">
 								<div class="row">
 									<div class="col-md-12 form-it">
 										<label>Nome celebrità</label>
-										<input type="text" placeholder="Scrivi il nome o il cognome della celebrità">
+										<input id="filter-text" type="text"
+											placeholder="Scrivi il nome o il cognome della celebrità" required>
 									</div>
 									<div class="col-md-12 form-it">
-										<label>Ruolo</label>
-										<select>
-											<option value="range">Actress</option>
-											<option value="saab">Others</option>
-										</select>
+										<label>Genere</label>
+										<div class="group-ip">
+											<select multiple="" class="ui fluid dropdown" id="filter-roles">
+												<option value="">Scegli ruolo</option>
+												<?php foreach($ruoli as $ruolo){?>
+												<option value="<?php echo $ruolo['id']?>">
+													<?php echo $ruolo['ruolo']?>
+												</option>
+												<?php } ?>
+											</select>
+										</div>
 									</div>
 									<div class="col-md-12 ">
 										<input class="submit" type="submit" value="Applica filtri">

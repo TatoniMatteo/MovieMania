@@ -186,20 +186,22 @@
 		<div class="container">
 			<div class="row ipad-width">
 				<div class="col-md-8 col-sm-12 col-xs-12">
+					<?php if(count($programmi) > 0){ ?>
 					<div class="topbar-filter">
 						<p class="pad-change">trovati <span>
-								<?php echo count($programmi) ?>
+								<?php echo $totale ?>
 							</span> risultati</p>
 						<label>Ordina per:</label>
-						<select>
-							<option value="popularity">Più recensiti</option>
-							<option value="popularity">Meno recensiti</option>
-							<option value="rating">Valutazione migliore</option>
-							<option value="rating">Valutazione peggiore</option>
-							<option value="date">Più recenti</option>
-							<option value="date">Meno recenti</option>
+						<select class="ordinamento">
+							<option value="0">Più recensiti</option>
+							<option value="1">Meno recensiti</option>
+							<option value="2">Valutazione migliore</option>
+							<option value="3">Valutazione peggiore</option>
+							<option value="4">Più recenti</option>
+							<option value="5">Meno recenti</option>
 						</select>
 					</div>
+
 					<div class="flex-wrap-movielist">
 						<?php foreach ($programmi as $programma) { ?>
 						<div class="movie-item-style-2 movie-item-style-1">
@@ -224,43 +226,54 @@
 						<?php } ?>
 					</div>
 					<div class="topbar-filter">
+						<div style="width: 80px;"></div>
 						<div class="pagination2">
-							<span>Page 1 of 2:</span>
-							<a class="active" href="#">1</a>
-							<a href="#">2</a>
-							<a href="#">3</a>
-							<a href="#">...</a>
-							<a href="#">78</a>
-							<a href="#">79</a>
-							<a href="#"><i class="ion-arrow-right-b"></i></a>
+							<span>Pagina
+								<?php echo ($pagina + 1)?> di
+								<?php echo $pagine ?>:
+							</span>
+							<?php for ($i = 1; $i <= $pagine; $i++){
+								if($i == $pagina + 1){ ?>
+							<a class="active page">
+								<?php echo $i ?>
+							</a>
+							<?php } else { ?>
+							<a class="page">
+								<?php echo $i ?>
+							</a>
+							<?php } }?>
 						</div>
 					</div>
+					<?php } else {?>
+					<p style="font-size: 2.5em;">Nessun programma trovato!</p>
+					<?php } ?>
 				</div>
 				<div class="col-md-4 col-sm-12 col-xs-12">
 					<div class="sidebar">
-						<div class="searh-form">
+						<div class="search-form">
 							<h4 class="sb-title">Filtri di ricerca</h4>
-							<form class="form-style-1" action="#">
+							<form class="form-style-1" id="movie-filter">
 								<div class="row">
 									<div class="col-md-12 form-it">
 										<label>Titolo del programma</label>
-										<input type="text" placeholder="Scrvi il titolo o una parola chiave">
+										<input type="text" placeholder="Scrvi il titolo o una parola chiave"
+											id="filter-text" required>
 									</div>
 									<div class="col-md-12 form-it">
 										<label>Tipologia</label>
-										<select>
+										<select id="filter-group">
 											<option value="film e serie">Film e Serie</option>
-											<option value="film">Film</option>
-											<option value="serie">Serie</option>
+											<option value="solo film">Film</option>
+											<option value="solo serie">Serie</option>
 										</select>
 									</div>
 									<div class="col-md-12 form-it">
 										<label>Genere</label>
 										<div class="group-ip">
-											<select name="skills" multiple="" class="ui fluid dropdown">
-												<option value="">Sceglie le categorie del film</option>
+											<select multiple="" class="ui fluid dropdown" id="filter-categories">
+												<option value="">Scegli categorie</option>
 												<?php foreach($categorie as $categoria){?>
-												<option value="<?php echo $categoria['categoria']?>">
+												<option value="<?php echo $categoria['id']?>">
 													<?php echo $categoria['categoria']?>
 												</option>
 												<?php } ?>
