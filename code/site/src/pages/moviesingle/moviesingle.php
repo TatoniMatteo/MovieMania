@@ -26,15 +26,23 @@ if (!isset($_GET['id'])) {
     if ($film == null) {
         include '../service/404.html';
     } else {
+        $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
+        $limit = 15;
+        $offset = $pagina * $limit;
+        $ordinamento = isset($_GET['ord']) ? $_GET['ord'] : 0;
+
         $categorie = $filmController->getCategoriesOfFilm($filmId);
         $personaggi = $personaggiController->getPersonaggiByFilm($filmId);
         $numero_recensioni = $recensioniController->getNumeroRecesioniByFilm($filmId);
+        $pagine = ceil($numero_recensioni / $limit);
         $film_correlati = $filmController->getFilmCorrelati($filmId);
+        $recensioni = $recensioniController->getRecensioniByFilm($filmId, $offset, $limit, $ordinamento);
         $recensione = null;
         if ($utente != null) {
             $preferito = $utentiController->isPreferito($utente['id'], $filmId, 'film');
             $recensione = $recensioniController->getRecensione($utente['id'], $filmId, 'film');
         }
+
         include 'moviesingle.html';
     }
 }

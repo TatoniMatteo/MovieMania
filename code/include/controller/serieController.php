@@ -33,7 +33,7 @@ class SerieController
         }
     }
 
-    public function getAllSeries($l)
+    public function getMainSeries($l)
     {
         if ($l > 0) {
             $limit = "LIMIT " . $l;
@@ -46,7 +46,7 @@ class SerieController
     LEFT JOIN Recensione as r ON s.id = r.id_serie
     LEFT JOIN Stagione as st ON s.id = st.id_serie
     GROUP BY s.id
-    ORDER BY MAX(st.data_pubblicazione) DESC " . $limit;
+    ORDER BY MAX(st.data_pubblicazione) DESC, media_voti " . $limit;
 
         $result = mysqli_query($this->dbConnection->getConnection(), $query);
         $series = array();
@@ -195,7 +195,7 @@ class SerieController
 
     public function getSerieCorrelate($id)
     {
-        $query = "SELECT S1.*, COUNT(*) AS categorie_comuni, ROUND(COALESCE(AVG(R.voto), 0),1) AS media_voti
+        $query = "SELECT S1.*, COUNT(*) AS categorie_comuni, ROUND(COALESCE(AVG(R.voto), 0),1) AS media_voti, MIN(St.data_pubblicazione) AS inizio_serie
         FROM Serie S1
         LEFT JOIN Stagione St ON S1.id = St.id_serie
         JOIN Caratterizza C1 ON S1.id = C1.id_serie

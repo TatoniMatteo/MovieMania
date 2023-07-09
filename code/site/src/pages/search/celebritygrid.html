@@ -145,28 +145,29 @@
 							<a href="#page-top"></a>
 						</li>
 						<li><a href="../../index.php">Home</a></li>
-						<li><a href="../../index.php"> File & Serie </a></li>
-						<li><a href="../../index.php"> Celebrità </a></li>
+						<li><a href="../search/moviegrid.php"> File & Serie </a></li>
+						<li><a href="../search/celebritygrid.php"> Celebrità </a></li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
 						<?php 
-								if($utente == null) {
-									echo '<li class="loginLink"><a>Accedi</a></li>';
-									echo '<li class="btn signupLink"><a>Registrati</a></li>';
-								} else {
-									if ($utente['foto'] != null) {
-										echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="40" height="40">';
-									} else {
-										echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
-									}
-									echo '<li><a href="../profilo/profilo.php">' . $utente['nome'] . '</a></li>';
-									echo '<li><a href="../service/logout.php">Disconetti</a></li>';
-								}
-							?>
+                            if($utente == null) {
+                                echo '<li class="loginLink"><a>Accedi</a></li>';
+                                echo '<li class="btn signupLink"><a>Registrati</a></li>';
+                            } else {
+                                if ($utente['foto'] != null) {
+                                    echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="40" height="40">';
+                                } else {
+                                    echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
+                                }
+                                echo '<li><a href="../profilo/profilo.php">' . $utente['nome'] . '</a></li>';
+                                echo '<li><a href="../service/logout.php">Disconetti</a></li>';
+                            }
+                        ?>
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
 			</nav>
+		</div>
 	</header>
 	<!-- END | Header -->
 
@@ -242,7 +243,9 @@
 						</div>
 					</div>
 					<?php } else {?>
-					<p style="font-size: 2.5em;">Nessuna celebrità trovata</p>
+					<p style="font-size: 1.5em;">
+						<?php echo $testo ? 'Nessuna celebrità trovata!' : 'Inserisci parametri di ricerca.' ?>
+					</p>
 					<?php } ?>
 				</div>
 				<div class="col-md-4 col-xs-12 col-sm-12">
@@ -282,63 +285,33 @@
 	</div>
 	<!-- end of celebrity grid v2 section-->
 	<!-- footer section-->
-	<footer class="ht-footer">
-		<div class="container">
-			<div class="flex-parent-ft">
-				<div class="flex-child-ft item1">
-					<a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
-					<p>5th Avenue st, manhattan<br>
-						New York, NY 10001</p>
-					<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
-				</div>
-				<div class="flex-child-ft item2">
-					<h4>Resources</h4>
-					<ul>
-						<li><a href="#">About</a></li>
-						<li><a href="#">Blockbuster</a></li>
-						<li><a href="#">Contact Us</a></li>
-						<li><a href="#">Forums</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Help Center</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item3">
-					<h4>Legal</h4>
-					<ul>
-						<li><a href="#">Terms of Use</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Security</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item4">
-					<h4>Account</h4>
-					<ul>
-						<li><a href="#">My Account</a></li>
-						<li><a href="#">Watchlist</a></li>
-						<li><a href="#">Collections</a></li>
-						<li><a href="#">User Guide</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item5">
-					<h4>Newsletter</h4>
-					<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-					<form action="#">
-						<input type="text" placeholder="Enter your email...">
-					</form>
-					<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
-				</div>
-			</div>
-		</div>
-		<div class="ft-copyright">
-			<div class="ft-left">
-				<p>© 2023 MovieMania. All Rights Reserved.</p>
-			</div>
-			<div class="backtotop">
-				<p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
-			</div>
-		</div>
-	</footer>
-	<!-- end of footer section-->
+    <footer class="ht-footer">
+        <div class="container">
+            <div class="flex-parent-ft">
+                <div class="flex-child-ft item1">
+                    <p>Via Vetoio, 1<br>
+                        67100 Coppito AQ</p>
+                    <p>Contattaci: <br><a href="#">(+39) 331 8985076</a><br><a href="#">(+39) 380 4674717</a><br><a
+                            href="#">(+39) 389 4638110</a></p>
+                </div>
+                <div class="flex-child-ft item2">
+                    <a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
+                    <h4 style="text-transform: none; font-size: 1.5em;">
+                        <em>"MovieMania: dove le immagini prendono vita e le parole diventano poesia!</em>"
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="ft-copyright">
+            <div class="ft-left">
+                <p>© 2023 MovieMania. All Rights Reserved.</p>
+            </div>
+            <div class="backtotop">
+                <p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- end of footer section-->
 
 	<script src="../../js/jquery.js"></script>
 	<script src="../../js/plugins.js"></script>

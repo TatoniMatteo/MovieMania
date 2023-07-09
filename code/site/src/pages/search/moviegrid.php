@@ -20,17 +20,9 @@ if (isset($_GET['testo']) && isset($_GET['filtro'])) {
     $limit = 16;
     $offset = $pagina * $limit;
     $ordinamento = isset($_GET['ord']) ? $_GET['ord'] : 0;
-    $categorie = array();
+    $categorie = "";
     if (isset($_GET['categorie'])) {
-        $stringa = $_GET['categorie'];
-        if (str_contains($stringa, ',')) {
-            $categorie = explode(",", $stringa);
-        } else {
-            $categorie[] = $stringa;
-        }
-        foreach ($categorie as &$numero) {
-            $numero = intval(trim($numero));
-        }
+        $categorie = $_GET['categorie'];
     }
 
     $programmi = $searchController->search($testo, $filtro, $offset, $limit, $ordinamento, $categorie);

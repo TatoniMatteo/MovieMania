@@ -42,11 +42,11 @@
 	</div>
 	<!--end of preloading-->
 	<!--login form popup-->
-	<div class="login-wrapper" id="login-content">
+	<div class="login-wrapper" action="../service/login.php" id="login-content">
 		<div class="login-content">
 			<a class="close">x</a>
 			<h3>Accedi</h3>
-			<form method="post" action="../service/login.php" id="login-form">
+			<form method="post" id="login-form">
 				<div class="row">
 					<label for="username">
 						Username o email:
@@ -145,8 +145,8 @@
 							<a href="#page-top"></a>
 						</li>
 						<li><a href="../../index.php">Home</a></li>
-						<li><a href="../../index.php"> File & Serie </a></li>
-						<li><a href="../../index.php"> Celebrità </a></li>
+						<li><a href="../search/moviegrid.php"> File & Serie </a></li>
+						<li><a href="../search/celebritygrid.php"> Celebrità </a></li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
 						<?php 
@@ -170,12 +170,15 @@
 
 			<!-- top search form -->
 			<div class="top-search">
-				<select>
+				<select id="search-type">
+					<option value="film e serie">Film e Serie</option>
 					<option value="film">Film</option>
 					<option value="serie">Serie</option>
 					<option value="celebrita">Celebrità</option>
 				</select>
-				<input type="text" placeholder="Scrivi il nome di un film, una serie o una celebrità che stai cercando">
+				<input id="search-input" type="text"
+					placeholder="Scrivi il nome di un film, una serie o una celebrità che stai cercando">
+				<span id="search-icon" class="search-icon"></span>
 			</div>
 		</div>
 	</header>
@@ -254,6 +257,8 @@
 								<?php echo $preferito ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti' ?>
 							</a>
 						</div>
+						<?php } else{?>
+						<div style="height: 60px;"></div>
 						<?php } ?>
 						<div class="movie-rate">
 							<div class="rate">
@@ -389,7 +394,6 @@
 												</div>
 												<!-- movie user review -->
 												<?php
-                                                    $recensioni = $recensioniController->getRecensioniBySerie($serieId, 0);
                                                     foreach ($recensioni as $recensione){
                                                 ?>
 												<div class="mv-user-review-item">
@@ -504,17 +508,18 @@
 										<div class="row">
 											<div style="height: 5vh;"></div>
 											<div class="topbar-filter">
-												<p>Trovate <span>56 recensioni</span> in totale</p>
+												<p>Trovate <span>
+														<?php echo $numero_recensioni?> recensioni
+													</span> in totale</p>
 												<label>Ordina per:</label>
-												<select>
-													<option value="miglior_voto">Voto migliore</option>
-													<option value="peggior_voto">Voto peggiore</option>
-													<option value="date">Più recente</option>
-													<option value="date">Meno recente</option>
+												<select class="ordinamento">
+													<option value="0">Voto migliore</option>
+													<option value="1">Voto peggiore</option>
+													<option value="2">Più recente</option>
+													<option value="3">Meno recente</option>
 												</select>
 											</div>
 											<?php 
-                                                $recensioni = $recensioniController->getRecensioniBySerie($serieId, 0);
                                                 $max = count($recensioni);
                                                 $count=0;
                                                 foreach ($recensioni as $recensione) { 
@@ -573,26 +578,25 @@
                                                 }
                                             ?>
 											<div class="topbar-filter">
-												<label>Recensioni per pagina:</label>
-												<select>
-													<option value="range">5 Recensioni</option>
-													<option value="saab">10 Recensioni</option>
-												</select>
-												<div class="pagination2">
-													<span>Pagina 1 di
-														<?php 
-															echo max(ceil($numero_recensioni/5),1);
-														?>:
-													</span> <!-- Da fare con AJAX-->
+												<div style="margin-left: 500px;" class="pagination2">
+													<span>Pagina
+														<?php echo ($pagina + 1)?> di
+														<?php echo $pagine ?>:
+													</span>
 													<?php 
-														for($i=1; $i<=$numero_recensioni/5; $i++) {
+														for ($i = 1; $i <= $pagine; $i++){
+															if($i == $pagina + 1){ 
 													?>
-
-													<a href="#">
+													<a class="active page">
 														<?php echo $i ?>
 													</a>
-													<?php } ?>
-													<a href="#"><i class="ion-arrow-right-b"></i></a>
+													<?php } else { ?>
+													<a class="page">
+														<?php echo $i ?>
+													</a>
+													<?php 	} 
+														}
+													?>
 												</div>
 											</div>
 										</div>
@@ -809,52 +813,22 @@
 		<div class="container">
 			<div class="flex-parent-ft">
 				<div class="flex-child-ft item1">
-					<a href="index.html"><img class="logo" src="../../images/logo1.png" alt=""></a>
-					<p>5th Avenue st, manhattan<br>
-						New York, NY 10001</p>
-					<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
+					<p>Via Vetoio, 1<br>
+						67100 Coppito AQ</p>
+					<p>Contattaci: <br><a href="#">(+39) 331 8985076</a><br><a href="#">(+39) 380 4674717</a><br><a
+							href="#">(+39) 389 4638110</a></p>
 				</div>
 				<div class="flex-child-ft item2">
-					<h4>Resources</h4>
-					<ul>
-						<li><a href="#">About</a></li>
-						<li><a href="#">Blockbuster</a></li>
-						<li><a href="#">Contact Us</a></li>
-						<li><a href="#">Forums</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Help Center</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item3">
-					<h4>Legal</h4>
-					<ul>
-						<li><a href="#">Terms of Use</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Security</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item4">
-					<h4>Account</h4>
-					<ul>
-						<li><a href="#">My Account</a></li>
-						<li><a href="#">Watchlist</a></li>
-						<li><a href="#">Collections</a></li>
-						<li><a href="#">User Guide</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item5">
-					<h4>Newsletter</h4>
-					<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-					<form action="#">
-						<input type="text" placeholder="Enter your email...">
-					</form>
-					<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
+					<a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
+					<h4 style="text-transform: none; font-size: 1.5em;">
+						<em>"MovieMania: dove le immagini prendono vita e le parole diventano poesia!</em>"
+					</h4>
 				</div>
 			</div>
 		</div>
 		<div class="ft-copyright">
 			<div class="ft-left">
-				<p>© 2017 Blockbuster. All Rights Reserved. Designed by leehari.</p>
+				<p>© 2023 MovieMania. All Rights Reserved.</p>
 			</div>
 			<div class="backtotop">
 				<p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>

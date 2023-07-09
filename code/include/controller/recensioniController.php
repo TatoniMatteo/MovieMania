@@ -9,17 +9,33 @@ class RecensioniController
         $this->dbConnection = $db;
     }
 
-    public function getRecensioniByFilm($id, $offset)
+    public function getRecensioniByFilm($id, $offset, $limit, $ordinamento)
     {
         $query = "SELECT Recensione.*
         FROM Recensione
         INNER JOIN Utenti ON Recensione.id_utente = Utenti.id
         WHERE Recensione.id_film = ?
-        ORDER BY Recensione.voto DESC
-        LIMIT ?, 5";
+        ORDER BY ";
+
+        switch ($ordinamento) {
+            case 0:
+                $query .= "Recensione.voto DESC";
+                break;
+            case 1:
+                $query .= "Recensione.voto";
+                break;
+            case 2:
+                $query .= "Recensione.data_recensione DESC";
+                break;
+            case 3:
+                $query .= "Recensione.data_recensione";
+                break;
+        }
+
+        $query .= " LIMIT ?, ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "ii", $id, $offset);
+        mysqli_stmt_bind_param($statement, "iii", $id, $offset, $limit);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -34,17 +50,33 @@ class RecensioniController
         return $recensioni;
     }
 
-    public function getRecensioniBySerie($id, $offset)
+    public function getRecensioniBySerie($id, $offset, $limit, $ordinamento)
     {
         $query = "SELECT Recensione.*
         FROM Recensione
         INNER JOIN Utenti ON Recensione.id_utente = Utenti.id
         WHERE Recensione.id_serie = ?
-        ORDER BY Recensione.voto DESC
-        LIMIT ?, 5";
+        ORDER BY ";
+
+        switch ($ordinamento) {
+            case 0:
+                $query .= "Recensione.voto DESC";
+                break;
+            case 1:
+                $query .= "Recensione.voto";
+                break;
+            case 2:
+                $query .= "Recensione.data_recensione DESC";
+                break;
+            case 3:
+                $query .= "Recensione.data_recensione";
+                break;
+        }
+
+        $query .= " LIMIT ?, ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "ii", $id, $offset);
+        mysqli_stmt_bind_param($statement, "iii", $id, $offset, $limit);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -103,7 +135,7 @@ class RecensioniController
 
     public function getRecesioniByUtente($id)
     {
-        $query = "SELECT R.*, COALESCE(F.copertina, S.copertina) AS copertina, COALESCE(F.titolo, S.titolo) AS titolo, COALESCE(F.data_pubblicazione, MIN(Stag.data_pubblicazione)) AS data_pubblicazione
+        $query = "SELECT R.*, COALESCE(F.copertina, S.copertina) AS copertina, COALESCE(F.titolo, S.titolo) AS titolo, COALESCE(F.data_pubblicazione, MIN(St.data_pubblicazione)) AS data_pubblicazione
         FROM Recensione R
         LEFT JOIN Film F ON R.id_film = F.id
         LEFT JOIN Serie S ON R.id_serie = S.id

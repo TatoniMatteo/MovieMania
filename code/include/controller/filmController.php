@@ -31,7 +31,7 @@ class FilmController
     }
 
 
-    public function getAllFilms($l)
+    public function getMainFilms($l)
     {
         if ($l > 0) {
             $limit = "LIMIT ?";
@@ -43,7 +43,7 @@ class FilmController
         FROM Film as f
         LEFT JOIN Recensione as r ON f.id = r.id_film
         GROUP BY f.id 
-        ORDER BY f.data_pubblicazione DESC " . $limit;
+        ORDER BY f.data_pubblicazione DESC, media_voti " . $limit;
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
         mysqli_stmt_bind_param($statement, "i", $l);

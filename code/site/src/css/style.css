@@ -7729,11 +7729,12 @@ ul {
   color: #dcf836;
 }
 
+/*
 .movie-single .sticky-sb {
-  position: relative;
+  position: fixed;
   top: 0px;
 }
-
+*/
 @media (max-width: 991px) {
   .movie-single .sticky-sb {
     max-width: 400px;
@@ -8340,7 +8341,7 @@ p.ceb-single {
 
 .overlay .login-content {
   width: 430px;
-  padding: 50px;
+  padding: 25px 50px;
   border: 1px solid #e1e1e1;
   height: auto;
   background-color: #ffffff;
@@ -8473,7 +8474,7 @@ p.ceb-single {
 
 .overlay .login-content .social-btn-2 a {
   width: 50%;
-  height: 42px;
+  height: 30px;
   display: -webkit-flex;
   display: -moz-box;
   display: -ms-flexbox;
@@ -9882,13 +9883,21 @@ footer .flex-parent-ft .flex-child-ft img {
   margin-bottom: 60px;
 }
 
+footer .flex-parent-ft .flex-child-ft .item2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 footer .flex-parent-ft .flex-child-ft p {
   margin-bottom: 15px;
 }
 
 footer .flex-parent-ft .flex-child-ft p a {
   color: #ffffff;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 footer .flex-parent-ft .flex-child-ft h4 {
@@ -10018,7 +10027,6 @@ footer.full-width-ft .ft-copyright {
 .error {
   font-family: 'Dosis', sans-serif;
   text-align: center;
-  margin-bottom: 45px;
   font-size: 14px;
   text-transform: uppercase;
   visibility: hidden;

@@ -8,6 +8,7 @@ require_once 'controller/recensioniController.php';
 require_once 'controller/utentiController.php';
 require_once 'controller/authController.php';
 require_once 'controller/searchController.php';
+require_once 'controller/statsController.php';
 
 class Config
 {
@@ -60,5 +61,10 @@ class Config
     public function getSearchController()
     {
         return new SearchController($this->database);
+    }
+
+    public function getStatisticheController()
+    {
+        return new StatisticheController($this->database);
     }
 }

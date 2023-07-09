@@ -15,8 +15,8 @@ if (isset($_SESSION['utente'])) {
     $utente = null;
 }
 
-$film = $filmController->getAllFilms(8);
-$serie = $serieController->getAllSeries(8);
+$film = $filmController->getMainFilms(8);
+$serie = $serieController->getMainSeries(8);
 
 $programmi = array_merge($film, $serie);
 shuffle($programmi);

@@ -84,6 +84,35 @@ $(function () {
 		e.preventDefault();
 	});
 
+	//js for change tab after pagiantion
+	$(document).ready(function () {
+		// Verifica se l'URL contiene "moviesingle" o "seriessingle" nell'indirizzo
+		var containsMovieSingle = window.location.href.includes("moviesingle");
+		var containsSeriesSingle = window.location.href.includes("seriessingle");
+
+		// Verifica se l'URL contiene "pagina" o "ord" come parametri
+		var urlParams = new URLSearchParams(window.location.search);
+		var containsPagina = urlParams.has("pagina");
+		var containsOrd = urlParams.has("ord");
+
+		// Verifica entrambe le condizioni
+		if ((containsMovieSingle || containsSeriesSingle) && (containsPagina || containsOrd)) {
+			// Mostra il tab desiderato e nascondi gli altri
+			$('#reviews').show().siblings().hide();
+
+			// Rimuovi la classe 'active' da tutti gli elementi li
+			$('.tab-links li').removeClass('active');
+
+			// Aggiungi la classe 'active' all'elemento li corrispondente
+			$('.tab-links li a[href="#review"]').parent('li').addClass('active');
+
+			// Reimposta la posizione degli slider/caroselli, se necessario
+			multiItem.slick('setPosition');
+			multiItem2.slick('setPosition');
+		}
+	});
+
+
 	// js for time count down
 	function getTimeRemaining(endtime) {
 		var t = Date.parse(endtime) - Date.parse(new Date());

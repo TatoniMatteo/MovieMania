@@ -21,6 +21,11 @@ if (isset($_SESSION['utente'])) {
 if (!isset($_GET['id'])) {
     include '../service/404.html';
 } else {
+    $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
+    $limit = 15;
+    $offset = $pagina * $limit;
+    $ordinamento = isset($_GET['ord']) ? $_GET['ord'] : 0;
+
     $serieId = $_GET['id'];
     $serie = $serieController->getSerieByID($serieId);
     if ($serie == null) {
@@ -31,6 +36,8 @@ if (!isset($_GET['id'])) {
         $categorie = $serieController->getCategoriesOfSerie($serieId);
         $personaggi = $personaggiController->getPersonaggiBySerie($serieId);
         $numero_recensioni = $recensioniController->getNumeroRecesioniBySerie($serieId);
+        $pagine = ceil($numero_recensioni / $limit);
+        $recensioni = $recensioniController->getRecensioniBySerie($serieId, $offset, $limit, $ordinamento);
         $serie_correlate = $serieController->getSerieCorrelate($serieId);
         $recensione = null;
         if ($utente != null) {

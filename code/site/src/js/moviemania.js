@@ -542,16 +542,25 @@ document.addEventListener('DOMContentLoaded', function () {
             if (text.trim().length == 0) { return }
             var url = window.location.href;
             var currentURL = new URL(url);
+            var urlParams = new URLSearchParams(currentURL.search);
 
-            if (type == "celebrita")
+            if (type == "celebrita") {
                 currentURL.pathname = '/MovieMania/code/site/src/pages/search/celebritygrid.php';
-            else
+            }
+            else {
                 currentURL.pathname = '/MovieMania/code/site/src/pages/search/moviegrid.php';
+                urlParams.append('filtro', type);
+            }
 
-            currentURL.search = '?testo=' + text + '&filtro=' + type;
+            urlParams.append('testo', text);
+            currentURL.search = urlParams.toString();
             window.location.href = currentURL.href;
         });
     }
+
+    /**
+     * PAGINAZIONE
+     */
 
     var pagination = document.querySelector('.pagination2');
     if (pagination) {
@@ -573,6 +582,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
+
+    /** 
+     * ORDINAMENTO
+    */
 
     var selectOrdinamento = document.querySelector('.ordinamento');
     if (selectOrdinamento) {
@@ -671,7 +684,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var rolesInput = document.getElementById('filter-roles');
 
             var text = textInput.value
-            var group = "celebrita"
             var values = [];
             for (var option of rolesInput.options) {
                 if (option.selected) {
@@ -687,16 +699,10 @@ document.addEventListener('DOMContentLoaded', function () {
             var currentOrd = parseInt(urlParams.get('ord'));
             var currentRoles = urlParams.get('ruoli');
 
-            console.log(urlParams.toString());
-
             if (isNaN(currentText)) {
                 urlParams.append('testo', text);
             } else {
                 urlParams.set('testo', text);
-            }
-
-            if (isNaN(currentFilter)) {
-                urlParams.append('filtro', group);
             }
 
             if (!isNaN(currentPage)) {

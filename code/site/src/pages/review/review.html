@@ -30,6 +30,8 @@
 </head>
 
 <body>
+	<!--toast-->
+	<div id="toast-container"></div>
 	<!--preloading-->
 	<div id="preloader">
 		<img class="logo" src="../../images/logo1.png" alt="" width="119" height="58">
@@ -40,11 +42,11 @@
 	</div>
 	<!--end of preloading-->
 	<!--login form popup-->
-	<div class="login-wrapper" id="login-content">
+	<div class="login-wrapper" action="../service/login.php" id="login-content">
 		<div class="login-content">
 			<a class="close">x</a>
 			<h3>Accedi</h3>
-			<form method="post" action="../service/login.php" id="login-form">
+			<form method="post" id="login-form">
 				<div class="row">
 					<label for="username">
 						Username o email:
@@ -143,8 +145,8 @@
 							<a href="#page-top"></a>
 						</li>
 						<li><a href="../../index.php">Home</a></li>
-						<li><a href="../../index.php"> File & Serie </a></li>
-						<li><a href="../../index.php"> Celebrità </a></li>
+						<li><a href="../search/moviegrid.php"> File & Serie </a></li>
+						<li><a href="../search/celebritygrid.php"> Celebrità </a></li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
 						<?php 
@@ -265,65 +267,34 @@
 		</div>
 	</div>
 	<!-- review section-->
-
 	<!-- footer section-->
-	<footer class="ht-footer">
-		<div class="container">
-			<div class="flex-parent-ft">
-				<div class="flex-child-ft item1">
-					<a href="index.html"><img class="logo" src="../../images/logo1.png" alt=""></a>
-					<p>5th Avenue st, manhattan<br>
-						New York, NY 10001</p>
-					<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
-				</div>
-				<div class="flex-child-ft item2">
-					<h4>Resources</h4>
-					<ul>
-						<li><a href="#">About</a></li>
-						<li><a href="#">Blockbuster</a></li>
-						<li><a href="#">Contact Us</a></li>
-						<li><a href="#">Forums</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Help Center</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item3">
-					<h4>Legal</h4>
-					<ul>
-						<li><a href="#">Terms of Use</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Security</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item4">
-					<h4>Account</h4>
-					<ul>
-						<li><a href="#">My Account</a></li>
-						<li><a href="#">Watchlist</a></li>
-						<li><a href="#">Collections</a></li>
-						<li><a href="#">User Guide</a></li>
-					</ul>
-				</div>
-				<div class="flex-child-ft item5">
-					<h4>Newsletter</h4>
-					<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-					<form action="#">
-						<input type="text" placeholder="Enter your email...">
-					</form>
-					<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
-				</div>
-			</div>
-		</div>
-		<div class="ft-copyright">
-			<div class="ft-left">
-				<p>© 2017 Blockbuster. All Rights Reserved. Designed by leehari.</p>
-			</div>
-			<div class="backtotop">
-				<p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
-			</div>
-		</div>
-	</footer>
-	<!-- end of footer section-->
+    <footer class="ht-footer">
+        <div class="container">
+            <div class="flex-parent-ft">
+                <div class="flex-child-ft item1">
+                    <p>Via Vetoio, 1<br>
+                        67100 Coppito AQ</p>
+                    <p>Contattaci: <br><a href="#">(+39) 331 8985076</a><br><a href="#">(+39) 380 4674717</a><br><a
+                            href="#">(+39) 389 4638110</a></p>
+                </div>
+                <div class="flex-child-ft item2">
+                    <a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
+                    <h4 style="text-transform: none; font-size: 1.5em;">
+                        <em>"MovieMania: dove le immagini prendono vita e le parole diventano poesia!</em>"
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="ft-copyright">
+            <div class="ft-left">
+                <p>© 2023 MovieMania. All Rights Reserved.</p>
+            </div>
+            <div class="backtotop">
+                <p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- end of footer section-->
 
 	<script src="../../js/jquery.js"></script>
 	<script src="../../js/plugins.js"></script>
