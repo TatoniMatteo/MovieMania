@@ -204,19 +204,7 @@ class StatisticheController
                 );
             }
         }
-
-        uasort($recensioniPerMese, function ($a, $b) {
-            $annoA = $a['anno'];
-            $annoB = $b['anno'];
-            $meseA = date('n', strtotime($a['mese']));
-            $meseB = date('n', strtotime($b['mese']));
-
-            if ($annoA == $annoB) {
-                return $meseA - $meseB;
-            } else {
-                return $annoA - $annoB;
-            }
-        });
+        
         return $recensioniPerMese;
     }
 }

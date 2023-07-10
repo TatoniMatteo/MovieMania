@@ -11,9 +11,12 @@ class UtentiController
 
     public function getUtenteById($id)
     {
-        $query = "SELECT Utenti.* 
-    FROM Utenti
-    WHERE Utenti.id = ?";
+        $query = "SELECT u.*, GROUP_CONCAT(p.id SEPARATOR ', ') AS permessi
+        FROM utenti u
+        JOIN possiede po ON u.id = po.utente_id
+        JOIN permessi p ON po.permesso_id = p.id
+        WHERE u.id = ?
+        GROUP BY u.id";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
         mysqli_stmt_bind_param($statement, "i", $id);

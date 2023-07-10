@@ -124,28 +124,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (ctx) {
             var data = await getData("anno");
             const entries = Object.entries(data);
-            const numeroRecensioniArray = entries.map(([_, value]) => value.numero_recensioni);
-            const meseAnnoArray = entries.map(([_, value]) => `${value.mese} ${value.anno}`);
 
-            meseAnnoArray.sort((a, b) => {
-                const [meseA, annoA] = a.split(' ');
-                const [meseB, annoB] = b.split(' ');
-                if (annoA === annoB) {
-                    return parseInt(meseA.slice(0, 3), 10) - parseInt(meseB.slice(0, 3), 10);
-                } else {
-                    return parseInt(annoA, 10) - parseInt(annoB, 10);
-                }
+            const dataLabelArray = entries.map(([_, value]) => {
+                return {
+                    dato: value.numero_recensioni,
+                    etichetta: `${value.mese} ${value.anno}`
+                };
             });
+
+            dataLabelArray.sort((a, b) => {
+                var mesi = ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"];
+
+                var aParti = a.etichetta.split(" ");
+                var bParti = b.etichetta.split(" ");
+
+                var aMese = mesi.indexOf(aParti[0]);
+                var bMese = mesi.indexOf(bParti[0]);
+
+                var aAnno = parseInt(aParti[1]);
+                var bAnno = parseInt(bParti[1]);
+
+                var aData = new Date(aAnno, aMese, 1);
+                var bData = new Date(bAnno, bMese, 1);
+
+                return aData - bData;
+            });
+
+            const values = dataLabelArray.map(item => item.dato);
+            const labels = dataLabelArray.map(item => item.etichetta);
+
 
             ctx.height = 100;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: meseAnnoArray,
+                    labels: labels,
                     type: 'line',
                     defaultFontFamily: 'Poppins',
                     datasets: [{
-                        data: numeroRecensioniArray,
+                        data: values,
                         label: "Expense",
                         backgroundColor: 'rgba(0,103,255,.15)',
                         borderColor: 'rgba(0,103,255,0.5)',

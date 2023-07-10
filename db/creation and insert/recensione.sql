@@ -48,4 +48,6 @@ La trama è piena di colpi di scena che ti terranno con il fiato sospeso. Gli at
 Ciò che mi ha colpito di più di "Forrest Gump" è il modo in cui affronta temi universali come l\'amore e la ricerca della felicità. Mi ha fatto riflettere e mi ha emozionato.
 
 In sintesi, se ti piacciono i film coinvolgenti e indimenticabili, ti consiglio "Forrest Gump". È un\'esperienza cinematografica da non perdere.', 10.0, 4, null, 3, '2015-02-17');
-INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (23, 'Film davvero commuovente!', 'Il film mi è molto piaciuto!', 10.0, 1, null, 6, '2023-07-05');
+INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (26, 'Film molto bello, ma...', 'Film molo bello che tiene con il fiato sospeso dall\'inizio alla fine. Purtroppo si percepisce che è un film di altri tempi.
+', 7.0, 1, null, 5, '2023-07-10');
+INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (27, 'Un supereroe nuovo', 'Finalmente un nuovo supereroe. Giovane, fresco e innovativo.', 9.0, 11, null, 5, '2023-07-10');

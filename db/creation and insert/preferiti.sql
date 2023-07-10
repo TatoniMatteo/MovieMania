@@ -24,5 +24,3 @@ INSERT INTO moviemania.preferiti (id, id_serie, id_film, id_utente) VALUES (5, 3
 INSERT INTO moviemania.preferiti (id, id_serie, id_film, id_utente) VALUES (6, null, 4, 3);
 INSERT INTO moviemania.preferiti (id, id_serie, id_film, id_utente) VALUES (7, 4, null, 4);
 INSERT INTO moviemania.preferiti (id, id_serie, id_film, id_utente) VALUES (8, null, 1, 4);
-INSERT INTO moviemania.preferiti (id, id_serie, id_film, id_utente) VALUES (12, null, 2, 6);
-INSERT INTO moviemania.preferiti (id, id_serie, id_film, id_utente) VALUES (14, 4, null, 6);
