@@ -64,6 +64,9 @@
 				<div class="row">
 					<button type="submit">Accedi</button>
 				</div>
+				<div class="row" style="margin-top: 10px; text-decoration: underline;">
+					<a href="#" id="goToSignUp">Non hai un account? Registrati ora</a>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -99,13 +102,12 @@
 							required="required" />
 					</label>
 				</div>
-				<div class="row">
+				<div class="row social-btn-2">
 					<label for="password-2">
 						Password:
 						<input type="password" name="password" id="password-2" required="required" />
 					</label>
-				</div>
-				<div class="row">
+					<div style="width: 10px;"></div>
 					<label for="repassword-2">
 						Conferma Password:
 						<input type="password" name="password" id="repassword-2" required="required" />
@@ -145,24 +147,27 @@
 							<a href="#page-top"></a>
 						</li>
 						<li><a href="../../index.php">Home</a></li>
-						<li><a href="../search/moviegrid.php"> File & Serie </a></li>
+						<li><a href="../search/moviegrid.php"> Film & Serie </a></li>
 						<li><a href="../search/celebritygrid.php"> Celebrità </a></li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
 						<?php 
-                            if($utente == null) {
-                                echo '<li class="loginLink"><a>Accedi</a></li>';
-                                echo '<li class="btn signupLink"><a>Registrati</a></li>';
-                            } else {
-                                if ($utente['foto'] != null) {
-                                    echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="40" height="40">';
-                                } else {
-                                    echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
-                                }
-                                echo '<li><a href="../profilo/profilo.php">' . $utente['nome'] . '</a></li>';
-                                echo '<li><a href="../service/logout.php">Disconetti</a></li>';
-                            }
-                        ?>
+								if($utente == null) {
+									echo '<li class="loginLink"><a>Accedi</a></li>';
+									echo '<li class="btn signupLink"><a>Registrati</a></li>';
+								} else {
+									if ($utente['foto'] != null) {
+										echo '<img src="data:image/jpeg;base64,' . base64_encode($utente['foto']) . '" alt="" width="40" height="40">';
+									} else {
+										echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
+									}
+									echo '<li><a href="../profilo/profilo.php">' . $utente['nome'] . '</a></li>';
+									if(in_array(2, $permessi)){
+										echo '<li><a href="../../../../admin/src/index.php">Amministrazione</a></li>';
+									}
+									echo '<li><a href="../service/logout.php">Disconetti</a></li>';
+								}
+							?>
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -285,33 +290,33 @@
 	</div>
 	<!-- end of celebrity grid v2 section-->
 	<!-- footer section-->
-    <footer class="ht-footer">
-        <div class="container">
-            <div class="flex-parent-ft">
-                <div class="flex-child-ft item1">
-                    <p>Via Vetoio, 1<br>
-                        67100 Coppito AQ</p>
-                    <p>Contattaci: <br><a href="#">(+39) 331 8985076</a><br><a href="#">(+39) 380 4674717</a><br><a
-                            href="#">(+39) 389 4638110</a></p>
-                </div>
-                <div class="flex-child-ft item2">
-                    <a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
-                    <h4 style="text-transform: none; font-size: 1.5em;">
-                        <em>"MovieMania: dove le immagini prendono vita e le parole diventano poesia!</em>"
-                    </h4>
-                </div>
-            </div>
-        </div>
-        <div class="ft-copyright">
-            <div class="ft-left">
-                <p>© 2023 MovieMania. All Rights Reserved.</p>
-            </div>
-            <div class="backtotop">
-                <p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
-            </div>
-        </div>
-    </footer>
-    <!-- end of footer section-->
+	<footer class="ht-footer">
+		<div class="container">
+			<div class="flex-parent-ft">
+				<div class="flex-child-ft item1">
+					<p>Via Vetoio, 1<br>
+						67100 Coppito AQ</p>
+					<p>Contattaci: <br><a href="#">(+39) 331 8985076</a><br><a href="#">(+39) 380 4674717</a><br><a
+							href="#">(+39) 389 4638110</a></p>
+				</div>
+				<div class="flex-child-ft item2">
+					<a href="../../index.php"><img class="logo" src="../../images/logo1.png" alt=""></a>
+					<h4 style="text-transform: none; font-size: 1.5em;">
+						<em>"MovieMania: dove le immagini prendono vita e le parole diventano poesia!</em>"
+					</h4>
+				</div>
+			</div>
+		</div>
+		<div class="ft-copyright">
+			<div class="ft-left">
+				<p>© 2023 MovieMania. All Rights Reserved.</p>
+			</div>
+			<div class="backtotop">
+				<p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
+			</div>
+		</div>
+	</footer>
+	<!-- end of footer section-->
 
 	<script src="../../js/jquery.js"></script>
 	<script src="../../js/plugins.js"></script>

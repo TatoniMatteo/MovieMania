@@ -47,11 +47,11 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="active">
+                        <li>
                             <a href="../home/home.php">
                                 <i class="fas fa-bar-chart-o"></i>Panoramica</a>
                         </li>
-                        <li class="has-sub">
+                        <li class="active has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-table"></i>Gestisci Risorse</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -115,100 +115,54 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        <div class="row">
+                        <div class="row" style="margin-bottom: 40px;">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1">Panoramica</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-t-25">
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c1">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-movie"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php echo $numero_film?>
-                                                </h2>
-                                                <span>Film in catalogo</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c2">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-movie-alt"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php echo $numero_serie?>
-                                                </h2>
-                                                <span>Serie in catalogo</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c3">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-account"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php echo $numero_celebrita?>
-                                                </h2>
-                                                <span>Celebrità sul sito</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c4">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-star"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php echo $numero_recensioni?>
-                                                </h2>
-                                                <span>Recensioni utenti</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <h2 class="title-1"><i class="zmdi zmdi-movie-alt"></i> CELEBRITÀ</h2>
+                                    <button class="au-btn au-btn-icon au-btn--blue">
+                                        <i class="zmdi zmdi-plus"></i>Aggiungi celebrità</button>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="au-card m-b-30">
-                                    <div class="au-card-inner">
-                                        <h3 class="title-2 m-b-40">Recensioni degli ultimi 30 giorni</h3>
-                                        <canvas id="mouth-review"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="au-card m-b-30">
-                                    <div class="au-card-inner">
-                                        <h3 class="title-2 m-b-40">Recensioni degli ultimi 12 mesi</h3>
-                                        <canvas id="year-review"></canvas>
-                                    </div>
+                                <div class="table-responsive table--no-card m-b-30">
+                                    <table class="table table-borderless table-striped table-earning">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th class="text-center">
+                                                    <i class="zmdi zmdi-calendar"> </i>
+                                                    Data di nascita
+                                                </th>
+                                                <th class="text-center">
+                                                    <i class="fas fa-globe"> </i>
+                                                    Nazionalità
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($personaggi as $personaggio){ ?>
+                                            <tr>
+                                                <td class="text-left">
+                                                    <?php echo $personaggio['nome'] . " ". $personaggio['cognome']; ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php echo $personaggio['data_nascita'] ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php echo $personaggio['nazionalita'] ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a style="cursor: pointer;">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +198,6 @@
 
     <!-- Main JS-->
     <script src="../../js/main.js"></script>
-    <script src="../../js/chart.js"></script>
 
 </body>
 

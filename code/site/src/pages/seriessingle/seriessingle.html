@@ -64,6 +64,9 @@
 				<div class="row">
 					<button type="submit">Accedi</button>
 				</div>
+				<div class="row" style="margin-top: 10px; text-decoration: underline;">
+					<a href="#" id="goToSignUp">Non hai un account? Registrati ora</a>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -99,13 +102,12 @@
 							required="required" />
 					</label>
 				</div>
-				<div class="row">
+				<div class="row social-btn-2">
 					<label for="password-2">
 						Password:
 						<input type="password" name="password" id="password-2" required="required" />
 					</label>
-				</div>
-				<div class="row">
+					<div style="width: 10px;"></div>
 					<label for="repassword-2">
 						Conferma Password:
 						<input type="password" name="password" id="repassword-2" required="required" />
@@ -145,7 +147,7 @@
 							<a href="#page-top"></a>
 						</li>
 						<li><a href="../../index.php">Home</a></li>
-						<li><a href="../search/moviegrid.php"> File & Serie </a></li>
+						<li><a href="../search/moviegrid.php"> Film & Serie </a></li>
 						<li><a href="../search/celebritygrid.php"> Celebrità </a></li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -160,6 +162,9 @@
                                     echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
                                 }
                                 echo '<li><a href="../profilo/profilo.php">' . $utente['nome'] . '</a></li>';
+                                if(in_array(2, $permessi)){
+                                    echo '<li><a href="../../../../admin/src/index.php">Amministrazione</a></li>';
+                                }
                                 echo '<li><a href="../service/logout.php">Disconetti</a></li>';
                             }
                         ?>

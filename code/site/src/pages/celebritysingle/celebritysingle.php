@@ -10,6 +10,7 @@ $utentiController = $config->getUtentiController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
+    $permessi = $array = array_map('intval', explode(",", $utente['permessi']));
 } else {
     $utente = null;
 }

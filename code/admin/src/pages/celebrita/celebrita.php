@@ -1,18 +1,18 @@
 <?php
 require_once '../../../../include/config.php';
+require_once '../../../../site/src/php/utility.php';
 session_start();
 
 $config = Config::getInstance();
 $utentiController = $config->getUtentiController();
+$statsController = $config->getStatisticheController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
-    $permessi = $array = array_map('intval', explode(",", $utente['permessi']));
-    if ($utente != null) {
-        include 'userprofile.html';
-    } else {
-        include '../service/404.html';
-    }
 } else {
-    include '../service/404.html';
+    $utente = null;
 }
+
+$personaggi = $statsController->getAllPersonaggi();
+
+include 'celebrita.html';

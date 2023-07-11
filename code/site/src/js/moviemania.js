@@ -103,6 +103,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
+    var goToSignUp = document.getElementById('goToSignUp')
+    if (goToSignUp) {
+
+        goToSignUp.addEventListener("click", function (event) {
+            event.preventDefault()
+
+            var signupct = $("#signup-content");
+            var loginWrap = $(".login-wrapper");
+            var overlay = $(".overlay");
+
+            overlay.removeClass("openform")
+
+            loginWrap.each(function () {
+                $(this).wrap('<div class="overlay"></div>')
+            });
+            signupct.parents(overlay).addClass("openform");
+            $(document).on('click', function (e) {
+                var target = $(e.target);
+                if ($(target).hasClass("overlay")) {
+                    $(target).find(signupct).each(function () {
+                        $(this).removeClass("openform");
+                    });
+                    setTimeout(function () {
+                        $(target).removeClass("openform");
+                    }, 350);
+                }
+            });
+        })
+    }
     /**
      * PULSANTE RECENSIONE
      */

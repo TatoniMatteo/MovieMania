@@ -8,6 +8,7 @@ $utentiController = $config->getUtentiController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
+    $permessi = $array = array_map('intval', explode(",", $utente['permessi']));
     if ($utente != null) {
         $recensioni = $recensioniController->getRecesioniByUtente($utente['id']);
         $numero_recensioni = count($recensioni);

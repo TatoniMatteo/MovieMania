@@ -9,6 +9,7 @@ $utentiController = $config->getUtentiController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
+    $permessi = $array = array_map('intval', explode(",", $utente['permessi']));
     if ($utente != null) {
         $programmiPreferiti = $utentiController->getPreferiti($utente['id']);
         $numero_preferiti = count($programmiPreferiti);

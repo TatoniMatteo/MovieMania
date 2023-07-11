@@ -133,6 +133,27 @@ class StatisticheController
         return $serie;
     }
 
+    public function getAllPersonaggi()
+    {
+        $query = "SELECT id, nome, cognome, nazionalita, data_nascita
+            FROM Personaggi
+            ORDER BY nome";
+
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
+        $personaggi = array();
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $personaggi[] = $row;
+            }
+        }
+
+        return $personaggi;
+    }
+
 
     public function getMounthReview()
     {
@@ -204,7 +225,7 @@ class StatisticheController
                 );
             }
         }
-        
+
         return $recensioniPerMese;
     }
 }
