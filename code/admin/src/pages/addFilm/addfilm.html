@@ -134,9 +134,9 @@
                                             </div>
                                             <div class="col-12 col-md-9">
                                                 <label for="fotoInput">
-                                                    <img src="../../media/addImage.jpg">
+                                                    <img id="copertina" src="../../media/addImage.jpg">
                                                 </label>
-                                                <input class="form-control-file" type="file" style="display: none;"
+                                                <input name="copertina" class="form-control-file" type="file" style="display: none;"
                                                     id="fotoInput" accept=".jpg, .jpeg">
                                             </div>
                                         </div>
@@ -189,17 +189,18 @@
                                             </div>
                                             <div class="col-12 col-md-9">
                                                 <div class="row">
-                                                    <div class="col-10 col-md-9">
+                                                    <div class="col-10">
                                                         <input id="trailerLink" type="text" class="form-control"
-                                                            placeholder="inserisci il link del trailer (YouTube embeded)"
+                                                            placeholder="inserisci il link del trailer (YouTube embed)"
                                                             style="margin-bottom: 10px;">
                                                     </div>
                                                     <div class="col">
-                                                        <button type="button" class=" btn btn-primary">Carica</button>
+                                                        <button id="trailerBtn" type="button"
+                                                            class=" btn btn-primary">Carica</button>
                                                     </div>
                                                 </div>
-                                                <iframe id="trailer" width="560" height="315" src="" title="Trailer"
-                                                    frameborder="0"></iframe>
+                                                <iframe id="trailer" style="aspect-ratio: 16/9;" class="form-control"
+                                                    src="" title="Trailer" frameborder="0"></iframe>
                                             </div>
                                         </div>
 

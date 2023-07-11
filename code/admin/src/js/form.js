@@ -69,6 +69,18 @@ function createCheckbox(defaultValue = false) {
 
 }
 
+function createInputText(text = null) {
+
+    var textinput = document.createElement("input")
+    textinput.classList.add("form-control");
+    textinput.setAttribute("type", "text");
+    textinput.setAttribute("placeholder", "interpreta");
+    if (text) textinput.setAttribute("value", text)
+
+    var div = createDiv(false, "text-center", [textinput])
+    return div
+}
+
 
 function addProduttore(nome, id, star, ruolo) {
     var produttori = document.getElementById('produttori')
@@ -103,16 +115,7 @@ function addAttore(nome, id, star, ruolo) {
 
     var divStar = createCheckbox(star)
 
-    var divInterpreta = document.createElement("div");
-    divInterpreta.classList.add("col");
-    divInterpreta.classList.add("col-md-3");
-
-    var interpretaInput = document.createElement("input");
-    interpretaInput.classList.add("form-control");
-    interpretaInput.setAttribute("type", "text");
-    interpretaInput.setAttribute("placeholder", "interpreta");
-
-    divInterpreta.appendChild(interpretaInput);
+    var divInterpreta = createInputText()
 
     var attore = createDiv(true, null, [space, divNome, divInterpreta, divStar]);
     attore.setAttribute("id", id)
@@ -267,8 +270,48 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     var trailerLink = document.getElementById('trailerLink')
     var trailer = document.getElementById('trailer')
+    var trailerBtn = document.getElementById('trailerBtn')
 
-    trailerLink.addEventListener('keyup', event => {
-        trailer.innerHTML = event.setAttribute('src', trailerLink.value);
+    if (trailer && trailerLink && trailerBtn) {
+        trailerBtn.addEventListener('click', event => {
+            trailer.setAttribute('src', trailerLink.value);
+        })
+    }
+
+    var copertina = document.getElementById('copertina');
+    var fileLoader = document.getElementById('fotoInput');
+
+    if (fileLoader && copertina) {
+        fileLoader.addEventListener('change', async () => {
+            copertina.setAttribute("src", await getNewImage(fileLoader.files[0]));
+        })
     }
 })
+
+async function getNewImage(image) {
+
+    var formData = new FormData();
+    formData.append('foto', image);
+    formData.append('altezza', 437)
+    formData.append('larghezza', 285)
+
+    return fetch('../services/elaboraFoto.php', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            if (data.success) {
+                console.log(data.path)
+                path = '../services/' + data.path
+                return path
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch(function (error) {
+            alert(error);
+        });
+}
