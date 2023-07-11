@@ -134,7 +134,7 @@
                                             </div>
                                             <div class="col-12 col-md-9">
                                                 <label for="fotoInput">
-                                                    <img src="../../../../site/src/images/uploads/slider1.jpg">
+                                                    <img src="../../media/addImage.jpg">
                                                 </label>
                                                 <input class="form-control-file" type="file" style="display: none;"
                                                     id="fotoInput" accept=".jpg, .jpeg">
@@ -162,16 +162,19 @@
                                         </div>
                                         <div class="row form-group">
                                             <div class="col col-md-3">
-                                                <label for="data" class=" form-control-label">Data
-                                                    pubblicazione*</label>
+                                                <label for="data" class=" form-control-label">
+                                                    Data pubblicazione*
+                                                </label>
                                             </div>
                                             <div class="col-5 col-md-3">
                                                 <input type="date" id="data" name="data"
                                                     placeholder="Inserisci la data di pubblicazione del film" required
                                                     class="form-control">
                                             </div>
-                                            <div class="col col-md-2">
-                                                <label for="data" class=" form-control-label">Durata*</label>
+                                            <div class="col col-md-2 text-right">
+                                                <label for="data" class=" form-control-label">
+                                                    Durata*
+                                                </label>
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <div class="input-group mb-3">
@@ -180,6 +183,26 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="data" class=" form-control-label">Trailer</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <div class="row">
+                                                    <div class="col-10 col-md-9">
+                                                        <input id="trailerLink" type="text" class="form-control"
+                                                            placeholder="inserisci il link del trailer (YouTube embeded)"
+                                                            style="margin-bottom: 10px;">
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="button" class=" btn btn-primary">Carica</button>
+                                                    </div>
+                                                </div>
+                                                <iframe id="trailer" width="560" height="315" src="" title="Trailer"
+                                                    frameborder="0"></iframe>
+                                            </div>
+                                        </div>
+
                                         <!--PRODUTTORI-->
                                         <div class="row form-group">
                                             <div class="col col-md-3">
@@ -187,7 +210,7 @@
                                             </div>
                                             <div class="col-12 col-md-9">
                                                 <input type="text" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" class="dropdown-toggle btn btn-primary"
+                                                    aria-expanded="false" class="dropdown-toggle form-control"
                                                     placeholder="Seleziona un personaggio" id="personaggi1">
                                                 <div tabindex="-1" aria-hidden="true" role="menu" class="dropdown-menu"
                                                     id="dropdown-menu1">
@@ -204,7 +227,7 @@
                                             </div>
                                             <div class="col-12 col-md-9">
                                                 <input type="text" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" class="dropdown-toggle btn btn-primary"
+                                                    aria-expanded="false" class="dropdown-toggle form-control"
                                                     placeholder="Seleziona un personaggio" id="personaggi2">
                                                 <div tabindex="-1" aria-hidden="true" role="menu" class="dropdown-menu"
                                                     id="dropdown-menu2">
@@ -221,7 +244,7 @@
                                             </div>
                                             <div class="col-12 col-md-9">
                                                 <input type="text" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" class="dropdown-toggle btn btn-primary"
+                                                    aria-expanded="false" class="dropdown-toggle form-control"
                                                     placeholder="Seleziona un personaggio" id="personaggi3">
                                                 <div tabindex="-1" aria-hidden="true" role="menu" class="dropdown-menu"
                                                     id="dropdown-menu3">

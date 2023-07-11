@@ -22,203 +22,125 @@ function filter(filtro, personaggio) {
     return personaggio.includes(filtro)
 }
 
+function createDiv(row, align, elements, margin = 10) {
+    var div = document.createElement('div')
+    if (row) div.classList.add('row')
+    else {
+        div.classList.add('col')
+        div.classList.add(`col-md-3`)
+        div.style.marginBottom = margin + 'px'
+    }
+    if (align) div.classList.add(align)
+    div.classList.add("align-middle")
+    elements.forEach(element => div.appendChild(element))
+
+    return div
+}
+
+function createSelect(data, defaultValue) {
+    var select = document.createElement('select')
+    select.classList.add('form-control')
+
+    data.forEach(data => {
+        var option = document.createElement('option')
+        option.textContent = data.ruolo
+        option.value = data.id
+        select.appendChild(option)
+    })
+    select.value = defaultValue
+
+    return select
+}
+
+function createCheckbox(defaultValue = false) {
+    var labelStar = document.createElement("label")
+    labelStar.classList.add("form-check-label")
+    labelStar.setAttribute("for", "checkbox")
+    labelStar.textContent = "STAR"
+    labelStar.style.marginRight = "10px"
+
+    var checkbox = document.createElement("input")
+    checkbox.setAttribute("type", "checkbox")
+    checkbox.setAttribute("id", "checkbox")
+    if (defaultValue)
+        checkbox.setAttribute("checked", "checked")
+
+    return createDiv(false, "text-center", [labelStar, checkbox], 0)
+
+}
+
 
 function addProduttore(nome, id, star, ruolo) {
     var produttori = document.getElementById('produttori')
 
-    var produttore = document.createElement("div")
-    produttore.classList.add("row")
-    produttore.setAttribute("id", id)
-
-    var space = document.createElement("div")
-    space.classList.add("col")
-    space.classList.add("col-md-3")
-
-    var divNome = document.createElement("div")
-    divNome.classList.add("col")
-    divNome.classList.add("col-md-3")
+    var space = createDiv(false, "text-left", []);
 
     var labelNome = document.createElement("label")
     labelNome.innerHTML = nome
     labelNome.classList.add("form-control-label")
-    divNome.appendChild(labelNome)
+    var divNome = createDiv(false, "text-left", [labelNome]);
 
-    var divRole = document.createElement("div")
-    divRole.classList.add("col")
-    divRole.classList.add("col-md-3")
+    var roleSelect = createSelect([{ ruolo: "Produttore", id: 1 }, { ruolo: "Scrittore", id: 4 }], ruolo)
+    var divRole = createDiv(false, "text-center", [roleSelect])
 
-    var roleSelect = document.createElement("select")
-    var role1 = document.createElement("option")
-    role1.textContent = "Produttore"
-    role1.value = 1
-    roleSelect.appendChild(role1)
+    var divStar = createCheckbox(star)
 
-    var role2 = document.createElement("option")
-    role2.textContent = "Scrittore"
-    role2.value = 4
-    roleSelect.appendChild(role2)
-    divRole.appendChild(roleSelect)
+    var produttore = createDiv(true, null, [space, divNome, divRole, divStar]);
+    produttore.setAttribute("id", id)
 
-    var divStar = document.createElement("div")
-    divStar.classList.add("col")
-    divStar.classList.add("col-md-3")
-
-    var divCheckbox = document.createElement("div")
-    divCheckbox.classList.add("row")
-
-    var labelStar = document.createElement("label")
-    labelStar.classList.add("form-check-label")
-    labelStar.setAttribute("for", "checkbox")
-    labelStar.textContent = "STAR"
-
-    var checkbox = document.createElement("input")
-    checkbox.setAttribute("type", "checkbox")
-    checkbox.setAttribute("id", "checkbox")
-    checkbox.classList.add("form-check-input")
-
-    divStar.appendChild(divCheckbox)
-    divCheckbox.appendChild(labelStar)
-    divCheckbox.appendChild(checkbox)
-
-    produttore.appendChild(space)
-    produttore.appendChild(divNome)
-    produttore.appendChild(divRole)
-    produttore.appendChild(divStar)
     produttori.appendChild(produttore)
-
-    roleSelect.value = ruolo
-    checkbox.checked = star
 }
 
 function addAttore(nome, id, star, ruolo) {
-    var attori = document.getElementById('attori')
+    var attori = document.getElementById('attori');
 
-    var attore = document.createElement("div")
-    attore.classList.add("row")
-    attore.setAttribute("id", id)
-
-    var space = document.createElement("div")
-    space.classList.add("col")
-    space.classList.add("col-md-3")
-
-    var divNome = document.createElement("div")
-    divNome.classList.add("col")
-    divNome.classList.add("col-md-3")
+    var space = createDiv(false, "text-left", []);
 
     var labelNome = document.createElement("label")
     labelNome.innerHTML = nome
     labelNome.classList.add("form-control-label")
-    divNome.appendChild(labelNome)
+    var divNome = createDiv(false, "text-left", [labelNome]);
 
+    var divStar = createCheckbox(star)
 
-    var divInterpreta = document.createElement("div")
-    divInterpreta.classList.add("col")
-    divInterpreta.classList.add("col-md-3")
+    var divInterpreta = document.createElement("div");
+    divInterpreta.classList.add("col");
+    divInterpreta.classList.add("col-md-3");
 
-    var interpretaInput = document.createElement("input")
-    interpretaInput.classList.add("form-control")
-    interpretaInput.setAttribute("type", "text")
-    interpretaInput.setAttribute("placeholder", "interpreta")
+    var interpretaInput = document.createElement("input");
+    interpretaInput.classList.add("form-control");
+    interpretaInput.setAttribute("type", "text");
+    interpretaInput.setAttribute("placeholder", "interpreta");
 
-    divInterpreta.appendChild(interpretaInput)
+    divInterpreta.appendChild(interpretaInput);
 
-    var divStar = document.createElement("div")
-    divStar.classList.add("col")
-    divStar.classList.add("col-md-3")
+    var attore = createDiv(true, null, [space, divNome, divInterpreta, divStar]);
+    attore.setAttribute("id", id)
+    attori.appendChild(attore);
 
-    var divCheckbox = document.createElement("div")
-    divCheckbox.classList.add("row")
-
-    var labelStar = document.createElement("label")
-    labelStar.classList.add("form-check-label")
-    labelStar.setAttribute("for", "checkbox")
-    labelStar.textContent = "STAR"
-
-    var checkbox = document.createElement("input")
-    checkbox.setAttribute("type", "checkbox")
-    checkbox.setAttribute("id", "checkbox")
-    checkbox.classList.add("form-check-input")
-
-    divStar.appendChild(divCheckbox)
-    divCheckbox.appendChild(labelStar)
-    divCheckbox.appendChild(checkbox)
-
-    attore.appendChild(space)
-    attore.appendChild(divNome)
-    attore.appendChild(divInterpreta)
-    attore.appendChild(divStar)
-    attori.appendChild(attore)
-
-    interpretaInput.value = ruolo
-    checkbox.checked = star
+    interpretaInput.value = ruolo;
 }
 
 
 function addMembro(nome, id, star, ruolo) {
     var membri = document.getElementById('troupe')
 
-    var membro = document.createElement("div")
-    membro.classList.add("row")
-    membro.setAttribute("id", id)
-
-    var space = document.createElement("div")
-    space.classList.add("col")
-    space.classList.add("col-md-3")
-
-    var divNome = document.createElement("div")
-    divNome.classList.add("col")
-    divNome.classList.add("col-md-3")
+    var space = createDiv(false, "text-left", []);
 
     var labelNome = document.createElement("label")
     labelNome.innerHTML = nome
     labelNome.classList.add("form-control-label")
-    divNome.appendChild(labelNome)
+    var divNome = createDiv(false, "text-left", [labelNome]);
 
-    var divRole = document.createElement("div")
-    divRole.classList.add("col")
-    divRole.classList.add("col-md-3")
+    var roleSelect = createSelect([{ ruolo: "Produttore", id: 1 }, { ruolo: "Scrittore", id: 4 }], ruolo)
+    var divRole = createDiv(false, "text-center", [roleSelect])
 
-    var roleSelect = document.createElement("select")
-    var role1 = document.createElement("option")
-    role1.textContent = "Produttore"
-    role1.value = 1
-    roleSelect.appendChild(role1)
+    var divStar = createCheckbox(star)
 
-    var role2 = document.createElement("option")
-    role2.textContent = "Scrittore"
-    role2.value = 4
-    roleSelect.appendChild(role2)
-    divRole.appendChild(roleSelect)
+    var membro = createDiv(true, null, [space, divNome, divRole, divStar]);
+    membro.setAttribute("id", id)
 
-    var divStar = document.createElement("div")
-    divStar.classList.add("col")
-    divStar.classList.add("col-md-3")
-
-    var divCheckbox = document.createElement("div")
-    divCheckbox.classList.add("row")
-
-    var labelStar = document.createElement("label")
-    labelStar.classList.add("form-check-label")
-    labelStar.setAttribute("for", "checkbox")
-    labelStar.textContent = "STAR"
-
-    var checkbox = document.createElement("input")
-    checkbox.setAttribute("type", "checkbox")
-    checkbox.setAttribute("id", "checkbox")
-    checkbox.classList.add("form-check-input")
-
-    divStar.appendChild(divCheckbox)
-    divCheckbox.appendChild(labelStar)
-    divCheckbox.appendChild(checkbox)
-
-    membro.appendChild(space)
-    membro.appendChild(divNome)
-    membro.appendChild(divRole)
-    membro.appendChild(divStar)
     membri.appendChild(membro)
-
-    roleSelect.value = ruolo
-    checkbox.checked = star
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -241,6 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     option.innerHTML = element.nome + " " + element.cognome
                     option.classList.add('dropdown-item')
                     option.value = element.id
+                    option.style.cursor = 'pointer'
                     menu1.appendChild(option)
                 });
 
@@ -284,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 options2 = menu2.getElementsByTagName('option')
                 for (let option of options2) {
                     option.addEventListener('click', function (event) {
-                        addAttore(option.innerHTML, option.value, true, "Thor")
+                        addAttore(option.innerHTML, option.value, false, "")
                         personaggi2.value = ""
                     })
                 }
@@ -322,7 +245,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 options3 = menu3.getElementsByTagName('option')
                 for (let option of options3) {
                     option.addEventListener('click', function (event) {
-                        addMembro(option.innerHTML, option.value, true, 1)
+                        addMembro(option.innerHTML, option.value, false, 1)
                         personaggi3.value = ""
                     })
                 }
@@ -342,4 +265,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
     }
 
+    var trailerLink = document.getElementById('trailerLink')
+    var trailer = document.getElementById('trailer')
+
+    trailerLink.addEventListener('keyup', event => {
+        trailer.innerHTML = event.setAttribute('src', trailerLink.value);
+    }
 })
