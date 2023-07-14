@@ -4,7 +4,7 @@ require_once '../../../../include/config.php';
 $config = Config::getInstance();
 $statsController = $config->getStatisticheController();
 
-$res = $statsController->getPersonaggi();
+$res = $statsController->getRuoli();
 
 if ($res) {
     $response = array('success' => true, 'data' => $res);

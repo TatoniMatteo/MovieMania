@@ -13,11 +13,11 @@ if (isset($_SESSION['utente'])) {
     $utente = null;
 }
 
-$filmId = null;
+$celebritaId = null;
 if (isset($_GET['id'])) {
-    $filmId = $_GET['id'];
+    $CelebritaId = $_GET['id'];
 }
 
 $categorie = $statsController->getAllCategorie();
 
-include 'addfilm.html';
+include 'addCelebrita.html';

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
     <!-- Required meta tags-->
@@ -119,8 +119,8 @@
                             <div class="col-md-12">
                                 <div class="overview-wrap">
                                     <h2 class="title-1"><i class="zmdi zmdi-movie-alt"></i> SERIE</h2>
-                                    <button class="au-btn au-btn-icon au-btn--blue">
-                                        <i class="zmdi zmdi-plus"></i>Aggiungi Serie</button>
+                                    <a class="au-btn au-btn-icon au-btn--blue" href="../addSerie/addserie.php">
+                                        <i class="zmdi zmdi-plus"></i>Aggiungi Serie</a>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,8 @@
                                                     <?php echo $serie['numero_recensioni'] ?>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a style="cursor: pointer;">
+                                                    <a style="cursor: pointer;"
+                                                        href="../addSerie/addserie.php?id=<?php echo $serie['id']?>">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 </td>
@@ -174,6 +175,31 @@
                                             <?php } ?>
                                         </tbody>
                                     </table>
+                                    <div class="col-12 row" style="margin-top: 20px;">
+                                        <div class="col-8"></div>
+                                        <div class="pagination2 col-4">
+                                            <span style="margin-right: 10px;">Pagina
+                                                <?php echo ($pagina + 1)?> di
+                                                <?php echo $pagine ?>:
+                                            </span>
+                                            <?php 
+                                                for ($i = 1; $i <= $pagine; $i++){
+                                                    if($i == $pagina + 1){ 
+                                            ?>
+                                            <a class="<?php echo $i == $pagine ? 'page-last' : 'page'?>"
+                                                style="color: #dcf836; cursor:pointer;">
+                                                <?php echo $i ?>
+                                            </a>
+                                            <?php } else { ?>
+                                            <a class="<?php echo $i==$pagine ? 'page-last' : 'page' ?>"
+                                                style="cursor:pointer;">
+                                                <?php echo $i ?>
+                                            </a>
+                                            <?php 	} 
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -209,6 +235,7 @@
 
     <!-- Main JS-->
     <script src="../../js/main.js"></script>
+    <script src="../../js/table.js"></script>
 
 </body>
 

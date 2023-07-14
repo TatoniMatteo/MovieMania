@@ -51,3 +51,4 @@ In sintesi, se ti piacciono i film coinvolgenti e indimenticabili, ti consiglio 
 INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (26, 'Film molto bello, ma...', 'Film molo bello che tiene con il fiato sospeso dall\'inizio alla fine. Purtroppo si percepisce che è un film di altri tempi.
 ', 7.0, 1, null, 5, '2023-07-10');
 INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (27, 'Un supereroe nuovo', 'Finalmente un nuovo supereroe. Giovane, fresco e innovativo.', 9.0, 11, null, 5, '2023-07-10');
+INSERT INTO moviemania.recensione (id, titolo, descrizione, voto, id_film, id_serie, id_utente, data_recensione) VALUES (30, 'Film avvincente e commuovente', 'Davvero un bellissimo finale per questa storia. Emozionato!', 10.0, 14, null, 5, '2023-07-13');

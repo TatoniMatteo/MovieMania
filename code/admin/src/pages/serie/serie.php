@@ -13,6 +13,11 @@ if (isset($_SESSION['utente'])) {
     $utente = null;
 }
 
-$series = $statsController->getAllSerie();
+$pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
+$limit = 15;
+$offset = $pagina * $limit;
+$series = $statsController->getAllserie($offset, $limit);
+$totale = $statsController->getNumeroSerie();
+$pagine = ceil($totale / $limit);
 
 include 'serie.html';

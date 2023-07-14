@@ -9,6 +9,7 @@ require_once 'controller/utentiController.php';
 require_once 'controller/authController.php';
 require_once 'controller/searchController.php';
 require_once 'controller/statsController.php';
+require_once 'controller/creazioneController.php';
 
 class Config
 {
@@ -66,5 +67,10 @@ class Config
     public function getStatisticheController()
     {
         return new StatisticheController($this->database);
+    }
+
+    public function getCreazioneController()
+    {
+        return new CreazioneController($this->database);
     }
 }

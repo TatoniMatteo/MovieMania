@@ -118,77 +118,106 @@
                         <div class="row" style="margin-bottom: 40px;">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1"><i class="zmdi zmdi-account"></i> CELEBRITÀ</h2>
-                                    <a class=" au-btn au-btn-icon au-btn--blue" href="../addCelebrita/addCelebrita.php">
-                                        <i class="zmdi zmdi-plus"></i>Aggiungi celebrità</a>
+                                    <h2 class="title-1"><i class="zmdi zmdi-account-add"></i> CREA NUOVA CELEBRITÀ</h2>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="table-responsive table--no-card m-b-30">
-                                    <table class="table table-borderless table-striped table-earning">
-                                        <thead>
-                                            <tr>
-                                                <th>Nome</th>
-                                                <th class="text-center">
-                                                    <i class="zmdi zmdi-calendar"> </i>
-                                                    Data di nascita
-                                                </th>
-                                                <th class="text-center">
-                                                    <i class="fas fa-globe"> </i>
-                                                    Nazionalità
-                                                </th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($personaggi as $personaggio){ ?>
-                                            <tr>
-                                                <td class="text-left">
-                                                    <?php echo $personaggio['nome'] . " ". $personaggio['cognome']; ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <?php echo $personaggio['data_nascita'] ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <?php echo $personaggio['nazionalita'] ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a style="cursor: pointer;"
-                                                        href="../addCelebrita/addCelebrita.php?id=<?php echo $personaggio['id']?>">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                    <div class="col-12 row" style="margin-top: 20px;">
-                                        <div class="col-8"></div>
-                                        <div class="pagination2 col-4">
-                                            <span style="margin-right: 10px;">Pagina
-                                                <?php echo ($pagina + 1)?> di
-                                                <?php echo $pagine ?>:
-                                            </span>
-                                            <?php 
-                                                for ($i = 1; $i <= $pagine; $i++){
-                                                    if($i == $pagina + 1){ 
-                                            ?>
-                                            <a class="<?php echo $i == $pagine ? 'page-last' : 'page'?>"
-                                                style="color: #dcf836; cursor:pointer;">
-                                                <?php echo $i ?>
-                                            </a>
-                                            <?php } else { ?>
-                                            <a class="<?php echo $i==$pagine ? 'page-last' : 'page' ?>"
-                                                style="cursor:pointer;">
-                                                <?php echo $i ?>
-                                            </a>
-                                            <?php 	} 
-                                                }
-                                            ?>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body card-block" style="background: #335576">
+                                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal"
+                                        id="createForm">
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="fotoInput" class=" form-control-label">
+                                                    Foto
+                                                </label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <label for="fotoInput">
+                                                    <img id="foto" src="../../media/addImage.jpg"
+                                                        style="aspect-ratio: 2/3; max-width: 250px;">
+                                                </label>
+                                                <input name="copertina" class="form-control-file" type="file"
+                                                    style="display: none;" id="fotoInput" accept=".jpg, .jpeg">
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="nome" class=" form-control-label">
+                                                    Nome*
+                                                </label>
+                                            </div>
+                                            <div class="col col-md-3">
+                                                <input type="text" id="nome" name="nome" placeholder="Nome" required
+                                                    class="form-control">
+                                            </div>
+                                            <div class="col col-md-3 text-center">
+                                                <label for="cognome" class=" form-control-label">
+                                                    Cogome*
+                                                </label>
+                                            </div>
+                                            <div class="col col-md-3">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" id="cognome"
+                                                        placeholder="Cognome" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="descrizione" class=" form-control-label">Biografia*</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <textarea name="descrizione" id="descrizione" rows="15"
+                                                    placeholder="Aggiungi una biografia della celebrità"
+                                                    class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="data" class=" form-control-label">
+                                                    Data di nascita*
+                                                </label>
+                                            </div>
+                                            <div class="col-5 col-md-3">
+                                                <input type="date" id="data" name="data"
+                                                    placeholder="Inserisci la data di pubblicazione del film" required
+                                                    class="form-control">
+                                            </div>
+                                            <div class="col col-md-3 text-center">
+                                                <label for="altezza" class=" form-control-label">
+                                                    Altezza*
+                                                </label>
+                                            </div>
+                                            <div class="col-6 col-md-3">
+                                                <div class="input-group mb-3">
+                                                    <input type="number" class="form-control" id="altezza" step=".01"
+                                                        inputmode="numeric" placeholder="0.00">
+                                                    <span class="input-group-text">metri</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="data" class=" form-control-label">
+                                                    Nazione d'origne*
+                                                </label>
+                                            </div>
+                                            <div class="col-5 col-md-3">
+                                                <input type="text" id="nazionalita" name="data"
+                                                    placeholder="Nazionalità" required class="form-control">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer" style="background: #233a50;">
+                                    <button type="submit" class="btn btn-primary btn-sm" id="submitBtn">
+                                        <i class="fa fa-save"></i> Salva
+                                    </button>
+                                    <button type="reset" class="btn btn-danger btn-sm" id="exitBtn">
+                                        <i class="fa fa-ban"></i> Annulla
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +253,7 @@
 
     <!-- Main JS-->
     <script src="../../js/main.js"></script>
-    <script src="../../js/table.js"></script>
+    <script src="../../js/form2.js"></script>
 
 </body>
 

@@ -30,7 +30,7 @@ class PersonaggiController
 
     public function getPersonaggiByFilm($id)
     {
-        $query = "SELECT Personaggi.*, Ruolo.ruolo, Partecipa.star, Partecipa.interpreta
+        $query = "SELECT Personaggi.*, Ruolo.ruolo, Partecipa.star, Partecipa.interpreta, Ruolo.categoria as categoria_ruolo
         FROM Partecipa
         INNER JOIN Personaggi ON Partecipa.id_personaggio = Personaggi.id
         INNER JOIN Ruolo ON Partecipa.ruolo = Ruolo.id
@@ -54,7 +54,7 @@ class PersonaggiController
 
     public function getPersonaggiBySerie($id)
     {
-        $query = "SELECT Personaggi.*, Ruolo.ruolo, Partecipa.star, Partecipa.interpreta
+        $query = "SELECT Personaggi.*, Ruolo.ruolo, Partecipa.star, Partecipa.interpreta,  Ruolo.categoria as categoria_ruolo
         FROM Partecipa
         INNER JOIN Personaggi ON Partecipa.id_personaggio = Personaggi.id
         INNER JOIN Ruolo ON Partecipa.ruolo = Ruolo.id

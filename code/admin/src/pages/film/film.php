@@ -13,6 +13,12 @@ if (isset($_SESSION['utente'])) {
     $utente = null;
 }
 
-$films = $statsController->getAllFilm();
+
+$pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
+$limit = 15;
+$offset = $pagina * $limit;
+$films = $statsController->getAllFilm($offset, $limit);
+$totale = $statsController->getNumeroFilm();
+$pagine = ceil($totale / $limit);
 
 include 'film.html';

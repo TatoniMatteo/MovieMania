@@ -11,7 +11,6 @@ class SearchController
 
     public function search($testo, $filtro, $offset, $limit, $ordinamento, $categorie)
     {
-        if ($testo == "") $testo = null;
         if ($filtro === 'celebrita') {
             return $this->searchCelebrita($testo, $offset, $limit, $ordinamento, $categorie);
         } else {
@@ -27,7 +26,7 @@ class SearchController
         FROM Film
         LEFT JOIN Recensione ON Film.id = Recensione.id_film
         LEFT JOIN Caratterizza CF ON Film.id = CF.id_film
-        WHERE (? IS NULL OR (Film.titolo LIKE CONCAT('%', ?, '%') OR Film.descrizione LIKE CONCAT('%', ?, '%')
+        WHERE ((Film.titolo LIKE CONCAT('%', ?, '%') OR Film.descrizione LIKE CONCAT('%', ?, '%')
             OR SOUNDEX(Film.titolo) = SOUNDEX(?)))
             " . (strlen($generi) > 0 ? "AND CF.id_categoria IN (" . $generi . ")" : "") . "
         GROUP BY Film.id
@@ -39,9 +38,9 @@ class SearchController
         LEFT JOIN Recensione ON Serie.id = Recensione.id_serie
         LEFT JOIN Stagione St ON Serie.id = St.id_serie
         LEFT JOIN Caratterizza CS ON Serie.id = CS.id_serie
-        WHERE (? IS NULL OR (Serie.titolo LIKE CONCAT('%', ?, '%') OR Serie.descrizione LIKE CONCAT('%', ?, '%')
+        WHERE ((Serie.titolo LIKE CONCAT('%', ?, '%') OR Serie.descrizione LIKE CONCAT('%', ?, '%')
             OR SOUNDEX(Serie.titolo) = SOUNDEX(?)))
-            " . (strlen($generi) > 0 ? "AND CF.id_categoria IN (" . $generi . ")" : "") . "
+            " . (strlen($generi) > 0 ? "AND CS.id_categoria IN (" . $generi . ")" : "") . "
         GROUP BY Serie.id 
     ) AS risultati
     WHERE (
@@ -75,7 +74,7 @@ class SearchController
         $query .= " LIMIT ?, ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "sssssssssssii", $testo, $testo, $testo, $testo, $testo, $testo, $testo, $testo, $filtro, $filtro, $filtro, $offset, $limit);
+        mysqli_stmt_bind_param($statement, "sssssssssii", $testo, $testo, $testo, $testo, $testo, $testo, $filtro, $filtro, $filtro, $offset, $limit);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -182,7 +181,7 @@ class SearchController
                 OR SOUNDEX(Personaggi.nome) = SOUNDEX(?)
                 OR SOUNDEX(Personaggi.cognome) = SOUNDEX(?)
                 OR SOUNDEX(CONCAT(Personaggi.nome, ' ', Personaggi.cognome)) =  SOUNDEX(?))
-                " . (strlen($ruoli) > 0 ? "AND Partecipa.ruolo IN (" . $ruoli . ")" : "");
+                " . (strlen($ruoli) > 0 ? "AND Partecipa.ruolo IN (" . $ruoli . ")" : "") . ")as result";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
         mysqli_stmt_bind_param($statement, "ssssss", $testo, $testo, $testo, $testo, $testo, $testo);

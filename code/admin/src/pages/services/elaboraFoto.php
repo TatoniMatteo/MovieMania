@@ -1,6 +1,5 @@
 <?php
 require_once '../../../../include/config.php';
-session_start();
 header('Content-Type: application/json');
 
 // Controlla se il file è stato caricato correttamente
@@ -21,7 +20,7 @@ $source_width = imagesx($source_image);
 $source_height = imagesy($source_image);
 $rapportoOriginale = $source_width / $source_height;
 
-$cropped_image = null;
+$cropped_image = $rapporto == $rapportoOriginale ? $source_image : null;
 
 if ($rapporto > $rapportoOriginale) {
     $nuovaAltezza = $source_width * ($rapporto ** -1);
@@ -48,7 +47,7 @@ if (!$cropped_image) {
 
 $resized_image = imagescale($cropped_image, $larghezza, $altezza);
 
-$outputFilename = uniqid('ritagliata_') . '.jpg';
+$outputFilename = "../../media/tmp/" . uniqid("copertina_") . ".jpg";
 
 if (imagejpeg($resized_image, $outputFilename)) {
     imagedestroy($source_image);

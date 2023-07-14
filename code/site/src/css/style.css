@@ -5498,10 +5498,10 @@ ul {
 .movie-items .slick-multiItem .slick-dots,
 .movie-items .slick-multiItem2 .slick-dots {
   position: absolute;
-  margin-left: 50%;
+  margin-left: 70%;
   text-align: right;
   right: 15px;
-  width: 50%;
+  width: 30%;
   position: inherit;
   margin-bottom: 60px;
   margin-top: -55px;

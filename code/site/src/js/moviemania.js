@@ -259,14 +259,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        var currentURL = new URL(url);
-                        if (tipo == 'film')
-                            currentURL.pathname = '/MovieMania/code/site/src/pages/moviesingle/moviesingle.php';
-                        else
-                            currentURL.pathname = '/MovieMania/code/site/src/pages/seriessingle/seriessingle.php';
+                        showToast('Recensione craeta correttamente', 'ion-checkmark')
+                        setTimeout(() => {
+                            var currentURL = new URL(url);
+                            if (tipo == 'film')
+                                currentURL.pathname = '/MovieMania/code/site/src/pages/moviesingle/moviesingle.php';
+                            else
+                                currentURL.pathname = '/MovieMania/code/site/src/pages/seriessingle/seriessingle.php';
 
-                        currentURL.search = '?id=' + id_programma;
-                        window.location.href = currentURL.href;
+                            currentURL.search = '?id=' + id_programma;
+                            window.location.href = currentURL.href;
+                        }, 2000);
+
                     } else {
                         throw new Error(data.message)
                     }
@@ -276,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     errorLabel.style.visibility = 'visible'
                 });
         });
-        reviewForm.addEventListener('reset', function (event) {
+        reviewForm.addEventListener('reset', event => {
             var url = window.location.href;
             var urlParams = new URLSearchParams(url.substring(url.indexOf('?')));
             var id_programma = urlParams.get('id');
@@ -304,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function () {
      **/
     var loginForm = document.getElementById('login-form');
     if (loginForm) {
-        loginForm.addEventListener('submit', function (event) {
+        loginForm.addEventListener('submit', event => {
             event.preventDefault();
 
             var errorLabel = document.getElementById('login-error-message');
@@ -564,7 +568,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     if (searchBar && searchType && searchIcon) {
-        searchIcon.addEventListener("click", function (event) {
+        searchIcon.addEventListener("click", event => {
             event.preventDefault();
             var text = searchBar.value
             var type = searchType.value
@@ -647,6 +651,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+
+    /** 
+     * FILTRO RICERCA FILM e SERIE
+    */
     var movieFilterForm = document.getElementById('movie-filter');
     if (movieFilterForm) {
         movieFilterForm.addEventListener('submit', function (event) {
@@ -663,46 +671,52 @@ document.addEventListener('DOMContentLoaded', function () {
                     values.push(parseInt(option.value));
                 }
             }
-            var categories = values.toString()
+            if (text.trim().length > 0 || values.length > 0) {
 
-            var urlParams = new URLSearchParams(window.location.search);
-            var currentText = urlParams.get('text');
-            var currentFilter = urlParams.get('filtro');
-            var currentPage = urlParams.get('pagina');
-            var currentOrd = parseInt(urlParams.get('ord'));
-            var currentCategories = urlParams.get('categorie');
+                var categories = values.toString()
 
-            if (isNaN(currentText)) {
-                urlParams.append('testo', text);
-            } else {
-                urlParams.set('testo', text);
+                var urlParams = new URLSearchParams(window.location.search);
+                var currentText = urlParams.get('text');
+                var currentFilter = urlParams.get('filtro');
+                var currentPage = urlParams.get('pagina');
+                var currentOrd = parseInt(urlParams.get('ord'));
+                var currentCategories = urlParams.get('categorie');
+
+                if (isNaN(currentText)) {
+                    urlParams.append('testo', text);
+                } else {
+                    urlParams.set('testo', text);
+                }
+
+                if (isNaN(currentFilter)) {
+                    urlParams.append('filtro', group);
+                } else {
+                    urlParams.set('filtro', group);
+                }
+
+                if (!isNaN(currentPage)) {
+                    urlParams.delete('pagina');
+                }
+
+                if (!isNaN(currentOrd)) {
+                    urlParams.delete('ord');
+                }
+
+                if (isNaN(currentCategories)) {
+                    if (categories.length > 0)
+                        urlParams.append('categorie', categories);
+                } else {
+                    if (categories.length > 0)
+                        urlParams.set('categorie', categories);
+                    else
+                        urlParams.delete('categorie');
+                }
+
+                window.location.search = urlParams.toString();
             }
-
-            if (isNaN(currentFilter)) {
-                urlParams.append('filtro', group);
-            } else {
-                urlParams.set('filtro', group);
+            else {
+                showToast('Troppi pochi parametri per la ricerca', 'ion-alert')
             }
-
-            if (!isNaN(currentPage)) {
-                urlParams.delete('pagina');
-            }
-
-            if (!isNaN(currentOrd)) {
-                urlParams.delete('ord');
-            }
-
-            if (isNaN(currentCategories)) {
-                if (categories.length > 0)
-                    urlParams.append('categorie', categories);
-            } else {
-                if (categories.length > 0)
-                    urlParams.set('categorie', categories);
-                else
-                    urlParams.delete('categorie');
-            }
-
-            window.location.search = urlParams.toString();
         });
     }
 

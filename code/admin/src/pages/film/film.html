@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
     <!-- Required meta tags-->
@@ -177,6 +177,31 @@
                                             <?php } ?>
                                         </tbody>
                                     </table>
+                                    <div class="col-12 row" style="margin-top: 20px;">
+                                        <div class="col-8"></div>
+                                        <div class="pagination2 col-4">
+                                            <span style="margin-right: 10px;">Pagina
+                                                <?php echo ($pagina + 1)?> di
+                                                <?php echo $pagine ?>:
+                                            </span>
+                                            <?php 
+                                                for ($i = 1; $i <= $pagine; $i++){
+                                                    if($i == $pagina + 1){ 
+                                            ?>
+                                            <a class="<?php echo $i == $pagine ? 'page-last' : 'page'?>"
+                                                style="color: #dcf836; cursor:pointer;">
+                                                <?php echo $i ?>
+                                            </a>
+                                            <?php } else { ?>
+                                            <a class="<?php echo $i==$pagine ? 'page-last' : 'page' ?>"
+                                                style="cursor:pointer;">
+                                                <?php echo $i ?>
+                                            </a>
+                                            <?php 	} 
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +215,7 @@
     </div>
 
     <!-- Jquery JS-->
-    <script src="../../vendor/jquery-3.2.1.min.js"></script>
+    <script src=" ../../vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="../../vendor/bootstrap-4.1/popper.min.js"></script>
     <script src="../../vendor/bootstrap-4.1/bootstrap.min.js"></script>
@@ -212,6 +237,7 @@
 
     <!-- Main JS-->
     <script src="../../js/main.js"></script>
+    <script src="../../js/table.js"></script>
 
 </body>
 
