@@ -370,7 +370,7 @@ class StatisticheController
     {
         $query = "SELECT id_categoria
         FROM Caratterizza
-        WHERE Partecipa.id_serie = ?";
+        WHERE Caratterizza.id_serie = ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
         mysqli_stmt_bind_param($statement, "i", $id);

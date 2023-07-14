@@ -115,7 +115,8 @@ class PersonaggiController
         $query = "SELECT R.ruolo
         FROM Ruolo R
         JOIN Partecipa P ON R.id = P.ruolo
-        WHERE P.id_personaggio = ?";
+        WHERE P.id_personaggio = ?
+        GROUP BY R.id";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
         mysqli_stmt_bind_param($statement, "i", $id);

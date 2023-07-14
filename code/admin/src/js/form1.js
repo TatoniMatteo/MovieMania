@@ -550,13 +550,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             event.preventDefault();
 
             var formData = new FormData();
-            var titoloFilm = titolo.value
-            var descrizioneFilm = descrizione.value
-            var copertinaFilm = copertina.src != "../../media/addImage.jpg" ? copertina.src : null;
-            var trailerFilm = trailerLink.value
-            if (!trailerFilm) trailerFilm = "https://www.youtube.com/embed/JuLxRYMjx9w"
-            var durataFilm = durata.value
-            var dataFilm = pubblicazione.value
+            var titoloProgramma = titolo.value
+            var descrizioneProgramma = descrizione.value
+            var copertinaProgramma = copertina.src != "../../media/addImage.jpg" ? copertina.src : null;
+            var trailerProgramma = trailerLink.value
+            if (!trailerProgramma) trailerProgramma = "https://www.youtube.com/embed/JuLxRYMjx9w"
+            var durataFilm = null
+            var dataFilm = null
+            var serieFinita = null
+            if (isFilm) {
+                var durataFilm = durata.value
+                var dataFilm = pubblicazione.value
+            } else {
+                serieFinita = false
+            }
 
             var produttoriElm = document.getElementById('produttori').children
             var produttori = []
@@ -592,11 +599,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             var selectedOptions = document.getElementById('selectedOptions').children;
             var categorie = Array.from(selectedOptions).map(option => option.getAttribute('id'));
 
-            if (titoloFilm && descrizioneFilm && copertinaFilm && trailerFilm && durataFilm && dataFilm && produttori.length > 0 && attori.length > 0 && membri && categorie.length > 0) {
-                formData.append('titolo', titoloFilm)
-                formData.append('descrizione', descrizioneFilm)
-                formData.append('copertina', copertinaFilm)
-                formData.append('trailer', trailerFilm)
+
+            //var stagioniElm = document.getElementById('troupe').children
+            var stagioni = []
+
+            if (isFilm && titoloProgramma && descrizioneProgramma && copertinaProgramma && trailerProgramma && durataFilm && dataFilm && produttori.length > 0 && attori.length > 0 && membri && categorie.length > 0) {
+                formData.append('titolo', titoloProgramma)
+                formData.append('descrizione', descrizioneProgramma)
+                formData.append('copertina', copertinaProgramma)
+                formData.append('trailer', trailerProgramma)
                 formData.append('durata', durataFilm)
                 formData.append('data_pubblicazione', dataFilm)
                 formData.append('produttori', JSON.stringify(produttori));
@@ -625,7 +636,56 @@ document.addEventListener('DOMContentLoaded', async () => {
                     .catch(error => {
                         alert("Error: " + error.message);
                     })
-            } else {
+            }
+
+            else if (isSerie && titoloProgramma && descrizioneProgramma && copertinaProgramma && trailerProgramma && serieFinita != null && produttori.length > 0 && attori.length > 0 && membri && categorie.length > 0 && stagioni.length > 0) {
+                formData.append('titolo', titoloProgramma)
+                formData.append('descrizione', descrizioneProgramma)
+                formData.append('copertina', copertinaProgramma)
+                formData.append('trailer', trailerProgramma)
+                formData.append('serieFinita', serieFinita)
+                formData.append('produttori', JSON.stringify(produttori));
+                formData.append('attori', JSON.stringify(attori));
+                formData.append('membri', JSON.stringify(membri));
+                formData.append('categorie', JSON.stringify(categorie));
+                formData.append('stagioni', JSON.stringify(stagioni));
+                if (id) formData.append('id', id)
+
+                fetch('../services/creaSerie.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => { return response.json() })
+                    .then(response => {
+                        if (response.success) {
+                            alert(id ? "Serie modificata con successo" : "Serie creata con successo")
+                            url = window.location.href
+                            var currentURL = new URL(url);
+                            currentURL.search = ""
+                            currentURL.pathname = '/MovieMania/code/admin/src/pages/serie/serie.php';
+                            window.location.href = currentURL.href;
+                        }
+                        else {
+                            throw new Error(response.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert("Error: " + error.message);
+                    })
+            }
+            else {
+                console.log('titolo', titoloProgramma)
+                console.log('descrizione', descrizioneProgramma)
+                console.log('copertina', copertinaProgramma)
+                console.log('trailer', trailerProgramma)
+                if (serieFinita != null) console.log('serieFinita', serieFinita)
+                if (durata) console.log('durata', durata)
+                if (dataFilm) console.log('data_pubblicazione', dataFilm)
+                console.log('produttori', JSON.stringify(produttori));
+                console.log('attori', JSON.stringify(attori));
+                console.log('membri', JSON.stringify(membri));
+                console.log('categorie', JSON.stringify(categorie));
+                if (id) formData.append('id', id)
                 alert('Inserisci tutti i dati correttamente e riprova!')
             }
         })
@@ -637,7 +697,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             event.preventDefault();
             url = window.location.href
             var currentURL = new URL(url);
-            currentURL.pathname = '/MovieMania/code/admin/src/pages/film/film.php';
+            currentURL.search = ""
+            if (isFilm) currentURL.pathname = '/MovieMania/code/admin/src/pages/film/film.php';
+            if (isSerie) currentURL.pathname = '/MovieMania/code/admin/src/pages/serie/serie.php';
             window.location.href = currentURL.href;
         })
     }

@@ -15,7 +15,7 @@ if (isset($_SESSION['utente'])) {
 
 $celebritaId = null;
 if (isset($_GET['id'])) {
-    $CelebritaId = $_GET['id'];
+    $celebritaId = $_GET['id'];
 }
 
 $categorie = $statsController->getAllCategorie();

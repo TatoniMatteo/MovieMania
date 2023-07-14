@@ -34,7 +34,7 @@ class AuthController
         return false;
     }
 
-    public function registerUser($nome, $cognome, $username, $email, $password)
+    public function registerUser($nome, $cognome, $username, $email, $password, $foto)
     {
         $connection = $this->dbConnection->getConnection();
         mysqli_autocommit($connection, false); // Disabilita l'autocommit
@@ -50,9 +50,9 @@ class AuthController
                 throw new Exception('Email e/o username già in uso!');
             }
 
-            $query = "INSERT INTO Utenti (nome, cognome, username, email, password) VALUES (?, ?, ?, ?, ?)";
+            $query = "INSERT INTO Utenti (nome, cognome, username, email, password, foto) VALUES (?, ?, ?, ?, ?, ?)";
             $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-            mysqli_stmt_bind_param($statement, "sssss", $nome, $cognome, $username, $email, $password);
+            mysqli_stmt_bind_param($statement, "ssssss", $nome, $cognome, $username, $email, $password, $foto);
             $result = mysqli_stmt_execute($statement);
 
             $newUserId = null;

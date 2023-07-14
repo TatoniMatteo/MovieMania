@@ -27,7 +27,16 @@ if ($tipo == 'film') {
 
 
 if ($res) {
-    $tmpFilePath =  "../../media/tmp/" . uniqid("copertina_") . ".jpg";
+    if (!file_exists('../../media/tmp/')) {
+        mkdir('../../media/tmp/', 0777, true);
+    }
+
+    $tmpFilePath = '../../media/tmp/' . uniqid("copertina_") . ".jpg";
+
+    if (file_exists($tmpFilePath)) {
+        unlink($tmpFilePath);
+    }
+
     file_put_contents($tmpFilePath, $res['copertina']);
     $res['copertina'] = $tmpFilePath;
 

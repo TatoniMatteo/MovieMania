@@ -13,8 +13,9 @@ if (!isset($_POST['nome']) || !isset($_POST['cognome']) || !isset($_POST['userna
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $foto = file_get_contents("../../images/uploads/user.jpg");
 
-    $response = $authController->registerUser($nome, $cognome, $username, $email, $password);
+    $response = $authController->registerUser($nome, $cognome, $username, $email, $password, $foto);
 }
 
 header('Content-Type: application/json');
