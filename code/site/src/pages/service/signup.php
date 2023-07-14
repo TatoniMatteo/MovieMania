@@ -14,14 +14,7 @@ if (!isset($_POST['nome']) || !isset($_POST['cognome']) || !isset($_POST['userna
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Esegui la logica di registrazione
-    $result = $authController->registerUser($nome, $cognome, $username, $email, $password);
-
-    if ($result === true) {
-        $response = array('success' => true);
-    } else {
-        $response = array('success' => false, 'message' => 'Errore durante la registrazione: username e/o email già in uso!');
-    }
+    $response = $authController->registerUser($nome, $cognome, $username, $email, $password);
 }
 
 header('Content-Type: application/json');
