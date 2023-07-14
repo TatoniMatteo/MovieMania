@@ -99,6 +99,27 @@ async function getCategorieProgramma(id, tipo) {
     }
 }
 
+/*
+* STAGIONI DELLA SERIE
+*/
+async function getStagioniSerie(id) {
+    try {
+        const response = await fetch(`../services/getDatiStagione.php?id=${id}`);
+        const data = await response.json();
+        //console.log(await response.text());
+
+        if (data.success) {
+            return data.data;
+        }
+        else {
+            throw new Error(data.message)
+        }
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
 
 /*
 * FILTRA PERSONAGGI
@@ -123,6 +144,7 @@ function createDiv(row, align, elements, margin = 10, size = 3) {
     }
     if (align) div.classList.add(align)
     div.classList.add("align-middle")
+    div.style.height = "100%"
     elements.forEach(element => div.appendChild(element))
 
     return div
@@ -156,19 +178,41 @@ function createSelect(categoria, ruoli, defaultValue) {
 * CREA PULASNTE STAR
 */
 function createCheckbox(defaultValue = false) {
+
     var labelStar = document.createElement("label")
     labelStar.classList.add("form-check-label")
     labelStar.setAttribute("for", "checkbox")
     labelStar.textContent = "STAR"
     labelStar.style.marginRight = "10px"
 
+
+    var label = document.createElement("label")
+    label.classList.add("switch")
+    label.classList.add("switch-text")
+    label.classList.add("switch-warning")
+
     var checkbox = document.createElement("input")
     checkbox.setAttribute("type", "checkbox")
     checkbox.setAttribute("id", "checkbox")
+    checkbox.classList.add("switch-input")
+
     if (defaultValue)
         checkbox.setAttribute("checked", "checked")
 
-    return createDiv(false, "text-center", [labelStar, checkbox], 0, 2)
+    var span1 = document.createElement("span")
+    span1.setAttribute("data-on", "SI")
+    span1.setAttribute("data-off", "NO")
+    span1.classList.add("switch-label")
+
+    var span2 = document.createElement("span")
+    span2.classList.add("switch-handle")
+
+    label.appendChild(checkbox)
+    label.appendChild(span1)
+    label.appendChild(span2)
+
+    return createDiv(false, "text-center", [labelStar, label], 0, 2)
+
 
 }
 
@@ -214,6 +258,57 @@ function elimina() {
     }
 }
 
+
+/*
+*  COPERTINA
+*/
+function createCopertina(copertina = "../../media/addImage.jpg") {
+    label = document.createElement("label")
+    label.setAttribute("for", "copertinaInput")
+
+    image = document.createElement("img")
+    image.src = copertina
+    image.setAttribute("style", "aspect-ratio 2/3;")
+
+    label.appendChild(image)
+    return createDiv(false, "text-center", [label])
+}
+
+/*
+*  INPUT NUMERICO
+*/
+function createInputNumerico(value, placeholder) {
+    label = document.createElement("label")
+    label.setAttribute("for", "input")
+    label.innerHTML = placeholder
+
+    var input = document.createElement("input")
+    input.setAttribute("type", "number")
+    input.classList.add("form-control")
+    input.setAttribute("placeholder", placeholder)
+    input.setAttribute("min", 1)
+
+    if (value) input.value = value
+
+    return createDiv(true, "text-center", [label, input])
+}
+
+/*
+*  DATA PUBBLICAZIONE
+*/
+function createDataPubblicazione(data) {
+    label = document.createElement("label")
+    label.setAttribute("for", "data")
+    label.innerHTML = "Data pubblicazione"
+
+    var dataInput = document.createElement("input")
+    dataInput.setAttribute("type", "date")
+    dataInput.classList.add("form-control")
+
+    if (data) dataInput.value = data
+
+    return createDiv(true, "text-center", [label, dataInput])
+}
 
 /*
 *  AGGIUGNI PRODUTTORE
@@ -293,6 +388,30 @@ function addMembro(nome, id, star, ruolo, ruoli) {
     membro.setAttribute("id", id)
 
     membri.appendChild(membro)
+}
+
+/*
+*  AGGIUNGI STAGIONE
+*/
+function addStagione(copertina, numero, pubblicazione, episodi) {
+    var stagioni = document.getElementById("stagioni")
+
+    var space = createDiv(false, "text-left", [])
+    var deleteBtn = createDelButton()
+    var image = createCopertina(copertina)
+
+    var slotNumero = createInputNumerico(numero, "Numero stagione")
+    var slotData = createDataPubblicazione(pubblicazione)
+    var slotEpisodi = createInputNumerico(episodi, "Numero episodi")
+
+    var slotDati = createDiv(false, "text-left", [slotNumero, slotData, slotEpisodi], null, 5)
+    slotData.setAttribute("style", "padding-right: 20px; margin-bottom:20px;")
+    slotNumero.setAttribute("style", "padding-right: 20px; margin-bottom:20px;")
+    slotEpisodi.setAttribute("style", "padding-right: 20px")
+
+    var stagione = createDiv(true, null, [space, deleteBtn, image, slotDati]);
+    stagione.setAttribute("style", "margin-bottom:30px;")
+    stagioni.appendChild(stagione)
 }
 
 
@@ -447,6 +566,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     var descrizione = document.getElementById('descrizione')
     var pubblicazione = document.getElementById('data')
     var durata = document.getElementById('durata')
+    var completata = document.getElementById('completata')
 
 
     if (fileLoader && copertina) {
@@ -489,11 +609,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         selectedOptions.appendChild(optionDiv);
 
     }
+    if (isSerie) {
+        document.getElementById('addStagione').addEventListener('click', event => {
+            event.preventDefault();
+            addStagione()
+        })
+    }
 
     if (id) {
         var programma = await getDatiProgramma(id, isFilm ? 'film' : 'serie')
         var personaggi = await getPersonaggiProgramma(id, isFilm ? 'film' : 'serie')
         var categorie = await getCategorieProgramma(id, isFilm ? 'film' : 'serie')
+        var stagioni = null
+        if (isSerie) stagioni = await getStagioniSerie(id)
 
         copertina.setAttribute("src", programma.copertina)
         titolo.value = programma.titolo
@@ -502,6 +630,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (isFilm) durata.value = programma.durata
         trailer.setAttribute('src', programma.trailer == "https://www.youtube.com/embed/JuLxRYMjx9w" ? "" : programma.trailer)
         trailerLink.value = programma.trailer
+        if (isSerie) completata.checked = programma.conclusa
 
         if (personaggi) {
             personaggi.forEach(personaggio => {
@@ -542,6 +671,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectCategory(categoria.id_categoria)
             });
         }
+
+        if (stagioni) {
+            stagioni.forEach(stagione => addStagione(
+                stagione.copertina,
+                stagione.numero_stagione,
+                stagione.data_pubblicazione,
+                stagione.episodi,
+            ))
+        }
     }
 
     var submitBtn = document.getElementById('submitBtn')
@@ -559,10 +697,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             var dataFilm = null
             var serieFinita = null
             if (isFilm) {
-                var durataFilm = durata.value
-                var dataFilm = pubblicazione.value
+                durataFilm = durata.value
+                dataFilm = pubblicazione.value
             } else {
-                serieFinita = false
+                serieFinita = completata.checked
             }
 
             var produttoriElm = document.getElementById('produttori').children
@@ -571,7 +709,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             for (let elem of produttoriElm) {
                 var pers = elem.getAttribute('id')
                 var ruolo = elem.children[3].children[0].value
-                star = elem.children[4].children[1].checked
+                var star = elem.children[4].children[1].children[0].checked
                 produttori.push({ 'personaggio': pers, 'ruolo': ruolo, 'star': star })
             }
 
@@ -581,7 +719,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             for (let elem of attoriElm) {
                 var pers = elem.getAttribute('id')
                 var interpreta = elem.children[3].children[0].value
-                star = elem.children[4].children[1].checked
+                var star = elem.children[4].children[1].children[0].checked
                 attori.push({ 'personaggio': pers, 'interpreta': interpreta, 'star': star })
             }
 
@@ -592,7 +730,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             for (let elem of membriElm) {
                 var pers = elem.getAttribute('id')
                 var ruolo = elem.children[3].children[0].value
-                star = elem.children[4].children[1].checked
+                var star = elem.children[4].children[1].children[0].checked
                 membri.push({ 'personaggio': pers, 'ruolo': ruolo, 'star': star })
             }
 
@@ -600,8 +738,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             var categorie = Array.from(selectedOptions).map(option => option.getAttribute('id'));
 
 
-            //var stagioniElm = document.getElementById('troupe').children
+            var stagioniElm = document.getElementById('stagioni').children
             var stagioni = []
+
+            for (let elem of stagioniElm) {
+                var numero = elem.children[3].children[0].children[0].children[1].value
+                var data = elem.children[3].children[1].children[0].children[1].value
+                var episodi = elem.children[3].children[2].children[0].children[1].value
+                var copertina = elem.children[2].children[0].children[0].src;
+                //GESTIRE COPERTINA MANCANTE
+                stagioni.push({ 'numero_stagione': numero, 'episodi': data, 'data_pubblicazione': episodi, 'copertina': copertina })
+            }
 
             if (isFilm && titoloProgramma && descrizioneProgramma && copertinaProgramma && trailerProgramma && durataFilm && dataFilm && produttori.length > 0 && attori.length > 0 && membri && categorie.length > 0) {
                 formData.append('titolo', titoloProgramma)

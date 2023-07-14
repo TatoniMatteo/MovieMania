@@ -388,6 +388,28 @@ class StatisticheController
         return $categorie;
     }
 
+    function getStagioniBySerie($id)
+    {
+        $query = "SELECT *
+        FROM Stagione
+        WHERE id_serie = ?";
+
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
+        $stagioni = array();
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $stagioni[] = $row;
+            }
+        }
+
+        return $stagioni;
+    }
+
 
     function getRuoli()
     {

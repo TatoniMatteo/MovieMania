@@ -33,10 +33,6 @@ if ($res) {
 
     $tmpFilePath = '../../media/tmp/' . uniqid("copertina_") . ".jpg";
 
-    if (file_exists($tmpFilePath)) {
-        unlink($tmpFilePath);
-    }
-
     file_put_contents($tmpFilePath, $res['copertina']);
     $res['copertina'] = $tmpFilePath;
 
