@@ -51,21 +51,35 @@
                             <a href="../home/home.php">
                                 <i class="fas fa-bar-chart-o"></i>Panoramica</a>
                         </li>
+                        <?php if(!empty(array_intersect([2,3], $permessi))){ ?>
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-table"></i>Gestisci Risorse</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <?php if(in_array(3, $permessi)){ ?>
                                 <li>
-                                    <a href="../film/film.php">Film</a>
+                                    <a href="../film/film.php"><i class="zmdi zmdi-movie"></i>Film</a>
                                 </li>
+                                <?php } ?>
+                                <?php if(in_array(3, $permessi)){ ?>
                                 <li>
-                                    <a href="../serie/serie.php">Serie</a>
+                                    <a href="../serie/serie.php"><i class="zmdi zmdi-movie-alt"></i>Serie</a>
                                 </li>
+                                <?php } ?>
+                                <?php if(in_array(3, $permessi)){ ?>
                                 <li>
-                                    <a href=" ../celebrita/celebrita.php">Celebrità</a>
+                                    <a href=" ../celebrita/celebrita.php"><i
+                                            class="zmdi zmdi-accounts-list"></i>Celebrità</a>
                                 </li>
+                                <?php } ?>
+                                <?php if(in_array(2, $permessi)){ ?>
+                                <li>
+                                    <a href=" ../users/users.php"><i class="zmdi zmdi-accounts-alt"></i>Utenti</a>
+                                </li>
+                                <?php } ?>
                             </ul>
                         </li>
+                        <?php } ?>
                         <li>
                             <a href="../../../../site/src/index.php">
                                 <i class="fas fa-arrow-alt-circle-left"></i>Torna al sito</a>
@@ -178,30 +192,36 @@
                                         </div>
                                         <div class="row form-group">
                                             <div class="col col-md-3">
-                                                <label for="data" class=" form-control-label">
+                                                <label for="dataNascita" class=" form-control-label">
                                                     Data di nascita*
                                                 </label>
                                             </div>
                                             <div class="col-5 col-md-3">
-                                                <input type="date" id="data" name="data"
-                                                    placeholder="Inserisci la data di pubblicazione del film" required
+                                                <input type="date" id="dataNascita" name="dataNascita" required
                                                     class="form-control">
                                             </div>
                                             <div class="col col-md-3 text-center">
-                                                <label for="altezza" class=" form-control-label">
-                                                    Altezza*
+                                                <label for="dataMorte" class=" form-control-label">
+                                                    Data di morte
                                                 </label>
                                             </div>
-                                            <div class="col-6 col-md-3">
-                                                <div class="input-group mb-3">
-                                                    <input type="number" class="form-control" id="altezza" step=".01"
-                                                        inputmode="numeric" placeholder="0.00">
-                                                    <span class="input-group-text">metri</span>
-                                                </div>
+                                            <div class="col-5 col-md-3">
+                                                <input type="date" id="dataMorte" name="dataMorte" required
+                                                    class="form-control">
                                             </div>
                                         </div>
                                         <div class="row form-group">
                                             <div class="col col-md-3">
+                                                <label for="sesso" class=" form-control-label">
+                                                    Sesso*
+                                                </label>
+                                            </div>
+                                            <div class="col-5 col-md-3">
+                                                <input type="text" id="sesso" name="sesso" placeholder="Sesso" required
+                                                    class="form-control" pattern="^[mfaMFA]$">
+                                                <small class="help-block form-text">(Valori ammessi: M , F, A)</small>
+                                            </div>
+                                            <div class="col col-md-3 text-center">
                                                 <label for="data" class=" form-control-label">
                                                     Nazione d'origne*
                                                 </label>

@@ -19,11 +19,13 @@ if (isset($_SESSION['utente'])) {
     exit;
 }
 
+
 $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
 $limit = 15;
 $offset = $pagina * $limit;
-$personaggi = $statsController->getAllPersonaggi($offset, $limit);
-$totale = $statsController->getNumeroPersonaggi();
+$res = $statsController->getAllUtenti($offset, $limit);
+$utenti = $res['success'] ? $res['data'] : array();
+$totale = $statsController->getNumeroUtenti();
 $pagine = ceil($totale / $limit);
 
-include 'celebrita.html';
+include 'users.html';

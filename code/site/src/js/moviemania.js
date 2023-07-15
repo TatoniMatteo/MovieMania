@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function showToast(message, icon_class) {
         var toastContainer = document.getElementById("toast-container");
-        console.log(toastContainer);
         if (toastContainer) {
             toastContainer.textContent = message;
             toastContainer.classList.add("show");

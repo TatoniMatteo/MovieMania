@@ -58,9 +58,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     var nomeInput = document.getElementById('nome')
     var cognomeInput = document.getElementById('cognome')
     var biografiaInput = document.getElementById('descrizione')
-    var nascitaInput = document.getElementById('data')
-    var altezzaInput = document.getElementById('altezza')
+    var nascitaInput = document.getElementById('dataNascita')
+    var morteInput = document.getElementById('dataMorte')
     var nazionalitaInput = document.getElementById('nazionalita')
+    var sessoInput = document.getElementById('sesso')
+    const pattern = /^[mfaMFA]$/;
 
     if (id) {
         var personaggio = await getDatiCelebrita(id)
@@ -68,8 +70,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         cognomeInput.value = personaggio.cognome
         biografiaInput.value = personaggio.biografia
         nascitaInput.value = personaggio.data_nascita
-        altezzaInput.value = personaggio.altezza
+        morteInput.value = personaggio.data_morte
         nazionalitaInput.value = personaggio.nazionalita
+        sessoInput.value = personaggio.sesso
         foto.src = personaggio.foto
     }
 
@@ -89,18 +92,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             var cognome = cognomeInput.value
             var biografia = biografiaInput.value
             var nascita = nascitaInput.value
-            var altezza = altezzaInput.value
+            var morte = morteInput.value
             var nazionalita = nazionalitaInput.value
+            var sesso = pattern.test(sessoInput.value) ? sessoInput.value : null
             var fotoValue = foto.src != "../../media/addImage.jpg" ? foto.src : '../../media/placeholder.jpg';
 
-            if (nome && cognome && fotoValue && biografia && nascita && nazionalita && altezza) {
+            if (nome && cognome && fotoValue && biografia && nascita && nazionalita && sesso) {
                 formData.append('nome', nome)
                 formData.append('cognome', cognome)
                 formData.append('foto', fotoValue)
                 formData.append('biografia', biografia)
                 formData.append('data_nascita', nascita)
                 formData.append('nazionalita', nazionalita)
-                formData.append('altezza', altezza)
+                formData.append('sesso', sesso)
+                if (morte) formData.append('data_morte', morte)
                 if (id) formData.append('id', id)
 
                 fetch('../services/creaPersonaggio.php', {

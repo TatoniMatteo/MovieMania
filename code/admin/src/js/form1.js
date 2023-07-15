@@ -262,16 +262,27 @@ function elimina() {
 /*
 *  COPERTINA
 */
-function createCopertina(copertina = "../../media/addImage.jpg") {
-    label = document.createElement("label")
-    label.setAttribute("for", "copertinaInput")
+function createCopertina(id, copertina = "../../media/addImage.jpg") {
+    var label = document.createElement("label")
+    label.setAttribute("for", `copertinaInput ${id}`)
 
-    image = document.createElement("img")
+    var image = document.createElement("img")
     image.src = copertina
     image.setAttribute("style", "aspect-ratio 2/3;")
 
     label.appendChild(image)
-    return createDiv(false, "text-center", [label])
+
+    var fileLoader = document.createElement("input")
+    fileLoader.type = "file"
+    fileLoader.setAttribute("id", `copertinaInput ${id}`)
+    fileLoader.style.display = "none"
+    fileLoader.setAttribute("accept", ".jpg, .jpeg")
+    fileLoader.classList.add("form-control-file")
+    fileLoader.addEventListener('change', async () => {
+        image.setAttribute("src", await getNewImage(fileLoader.files[0], 390, 260));
+    })
+
+    return createDiv(false, "text-center", [label, fileLoader])
 }
 
 /*
@@ -395,10 +406,13 @@ function addMembro(nome, id, star, ruolo, ruoli) {
 */
 function addStagione(copertina, numero, pubblicazione, episodi) {
     var stagioni = document.getElementById("stagioni")
+    const ultimaStagione = stagioni.lastElementChild;
+    var id = ultimaStagione ? ultimaStagione.id : ''
+    id = id.length > 0 ? parseInt(id) + 1 : 0
 
     var space = createDiv(false, "text-left", [])
     var deleteBtn = createDelButton()
-    var image = createCopertina(copertina)
+    var image = createCopertina(id, copertina)
 
     var slotNumero = createInputNumerico(numero, "Numero stagione")
     var slotData = createDataPubblicazione(pubblicazione)
@@ -411,6 +425,7 @@ function addStagione(copertina, numero, pubblicazione, episodi) {
 
     var stagione = createDiv(true, null, [space, deleteBtn, image, slotDati]);
     stagione.setAttribute("style", "margin-bottom:30px;")
+    stagione.setAttribute("id", id)
     stagioni.appendChild(stagione)
 }
 
@@ -418,12 +433,12 @@ function addStagione(copertina, numero, pubblicazione, episodi) {
 /*
 *  GESTIONE IMMAGINE
 */
-async function getNewImage(image) {
+async function getNewImage(image, altezza, larghezza) {
 
     var formData = new FormData();
     formData.append('foto', image);
-    formData.append('altezza', 437)
-    formData.append('larghezza', 285)
+    formData.append('altezza', altezza)
+    formData.append('larghezza', larghezza)
 
     return fetch('../services/elaboraFoto.php', {
         method: 'POST',
@@ -483,7 +498,7 @@ function createDropdownMenu(personaggioInput, menuId, addFunction, addParams) {
     var menu = document.getElementById(menuId);
     var options;
 
-    personaggioInput.addEventListener('keyup', function (event) {
+    personaggioInput.addEventListener('keyup', () => {
         var filtro = personaggioInput.value;
 
         if (!menu.firstElementChild) {
@@ -571,7 +586,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (fileLoader && copertina) {
         fileLoader.addEventListener('change', async () => {
-            copertina.setAttribute("src", await getNewImage(fileLoader.files[0]));
+            copertina.setAttribute("src", await getNewImage(fileLoader.files[0], 437, 285));
         })
     }
     var categorieBox = document.getElementById('selectBox')
@@ -687,6 +702,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         submitBtn.addEventListener('click', (event) => {
             event.preventDefault();
 
+            var copertina = document.getElementById('copertina')
             var formData = new FormData();
             var titoloProgramma = titolo.value
             var descrizioneProgramma = descrizione.value
@@ -742,12 +758,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             var stagioni = []
 
             for (let elem of stagioniElm) {
-                var numero = elem.children[3].children[0].children[0].children[1].value
-                var data = elem.children[3].children[1].children[0].children[1].value
-                var episodi = elem.children[3].children[2].children[0].children[1].value
+                var numero = elem.children[3].children[0].children[1].value
+                var data = elem.children[3].children[1].children[1].value
+                var episodi = elem.children[3].children[2].children[1].value
                 var copertina = elem.children[2].children[0].children[0].src;
-                //GESTIRE COPERTINA MANCANTE
-                stagioni.push({ 'numero_stagione': numero, 'episodi': data, 'data_pubblicazione': episodi, 'copertina': copertina })
+                if (copertina == " ../../media/addImage.jpg") copertina == "../../media/noCopertina.jpg"
+                stagioni.push({ 'numero_stagione': numero, 'episodi': episodi, 'data_pubblicazione': data, 'copertina': copertina })
             }
 
             if (isFilm && titoloProgramma && descrizioneProgramma && copertinaProgramma && trailerProgramma && durataFilm && dataFilm && produttori.length > 0 && attori.length > 0 && membri && categorie.length > 0) {
@@ -803,6 +819,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     body: formData
                 })
                     .then(response => { return response.json() })
+                    //.then(response => { console.log(response.text()) })
                     .then(response => {
                         if (response.success) {
                             alert(id ? "Serie modificata con successo" : "Serie creata con successo")
@@ -821,6 +838,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     })
             }
             else {
+                /*
                 console.log('titolo', titoloProgramma)
                 console.log('descrizione', descrizioneProgramma)
                 console.log('copertina', copertinaProgramma)
@@ -832,7 +850,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log('attori', JSON.stringify(attori));
                 console.log('membri', JSON.stringify(membri));
                 console.log('categorie', JSON.stringify(categorie));
-                if (id) formData.append('id', id)
+                if (id) console.log('id', id)
+                */
                 alert('Inserisci tutti i dati correttamente e riprova!')
             }
         })

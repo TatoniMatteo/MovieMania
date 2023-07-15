@@ -230,4 +230,43 @@ class UtentiController
 
         return mysqli_num_rows($result) > 0;
     }
+
+    public function modificaPermessi($id, $permessi)
+    {
+        $connection = $this->dbConnection->getConnection();
+        mysqli_autocommit($connection, false); // Disabilita l'autocommit
+
+        try {
+            // Elimina tutti i permessi dell'utente
+            $deleteQuery = "DELETE FROM Possiede WHERE utente_id = ? AND permesso_id <> 1";
+            $deleteStatement = mysqli_prepare($connection, $deleteQuery);
+            mysqli_stmt_bind_param($deleteStatement, "i", $id);
+            if (!mysqli_stmt_execute($deleteStatement)) {
+                throw new Exception('Impossibile eliminare i permessi dell\'utente');
+            }
+
+            // Aggiungi i nuovi permessi per l'utente
+            $insertQuery = "INSERT INTO Possiede (utente_id, permesso_id) VALUES (?, ?)";
+            $insertStatement = mysqli_prepare($connection, $insertQuery);
+
+
+            foreach ($permessi as $permessoId) {
+                mysqli_stmt_bind_param($insertStatement, "ii", $id, $permessoId);
+                mysqli_stmt_execute($insertStatement);
+            }
+
+            mysqli_commit($connection); // Commit della transazione
+            mysqli_autocommit($connection, true); // Riabilita l'autocommit
+
+            return array('success' => true);
+        } catch (Exception $e) {
+            mysqli_rollback($connection); // Rollback della transazione
+            mysqli_autocommit($connection, true); // Riabilita l'autocommit
+
+            return array(
+                'success' => false,
+                'message' => 'Si è verificato un errore durante la modifica dei permessi: ' . $e->getMessage()
+            );
+        }
+    }
 }

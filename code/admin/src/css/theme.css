@@ -14761,3 +14761,7 @@ select {
     margin-bottom: 15px;
     background: white;
 }
+
+img {
+    border-radius: 5px;
+}

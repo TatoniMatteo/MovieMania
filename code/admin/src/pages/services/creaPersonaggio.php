@@ -11,7 +11,7 @@ if (
     !isset($_POST['biografia']) ||
     !isset($_POST['data_nascita']) ||
     !isset($_POST['nazionalita']) ||
-    !isset($_POST['altezza']) ||
+    !isset($_POST['sesso']) ||
     !isset($_POST['foto'])
 ) {
     echo json_encode(['success' => false, 'message' => 'Dati non corretti!']);
@@ -23,15 +23,17 @@ $cognome = $_POST['cognome'];
 $foto = file_get_contents($_POST['foto']);
 $biografia = $_POST['biografia'];
 $nascita = $_POST['data_nascita'];
+$morte = null;
+if (isset($_POST['data_morte'])) $morte = $_POST['data_morte'];
 $nazionalita = $_POST['nazionalita'];
-$altezza = $_POST['altezza'];
+$sesso = $_POST['sesso'];
 $personaggioId = isset($_POST['id']) ? $_POST['id'] : null;
 
 
 if ($personaggioId) {
-    $response = $createController->aggiornaPersonaggio($personaggioId, $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $altezza);
+    $response = $createController->aggiornaPersonaggio($personaggioId, $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte);
 } else {
-    $response = $createController->creaPersonaggio($nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $altezza);
+    $response = $createController->creaPersonaggio($nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte);
 }
 echo json_encode($response);
 exit;

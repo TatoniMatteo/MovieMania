@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 
 
@@ -233,6 +233,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 });

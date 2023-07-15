@@ -33,9 +33,11 @@ $attori = json_decode($_POST['attori'], true);
 $membri = json_decode($_POST['membri'], true);
 $stagioni = json_decode($_POST['stagioni'], true);
 
-foreach ($stagioni as $stagione) {
-    $stagione = file_get_contents($stagione['copertina']);
+foreach ($stagioni as &$stagione) {
+    $stagione['copertina'] = file_get_contents($stagione['copertina']);
 }
+unset($stagione);
+
 
 if ($serieId) {
     $response = $createController->aggiornaSerie($serieId, $titolo, $descrizione, $copertina, $trailer, $serieFinita, $categorie, $produttori, $attori, $membri, $stagioni);

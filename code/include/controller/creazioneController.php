@@ -183,13 +183,13 @@ class CreazioneController
         }
     }
 
-    function aggiornaPersonaggio($personaggioId, $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $altezza)
+    function aggiornaPersonaggio($personaggioId, $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte)
     {
         try {
             $query = "UPDATE personaggi SET nome = ?, cognome = ?, foto = ?, biografia = ?, 
-            data_nascita = ?, nazionalita = ?, altezza = ? WHERE id = ?";
+            data_nascita = ?, nazionalita = ?, sesso = ?, data_morte = ? WHERE id = ?";
             $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-            mysqli_stmt_bind_param($statement, "sssssssi", $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $altezza, $personaggioId);
+            mysqli_stmt_bind_param($statement, "ssssssisi", $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte, $personaggioId);
             if (!$statement->execute()) {
                 throw new Exception('Impossibile aggiornare i parametri della celebrita');
             }
@@ -199,14 +199,14 @@ class CreazioneController
         }
     }
 
-    function creaPersonaggio($nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $altezza)
+    function creaPersonaggio($nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte)
     {
         try {
-            $query = 'INSERT INTO personaggi (nome, cognome, foto, biografia, data_nascita, nazionalita, altezza)
-            VALUES (?, ?, ?, ?, ?, ?, ?)';
+            $query = 'INSERT INTO personaggi (nome, cognome, foto, biografia, data_nascita, nazionalita, sesso, data_morte)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
             $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-            mysqli_stmt_bind_param($statement, "sssssss", $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $altezza);
+            mysqli_stmt_bind_param($statement, "ssssssis", $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte);
             if (!$statement->execute()) {
                 throw new Exception('Impossibile creare la celebrita');
             }

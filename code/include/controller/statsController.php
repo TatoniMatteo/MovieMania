@@ -104,6 +104,26 @@ class StatisticheController
         }
     }
 
+    public function getNumeroUtenti()
+    {
+        $query = "SELECT COUNT(*) as numero
+            FROM (SELECT id 
+                FROM Utenti) as conto";
+
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['numero'];
+        } else {
+            return null;
+        }
+    }
+
+
     public function getAllFilm($offset, $limit)
     {
         $query = "SELECT Film.*, IFNULL(ROUND(AVG(Recensione.voto), 1), 0) AS media_voti, IFNULL(COUNT(Recensione.id), 0) AS numero_recensioni
@@ -179,6 +199,69 @@ class StatisticheController
         return $personaggi;
     }
 
+
+    public function getAllUtenti($offset, $limit)
+    {
+        try {
+            $query = "SELECT Utenti.id, Utenti.nome, Utenti.cognome, Utenti.email, Utenti.username, Permessi.id AS id_permesso
+                      FROM Utenti
+                      INNER JOIN Possiede ON Utenti.id = Possiede.utente_id
+                      INNER JOIN Permessi ON Possiede.permesso_id = Permessi.id
+                      ORDER BY Utenti.nome, Utenti.cognome
+                      LIMIT ?, ?";
+
+            $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+            if (!$statement) {
+                throw new Exception("Errore nella preparazione della query.");
+            }
+
+            mysqli_stmt_bind_param($statement, "ii", $offset, $limit);
+            if (!mysqli_stmt_execute($statement)) {
+                throw new Exception("Errore nell'esecuzione della query.");
+            }
+
+            $result = mysqli_stmt_get_result($statement);
+            if (!$result) {
+                throw new Exception("Errore nell'ottenimento del risultato dalla query.");
+            }
+
+            $utenti = array();
+
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $utenteId = $row['id'];
+
+                    if (!isset($utenti[$utenteId])) {
+                        $utenti[$utenteId] = array(
+                            'id' => $row['id'],
+                            'nome' => $row['nome'],
+                            'cognome' => $row['cognome'],
+                            'email' => $row['email'],
+                            'username' => $row['username'],
+                            'permessi' => array()
+                        );
+                    }
+
+                    $utenti[$utenteId]['permessi'][] = $row['id_permesso'];
+                }
+            }
+
+            return array(
+                'success' => true,
+                'data' => $utenti
+            );
+        } catch (Exception $e) {
+            return array(
+                'success' => false,
+                'message' => $e->getMessage()
+            );
+        }
+    }
+
+
+
+
+
     public function getPersonaggi()
     {
         $query = "SELECT id, nome, cognome, nazionalita, data_nascita
@@ -220,7 +303,6 @@ class StatisticheController
 
         return $personaggi;
     }
-
 
     public function getMounthReview()
     {

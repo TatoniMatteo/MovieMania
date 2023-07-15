@@ -80,9 +80,8 @@
                             </ul>
                         </li>
                         <?php } ?>
-                        <li>
-                            <a href="../../../../site/src/index.php">
-                                <i class="fas fa-arrow-alt-circle-left"></i>Torna al sito</a>
+                        <a href="../../../../site/src/index.php">
+                            <i class="fas fa-arrow-alt-circle-left"></i>Torna al sito</a>
                         </li>
                     </ul>
                 </nav>
@@ -132,9 +131,7 @@
                         <div class="row" style="margin-bottom: 40px;">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1"><i class="zmdi zmdi-accounts-list"></i> CELEBRITÀ</h2>
-                                    <a class=" au-btn au-btn-icon au-btn--blue" href="../addCelebrita/addCelebrita.php">
-                                        <i class="zmdi zmdi-plus"></i>Aggiungi celebrità</a>
+                                    <h2 class="title-1"><i class="zmdi zmdi-accounts-alt"></i> UTENTI</h2>
                                 </div>
                             </div>
                         </div>
@@ -144,35 +141,66 @@
                                     <table class="table table-borderless table-striped table-earning">
                                         <thead>
                                             <tr>
-                                                <th>Nome</th>
-                                                <th class="text-center">
-                                                    <i class="zmdi zmdi-calendar"> </i>
-                                                    Data di nascita
+                                                <th class="text-left">Nome</th>
+                                                <th class="text-left non-tronca">
+                                                    <i class="zmdi zmdi-accounts-alt"> </i>
+                                                    Username
                                                 </th>
-                                                <th class="text-center">
-                                                    <i class="fas fa-globe"> </i>
-                                                    Nazionalità
+                                                <th class="text-left">
+                                                    <i class="zmdi zmdi-email"> </i>
+                                                    Email
                                                 </th>
-                                                <th></th>
+                                                <th class="text-center"> Creatore</th>
+                                                <th class="text-center"> Amministratore</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($personaggi as $personaggio){ ?>
+                                            <?php foreach ($utenti as $utente){ ?>
                                             <tr>
+                                                <td>
+                                                    <?php echo $utente['nome'] . ' ' . $utente['cognome'] ?>
+                                                </td>
+                                                <td class="text-left non-tronca">
+                                                    <?php echo $utente['username']?>
+                                                </td>
                                                 <td class="text-left">
-                                                    <?php echo $personaggio['nome'] . " ". $personaggio['cognome']; ?>
+                                                    <?php echo $utente['email']?>
                                                 </td>
                                                 <td class="text-center">
-                                                    <?php echo $personaggio['data_nascita'] ?>
+                                                    <label class="switch switch-text switch-warning">
+                                                        <?php if(in_array(3, $utente['permessi'])){ ?>
+                                                        <?php if($utente['id'] == $_SESSION['utente']){ ?>
+                                                        <input type="checkbox" class="switch-input creatore"
+                                                            id="<?php echo $utente['id'] ?>" checked disabled>
+                                                        <?php }else{ ?>
+                                                        <input type="checkbox" class="switch-input creatore"
+                                                            id="<?php echo $utente['id'] ?>" checked>
+                                                        <?php }?>
+                                                        <?php }else{ ?>
+                                                        <input type="checkbox" class="switch-input creatore"
+                                                            id="<?php echo $utente['id'] ?>">
+                                                        <?php }?>
+                                                        <span data-on="SI" data-off="NO" class="switch-label"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
                                                 </td>
                                                 <td class="text-center">
-                                                    <?php echo $personaggio['nazionalita'] ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a style="cursor: pointer;"
-                                                        href="../addCelebrita/addCelebrita.php?id=<?php echo $personaggio['id']?>">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
+                                                    <label class="switch switch-text switch-warning">
+                                                        <?php if(in_array(2, $utente['permessi'])){ ?>
+                                                        <?php if($utente['id'] == $_SESSION['utente']){ ?>
+                                                        <input type="checkbox" class="switch-input amministratore"
+                                                            id="<?php echo $utente['id'] ?>" checked disabled>
+                                                        <?php }else{ ?>
+                                                        <input type="checkbox" class="switch-input amministratore"
+                                                            id="<?php echo $utente['id'] ?>" checked>
+                                                        <?php }?>
+                                                        <?php }else{ ?>
+                                                        <input type="checkbox" class="switch-input amministratore"
+                                                            id="<?php echo $utente['id'] ?>">
+                                                        <?php }?>
+                                                        <span data-on="SI" data-off="NO" class="switch-label"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
                                                 </td>
                                             </tr>
                                             <?php } ?>
@@ -216,7 +244,7 @@
     </div>
 
     <!-- Jquery JS-->
-    <script src="../../vendor/jquery-3.2.1.min.js"></script>
+    <script src=" ../../vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="../../vendor/bootstrap-4.1/popper.min.js"></script>
     <script src="../../vendor/bootstrap-4.1/bootstrap.min.js"></script>
@@ -239,6 +267,7 @@
     <!-- Main JS-->
     <script src="../../js/main.js"></script>
     <script src="../../js/table.js"></script>
+    <script src="../../js/permessi.js"></script>
 
 </body>
 

@@ -162,7 +162,7 @@
                                     echo '<img src="../../images/uploads/user.jpg" alt="" width="40" height="40">';
                                 }
                                 echo '<li><a href="../profilo/profilo.php">' . $utente['nome'] . '</a></li>';
-                                if(in_array(2, $permessi)){
+								if(!empty(array_intersect([2,3], $permessi))){
                                     echo '<li><a href="../../../../admin/src/index.php">Amministrazione</a></li>';
                                 }
                                 echo '<li><a href="../service/logout.php">Disconetti</a></li>';

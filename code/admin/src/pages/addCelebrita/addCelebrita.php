@@ -9,8 +9,14 @@ $statsController = $config->getStatisticheController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
+    $permessi = array_map('intval', explode(",", $utente['permessi']));
+    if (empty(array_intersect([2, 3], $permessi))) {
+        header("Location: ../../../../site/src");
+        exit;
+    }
 } else {
-    $utente = null;
+    header("Location: ../../../../site/src");
+    exit;
 }
 
 $celebritaId = null;
