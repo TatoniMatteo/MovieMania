@@ -232,10 +232,14 @@
 				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
 					<?php
+					
 						if(count($recensioni) > 0) {
+							$count = 0;
 							foreach($recensioni as $recensione){
+								$count++;
 					?>
-					<div class="movie-item-style-2 userrate">
+					<div
+						class="movie-item-style-2 userrate <?php echo $count == $limit || $count == count($recensioni) ? 'last' : ''?>">
 						<?php
 							if ($recensione['copertina'] != null) {
 								echo '<img src="data:image/jpeg;base64,' . base64_encode($recensione['copertina']) . '" alt="" width="170" height="261">';
@@ -274,8 +278,32 @@
 							</p>
 						</div>
 					</div>
-					<?php } 
-						} else{ ?>
+
+					<?php } ?>
+					<div class="topbar-filter">
+						<div style="width: 40vw;"></div>
+						<div class="pagination2">
+							<span>Pagina
+								<?php echo ($pagina + 1)?> di
+								<?php echo $pagine ?>:
+							</span>
+							<?php 
+								for ($i = 1; $i <= $pagine; $i++){
+									if($i == $pagina + 1){ 
+							?>
+							<a class="active page" style="cursor:pointer">
+								<?php echo $i ?>
+							</a>
+							<?php } else { ?>
+							<a class="page" style="cursor:pointer">
+								<?php echo $i ?>
+							</a>
+							<?php 	} 
+								}
+							?>
+						</div>
+					</div>
+					<?php } else{ ?>
 					<p style="font-size: 1.5em;">
 						Le tue recensioni saranno visibili qui!</p>
 					<?php } ?>

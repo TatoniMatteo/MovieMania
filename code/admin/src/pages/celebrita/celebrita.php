@@ -19,11 +19,12 @@ if (isset($_SESSION['utente'])) {
     exit;
 }
 
+$filtro = (isset($_GET['filtro'])) ? $_GET['filtro'] : "";
 $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
 $limit = 15;
 $offset = $pagina * $limit;
-$personaggi = $statsController->getAllPersonaggi($offset, $limit);
-$totale = $statsController->getNumeroPersonaggi();
+$personaggi = $statsController->getAllPersonaggi($offset, $limit, $filtro);
+$totale = $statsController->getNumeroPersonaggi($filtro);
 $pagine = ceil($totale / $limit);
 
 include 'celebrita.html';

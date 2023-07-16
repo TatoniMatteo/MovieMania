@@ -189,7 +189,7 @@ class CreazioneController
             $query = "UPDATE personaggi SET nome = ?, cognome = ?, foto = ?, biografia = ?, 
             data_nascita = ?, nazionalita = ?, sesso = ?, data_morte = ? WHERE id = ?";
             $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-            mysqli_stmt_bind_param($statement, "ssssssisi", $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte, $personaggioId);
+            mysqli_stmt_bind_param($statement, "ssssssssi", $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte, $personaggioId);
             if (!$statement->execute()) {
                 throw new Exception('Impossibile aggiornare i parametri della celebrita');
             }
@@ -206,7 +206,7 @@ class CreazioneController
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
             $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-            mysqli_stmt_bind_param($statement, "ssssssis", $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte);
+            mysqli_stmt_bind_param($statement, "ssssssss", $nome, $cognome, $foto, $biografia, $nascita, $nazionalita, $sesso, $morte);
             if (!$statement->execute()) {
                 throw new Exception('Impossibile creare la celebrita');
             }

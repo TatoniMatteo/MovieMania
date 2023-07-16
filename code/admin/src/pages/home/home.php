@@ -18,8 +18,8 @@ if (isset($_SESSION['utente'])) {
     exit;
 }
 
-$numero_film = $statsController->getNumeroFilm();
-$numero_serie = $statsController->getNumeroSerie();
-$numero_celebrita = $statsController->getNumeroCelebrità();
+$numero_film = $statsController->getNumeroFilm("");
+$numero_serie = $statsController->getNumeroSerie("");
+$numero_celebrita = $statsController->getNumeroCelebrità("");
 $numero_recensioni = $statsController->getNumeroRecensioni();
 include 'home.html';

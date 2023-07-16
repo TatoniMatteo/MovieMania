@@ -19,11 +19,12 @@ if (isset($_SESSION['utente'])) {
     exit;
 }
 
+$filtro = (isset($_GET['filtro'])) ? $_GET['filtro'] : "";
 $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
 $limit = 15;
 $offset = $pagina * $limit;
-$series = $statsController->getAllserie($offset, $limit);
-$totale = $statsController->getNumeroSerie();
+$series = $statsController->getAllserie($offset, $limit, $filtro);
+$totale = $statsController->getNumeroSerie($filtro);
 $pagine = ceil($totale / $limit);
 
 include 'serie.html';

@@ -31,61 +31,61 @@ class UtentiController
         }
     }
 
-    public function getPreferiti($id)
+    public function getPreferiti($id, $offset, $limit)
     {
-        $query = "SELECT ROUND(IFNULL(AVG(R.voto), 0), 1) AS media_voti, 'film' AS tipo, F.*
-    FROM Film F
-    LEFT JOIN Preferiti P ON F.id = P.id_film
-    LEFT JOIN Recensione R ON F.id = R.id_film
-    WHERE P.id_utente = ?
-    GROUP BY F.id";
+        $query = "SELECT tipo, media_voti, id, titolo, descrizione, data_pubblicazione, copertina, numero_stagioni, durata
+            FROM (
+                SELECT 'film' AS tipo, ROUND(IFNULL(AVG(R.voto), 0), 1) AS media_voti, F.id, F.titolo, F.descrizione, F.data_pubblicazione, F.copertina, NULL AS numero_stagioni, F.durata
+                FROM Film F
+                LEFT JOIN Preferiti P ON F.id = P.id_film
+                LEFT JOIN Recensione R ON F.id = R.id_film
+                WHERE P.id_utente = ?
+                GROUP BY F.id
+                UNION ALL
+                SELECT 'serie' AS tipo, ROUND(IFNULL(AVG(R.voto), 0), 1) AS media_voti, S.id, S.titolo, S.descrizione, MIN(St.data_pubblicazione) as data_publicazione, S.copertina, COUNT(St.id) AS numero_stagioni, NULL as durata
+                FROM Serie S
+                LEFT JOIN Preferiti P ON S.id = P.id_serie
+                LEFT JOIN Recensione R ON S.id = R.id_serie
+                LEFT JOIN Stagione St ON St.id_serie = P.id_serie
+                WHERE P.id_utente = ?
+                GROUP BY S.id
+            ) AS preferiti
+            ORDER BY data_pubblicazione DESC
+            LIMIT ?, ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_bind_param($statement, "iiii", $id, $id, $offset, $limit);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
-        $film = array();
+        $preferiti = array();
 
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $film[] = $row;
+                $preferiti[] = $row;
             }
         }
 
-        $query = "SELECT ROUND(IFNULL(AVG(R.voto), 0), 1) AS media_voti, MIN(St.data_pubblicazione) AS data_pubblicazione, COUNT(St.id) AS numero_stagioni, 'serie' AS tipo, S.*
-    FROM Serie S
-    LEFT JOIN Preferiti P ON S.id = P.id_serie
-    LEFT JOIN Recensione R ON S.id = R.id_serie
-    LEFT JOIN Stagione St ON St.id_serie = P.id_serie
-    WHERE P.id_utente = ?
-    GROUP BY S.id";
-
-        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "i", $id);
-        mysqli_stmt_execute($statement);
-
-        $result = mysqli_stmt_get_result($statement);
-        $serie = array();
-
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $serie[] = $row;
-            }
-        }
-
-        $preferiti = array_merge($film, $serie);
-
-        function compareByDataPubblicazione($a, $b)
-        {
-            if ($a['data_pubblicazione'] == $b['data_pubblicazione']) {
-                return 0;
-            }
-            return ($a['data_pubblicazione'] > $b['data_pubblicazione']) ? -1 : 1;
-        }
-        usort($preferiti, 'compareByDataPubblicazione');
         return $preferiti;
     }
+
+    public function countPreferiti($id)
+    {
+        $query = "SELECT COUNT(*) AS count
+        FROM Preferiti
+        WHERE id_utente = ?";
+
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['count'];
+    }
+
+
 
     public function updateFoto($id, $foto)
     {

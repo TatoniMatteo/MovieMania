@@ -9,13 +9,17 @@ class StatisticheController
         $this->dbConnection = $db;
     }
 
-    public function getNumeroFilm()
+    public function getNumeroFilm($filtro)
     {
         $query = "SELECT COUNT(*) as numero
-            FROM (SELECT id 
-                FROM Film) as conto";
+            FROM (
+                SELECT id 
+                FROM Film
+                WHERE Film.titolo LIKE CONCAT('%', ?, '%') OR SOUNDEX(Film.titolo) = SOUNDEX(?)
+                ) as conto";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ss", $filtro, $filtro);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -28,13 +32,17 @@ class StatisticheController
         }
     }
 
-    public function getNumeroSerie()
+    public function getNumeroSerie($filtro)
     {
         $query = "SELECT COUNT(*) as numero
-            FROM (SELECT id 
-                FROM Serie) as conto";
+            FROM (
+                    SELECT id 
+                    FROM Serie
+                    WHERE Serie.titolo LIKE CONCAT('%', ?, '%') OR SOUNDEX(Serie.titolo) = SOUNDEX(?)
+                ) as conto";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ss", $filtro, $filtro);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -47,13 +55,21 @@ class StatisticheController
         }
     }
 
-    public function getNumeroPersonaggi()
+    public function getNumeroPersonaggi($filtro)
     {
         $query = "SELECT COUNT(*) as numero
-            FROM (SELECT id 
-                FROM Personaggi) as conto";
+            FROM (
+                    SELECT id, nome, cognome, nazionalita, data_nascita
+                    FROM Personaggi
+                    WHERE (Personaggi.nome LIKE CONCAT('%', ?, '%') OR Personaggi.cognome LIKE CONCAT('%', ?, '%')
+                        OR CONCAT(Personaggi.nome, ' ', Personaggi.cognome) LIKE CONCAT('%', ?, '%')
+                        OR SOUNDEX(Personaggi.nome) = SOUNDEX(?)
+                        OR SOUNDEX(Personaggi.cognome) = SOUNDEX(?)
+                        OR SOUNDEX(CONCAT(Personaggi.nome, ' ', Personaggi.cognome)) =  SOUNDEX(?))
+                ) as conto";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ssssss", $filtro, $filtro, $filtro, $filtro, $filtro, $filtro);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -104,13 +120,24 @@ class StatisticheController
         }
     }
 
-    public function getNumeroUtenti()
+    public function getNumeroUtenti($filtro)
     {
         $query = "SELECT COUNT(*) as numero
-            FROM (SELECT id 
-                FROM Utenti) as conto";
+            FROM (
+                    SELECT Utenti.id 
+                    FROM Utenti
+                    WHERE Utenti.nome LIKE CONCAT('%', ?, '%') OR Utenti.cognome LIKE CONCAT('%', ?, '%')
+                        OR CONCAT(Utenti.nome, ' ', Utenti.cognome) LIKE CONCAT('%', ?, '%')
+                        OR Utenti.username LIKE CONCAT('%', ?, '%') OR Utenti.email LIKE CONCAT('%', ?, '%')
+                        OR SOUNDEX(Utenti.nome) = SOUNDEX(?)
+                        OR SOUNDEX(Utenti.cognome) = SOUNDEX(?)
+                        OR SOUNDEX(CONCAT(Utenti.nome, ' ', Utenti.cognome)) =  SOUNDEX(?)
+                        OR SOUNDEX(Utenti.username) = SOUNDEX(?)
+                        OR SOUNDEX(Utenti.email) = SOUNDEX(?)
+                ) as conto";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "ssssssssss", $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $filtro,);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -118,23 +145,23 @@ class StatisticheController
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             return $row['numero'];
-        } else {
-            return null;
         }
+        return null;
     }
 
 
-    public function getAllFilm($offset, $limit)
+    public function getAllFilm($offset, $limit, $filtro)
     {
         $query = "SELECT Film.*, IFNULL(ROUND(AVG(Recensione.voto), 1), 0) AS media_voti, IFNULL(COUNT(Recensione.id), 0) AS numero_recensioni
             FROM Film
             LEFT JOIN Recensione ON Film.id = Recensione.id_film
+            WHERE Film.titolo LIKE CONCAT('%', ?, '%') OR SOUNDEX(Film.titolo) = SOUNDEX(?)
             GROUP BY Film.id 
             ORDER BY Film.data_pubblicazione DESC, Film.titolo
             LIMIT ?, ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "ii", $offset, $limit);
+        mysqli_stmt_bind_param($statement, "ssii", $filtro, $filtro, $offset, $limit);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -150,18 +177,21 @@ class StatisticheController
     }
 
 
-    public function getAllSerie($offset, $limit)
+    public function getAllSerie($offset, $limit, $filtro)
     {
+
         $query = "SELECT Serie.*, IFNULL(ROUND(AVG(Recensione.voto), 1), 0) AS media_voti, IFNULL(COUNT(Recensione.id), 0) AS numero_recensioni, MIN(Stagione.data_pubblicazione) as data_pubblicazione
             FROM Serie
             LEFT JOIN Recensione ON Serie.id = Recensione.id_serie
             LEFT JOIN Stagione ON Serie.id = Stagione.id_serie
+            LEFT JOIN Caratterizza CS ON Serie.id = CS.id_serie
+            WHERE Serie.titolo LIKE CONCAT('%', ?, '%') OR SOUNDEX(Serie.titolo) = SOUNDEX(?)
             GROUP BY Serie.id 
             ORDER BY data_pubblicazione DESC, Serie.titolo
             LIMIT ?, ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "ii", $offset, $limit);
+        mysqli_stmt_bind_param($statement, "ssii", $filtro, $filtro, $offset, $limit);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -176,15 +206,20 @@ class StatisticheController
         return $serie;
     }
 
-    public function getAllPersonaggi($offset, $limit)
+    public function getAllPersonaggi($offset, $limit, $filtro)
     {
         $query = "SELECT id, nome, cognome, nazionalita, data_nascita
-            FROM Personaggi
+        FROM Personaggi
+        WHERE (Personaggi.nome LIKE CONCAT('%', ?, '%') OR Personaggi.cognome LIKE CONCAT('%', ?, '%')
+            OR CONCAT(Personaggi.nome, ' ', Personaggi.cognome) LIKE CONCAT('%', ?, '%')
+            OR SOUNDEX(Personaggi.nome) = SOUNDEX(?)
+            OR SOUNDEX(Personaggi.cognome) = SOUNDEX(?)
+            OR SOUNDEX(CONCAT(Personaggi.nome, ' ', Personaggi.cognome)) =  SOUNDEX(?))
             ORDER BY nome
             LIMIT ?, ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "ii", $offset, $limit);
+        mysqli_stmt_bind_param($statement, "ssssssii", $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $offset, $limit);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -200,22 +235,31 @@ class StatisticheController
     }
 
 
-    public function getAllUtenti($offset, $limit)
+    public function getAllUtenti($offset, $limit, $filtro)
     {
         try {
+
             $query = "SELECT Utenti.id, Utenti.nome, Utenti.cognome, Utenti.email, Utenti.username, Permessi.id AS id_permesso
-                      FROM Utenti
-                      INNER JOIN Possiede ON Utenti.id = Possiede.utente_id
-                      INNER JOIN Permessi ON Possiede.permesso_id = Permessi.id
-                      ORDER BY Utenti.nome, Utenti.cognome
-                      LIMIT ?, ?";
+                        FROM Utenti
+                        INNER JOIN Possiede ON Utenti.id = Possiede.utente_id
+                        INNER JOIN Permessi ON Possiede.permesso_id = Permessi.id
+                        WHERE Utenti.nome LIKE CONCAT('%', ?, '%') OR Utenti.cognome LIKE CONCAT('%', ?, '%')
+                            OR CONCAT(Utenti.nome, ' ', Utenti.cognome) LIKE CONCAT('%', ?, '%')
+                            OR Utenti.username LIKE CONCAT('%', ?, '%') OR Utenti.email LIKE CONCAT('%', ?, '%')
+                            OR SOUNDEX(Utenti.nome) = SOUNDEX(?)
+                            OR SOUNDEX(Utenti.cognome) = SOUNDEX(?)
+                            OR SOUNDEX(CONCAT(Utenti.nome, ' ', Utenti.cognome)) =  SOUNDEX(?)
+                            OR SOUNDEX(Utenti.username) = SOUNDEX(?)
+                            OR SOUNDEX(Utenti.email) = SOUNDEX(?)
+                            ORDER BY Utenti.nome, Utenti.cognome
+                            LIMIT ?, ?";
 
             $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
             if (!$statement) {
                 throw new Exception("Errore nella preparazione della query.");
             }
 
-            mysqli_stmt_bind_param($statement, "ii", $offset, $limit);
+            mysqli_stmt_bind_param($statement, "ssssssssssii", $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $filtro, $offset, $limit);
             if (!mysqli_stmt_execute($statement)) {
                 throw new Exception("Errore nell'esecuzione della query.");
             }

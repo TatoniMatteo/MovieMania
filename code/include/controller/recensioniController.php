@@ -133,7 +133,7 @@ class RecensioniController
         }
     }
 
-    public function getRecesioniByUtente($id)
+    public function getRecesioniByUtente($id, $offset, $limit)
     {
         $query = "SELECT R.*, COALESCE(F.copertina, S.copertina) AS copertina, COALESCE(F.titolo, S.titolo) AS titolo, COALESCE(F.data_pubblicazione, MIN(St.data_pubblicazione)) AS data_pubblicazione
         FROM Recensione R
@@ -141,10 +141,11 @@ class RecensioniController
         LEFT JOIN Serie S ON R.id_serie = S.id
         LEFT JOIN Stagione St ON S.id = St.id_serie
         WHERE R.id_utente = ?
-        GROUP BY R.id, F.id, S.id";
+        GROUP BY R.id, F.id, S.id
+        LIMIT ?, ?";
 
         $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
-        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_bind_param($statement, "iii", $id, $offset, $limit);
         mysqli_stmt_execute($statement);
 
         $result = mysqli_stmt_get_result($statement);
@@ -158,6 +159,29 @@ class RecensioniController
 
         return $recensioni;
     }
+
+    public function countRecesioniByUtente($id)
+    {
+        $query = "SELECT COUNT(*) AS numero
+        FROM (
+            SELECT R.id
+            FROM Recensione R
+            WHERE R.id_utente = ?
+            ) AS valori";
+
+        $statement = mysqli_prepare($this->dbConnection->getConnection(), $query);
+        mysqli_stmt_bind_param($statement, "i", $id);
+        mysqli_stmt_execute($statement);
+
+        $result = mysqli_stmt_get_result($statement);
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['numero'];
+        }
+        return null;
+    }
+
 
     public function getRecensione($id_utente, $id_programma, $tipo)
     {

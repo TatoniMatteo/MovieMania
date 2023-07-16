@@ -329,6 +329,28 @@
 														<?php echo $personaggio['nazionalita']  ?>
 													</p>
 												</div>
+												<?php 
+													$stringa = trim($personaggio['sesso']);
+  													if (strlen($stringa) === 1 && preg_match('/^[mfa]$/i', $stringa)) {?>
+												<div class="sb-it">
+													<h6>Sesso: </h6>
+													<p>
+														<?php 
+															switch (strtolower($stringa)) {
+																case 'm':
+																	echo "Uomo";
+																	break;
+																case 'f':
+																	echo "Donna";
+																	break;
+																case 'a':
+																	echo "Altro";
+																	break;
+															}
+														?>
+													</p>
+												</div>
+												<?php }?>
 											</div>
 										</div>
 									</div>

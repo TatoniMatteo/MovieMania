@@ -19,13 +19,13 @@ if (isset($_SESSION['utente'])) {
     exit;
 }
 
-
+$filtro = (isset($_GET['filtro'])) ? $_GET['filtro'] : "";
 $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
 $limit = 15;
 $offset = $pagina * $limit;
-$res = $statsController->getAllUtenti($offset, $limit);
+$res = $statsController->getAllUtenti($offset, $limit, $filtro);
 $utenti = $res['success'] ? $res['data'] : array();
-$totale = $statsController->getNumeroUtenti();
+$totale = $statsController->getNumeroUtenti($filtro);
 $pagine = ceil($totale / $limit);
 
 include 'users.html';

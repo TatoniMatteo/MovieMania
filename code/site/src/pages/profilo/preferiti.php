@@ -9,14 +9,21 @@ $utentiController = $config->getUtentiController();
 
 if (isset($_SESSION['utente'])) {
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
-    $permessi = $array = array_map('intval', explode(",", $utente['permessi']));
+    $permessi = array_map('intval', explode(",", $utente['permessi']));
     if ($utente != null) {
-        $programmiPreferiti = $utentiController->getPreferiti($utente['id']);
-        $numero_preferiti = count($programmiPreferiti);
+        $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
+        $limit = 5;
+        $offset = $pagina * $limit;
+        $programmiPreferiti = $utentiController->getPreferiti($utente['id'], $offset, $limit);
+        $totale = $utentiController->countPreferiti($utente['id']);
+        $pagine = ceil($totale / $limit);
+
         include 'userfavoritelist.html';
     } else {
-        include '../service/404.html';
+        header("Location: ../../../../site/src");
+        exit;
     }
 } else {
-    include '../service/404.html';
+    header("Location: ../../../../site/src");
+    exit;
 }

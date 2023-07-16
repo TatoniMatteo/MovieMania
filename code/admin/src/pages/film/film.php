@@ -19,12 +19,12 @@ if (isset($_SESSION['utente'])) {
     exit;
 }
 
-
+$filtro = (isset($_GET['filtro'])) ? $_GET['filtro'] : "";
 $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
 $limit = 15;
 $offset = $pagina * $limit;
-$films = $statsController->getAllFilm($offset, $limit);
-$totale = $statsController->getNumeroFilm();
+$films = $statsController->getAllFilm($offset, $limit, $filtro);
+$totale = $statsController->getNumeroFilm($filtro);
 $pagine = ceil($totale / $limit);
 
 include 'film.html';

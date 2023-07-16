@@ -27,7 +27,6 @@ INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, 
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (3, 3, null, 2, 2, 'Frodo ', 1);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (4, 4, null, 2, 1, null, 0);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (5, 5, 3, null, 2, 'Eleven', 1);
-INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (6, 6, 4, null, 2, 'Rachel Green', 1);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (7, 7, null, 4, 2, 'Forrest Gump', 1);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (8, 8, null, 4, 1, null, 0);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (9, 9, null, 4, 3, null, 0);
@@ -50,5 +49,15 @@ INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, 
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (47, 23, null, 14, 2, 'Scott Lang / Ant-Man', 0);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (48, 24, null, 14, 2, 'Stephen Strange / Doctor Strange', 1);
 INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (49, 16, null, 14, 4, null, 0);
-INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (50, 11, null, 12, 1, null, 0);
-INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (53, 13, null, 12, 2, 'Shazam', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (56, 26, 4, null, 3, null, 0);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (57, 6, 4, null, 2, 'Rachel Green', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (58, 27, 4, null, 2, 'Monica Geller', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (59, 28, 4, null, 2, 'Phoebe Buffay', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (60, 29, 4, null, 2, 'Joey Tribbiani', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (61, 30, 4, null, 2, 'Chandler Bing', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (62, 31, 4, null, 2, 'Ross Geller', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (75, 11, null, 12, 1, null, 0);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (76, 13, null, 12, 2, 'Shazam', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (97, 34, 13, null, 3, null, 0);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (98, 32, 13, null, 2, 'Lord Anthony Bridgerton ', 1);
+INSERT INTO moviemania.partecipa (id, id_personaggio, id_serie, id_film, ruolo, interpreta, star) VALUES (99, 33, 13, null, 2, 'Daphne Basset', 1);

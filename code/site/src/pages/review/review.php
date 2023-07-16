@@ -18,7 +18,7 @@ if (!isset($_GET['id']) or !isset($_GET['tipo']) or !isset($_SESSION['utente']))
         $rate = intval($_GET['rate']);
     }
     $utente = $utentiController->getUtenteById($_SESSION['utente']);
-    $permessi = $array = array_map('intval', explode(",", $utente['permessi']));
+    $permessi = array_map('intval', explode(",", $utente['permessi']));
     $programmaId = $_GET['id'];
     $tipo = $_GET['tipo'];
     $programma = null;

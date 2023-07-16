@@ -319,8 +319,31 @@
 								</p>
 							</div>
 						</div>
-						<?php } 
-							} else{ ?>
+						<?php } ?>
+						<div class="topbar-filter">
+							<div style="width: 40vw;"></div>
+							<div class="pagination2">
+								<span>Pagina
+									<?php echo ($pagina + 1)?> di
+									<?php echo $pagine ?>:
+								</span>
+								<?php 
+									for ($i = 1; $i <= $pagine; $i++){
+										if($i == $pagina + 1){ 
+								?>
+								<a class="active page" style="cursor:pointer">
+									<?php echo $i ?>
+								</a>
+								<?php } else { ?>
+								<a class="page" style="cursor:pointer">
+									<?php echo $i ?>
+								</a>
+								<?php 	} 
+									}
+								?>
+							</div>
+						</div>
+						<?php } else{ ?>
 						<p style="font-size: 1.5em;">
 							I tuoi programmi preferiti saranno visibili qui!</p>
 						<?php } ?>
