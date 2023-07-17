@@ -5921,8 +5921,8 @@ ul {
 }
 
 .trailers .trailer-img {
-  width: 100px;
-  max-height: 57px;
+  width: 50px;
+  aspect-ratio: 2/3;
   overflow: hidden;
 }
 

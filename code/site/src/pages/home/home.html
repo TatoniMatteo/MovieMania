@@ -537,16 +537,19 @@
                                 <div class="trailer-img">
                                     <?php
 										if ($programma['copertina'] != null) {
-											echo '<img src="data:image/jpeg;base64,' . base64_encode($programma['copertina']) . '" alt="" width="4096" height="2737"> ';
+											echo '<img src="data:image/jpeg;base64,' . base64_encode($programma['copertina']) . '" > ';
                                         } else {
-                                            echo '<img src="../../images/uploads/slider1.jpg" alt="" width="4096" height="2737">';
+                                            echo '<img src="../../images/uploads/slider1.jpg">';
                                         }
                                     ?>
                                 </div>
                                 <div class="trailer-infor">
                                     <h4 class="desc">
-                                        <?php echo $programma['titolo'] ?>
+                                        <?php echo $programma['titolo']; ?>
                                     </h4>
+                                    <p>
+                                        <?php echo '( '. date('Y', strtotime($programma['data_pubblicazione'])) .' )'; ?>
+                                    </p>
                                 </div>
                             </div>
                             <?php }?>

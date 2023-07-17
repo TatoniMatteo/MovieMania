@@ -41,7 +41,7 @@ class SerieController
             $limit = "";
         }
 
-        $query = "SELECT s.*, IFNULL(ROUND(AVG(r.voto), 1), 0) AS media_voti, 'serie' as tipo
+        $query = "SELECT s.*, IFNULL(ROUND(AVG(r.voto), 1), 0) AS media_voti, 'serie' as tipo, MIN(st.data_pubblicazione) as data_pubblicazione
     FROM Serie as s
     LEFT JOIN Recensione as r ON s.id = r.id_serie
     LEFT JOIN Stagione as st ON s.id = st.id_serie
