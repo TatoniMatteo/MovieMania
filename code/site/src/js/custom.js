@@ -450,6 +450,12 @@ $(function () {
 				hd: 1,
 				wmode: 'opaque', // shows X to close
 				vq: 'hd720' // default 720p hd quality
+			},
+			beforeShow: function () {
+				$('.ht-header').hide();
+			},
+			afterClose: function () {
+				$('.ht-header').show();
 			}
 		});
 	//== js for image lightbox

@@ -13,8 +13,16 @@ $larghezza = $_POST['larghezza'];
 $rapporto = $larghezza / $altezza;
 
 $tmp_name = $_FILES['foto']['tmp_name'];
+$extension = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
 
-$source_image = imagecreatefromjpeg($tmp_name);
+if ($extension === 'jpeg' || $extension === 'jpg') {
+    $source_image = imagecreatefromjpeg($tmp_name);
+} elseif ($extension === 'png') {
+    $source_image = imagecreatefrompng($tmp_name);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Formato immagine non supportato. Sono consentiti solo file JPEG e PNG.']);
+    exit;
+}
 
 $source_width = imagesx($source_image);
 $source_height = imagesy($source_image);
@@ -49,16 +57,20 @@ $resized_image = imagescale($cropped_image, $larghezza, $altezza);
 
 $outputFilename = "../../media/tmp/" . uniqid("copertina_") . ".jpg";
 
-if (imagejpeg($resized_image, $outputFilename)) {
-    imagedestroy($source_image);
-    imagedestroy($cropped_image);
-    imagedestroy($resized_image);
+if ($extension === 'jpeg' || $extension === 'jpg') {
+    $success = imagejpeg($resized_image, $outputFilename);
+} elseif ($extension === 'png') {
+    $success = imagepng($resized_image, $outputFilename);
+} else {
+    $success = false;
+}
 
+imagedestroy($source_image);
+imagedestroy($cropped_image);
+imagedestroy($resized_image);
+
+if ($success) {
     echo json_encode(['success' => true, 'path' => $outputFilename]);
 } else {
-    imagedestroy($source_image);
-    imagedestroy($cropped_image);
-    imagedestroy($resized_image);
-
     echo json_encode(['success' => false, 'message' => 'Problemi con la connessione al server']);
 }

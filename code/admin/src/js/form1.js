@@ -276,7 +276,7 @@ function createCopertina(id, copertina = "../../media/addImage.jpg") {
     fileLoader.type = "file"
     fileLoader.setAttribute("id", `copertinaInput ${id}`)
     fileLoader.style.display = "none"
-    fileLoader.setAttribute("accept", ".jpg, .jpeg")
+    fileLoader.setAttribute("accept", ".jpg, .jpeg, .png")
     fileLoader.classList.add("form-control-file")
     fileLoader.addEventListener('change', async () => {
         image.setAttribute("src", await getNewImage(fileLoader.files[0], 390, 260));
@@ -753,8 +753,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             var selectedOptions = document.getElementById('selectedOptions').children;
             var categorie = Array.from(selectedOptions).map(option => option.getAttribute('id'));
 
-
-            var stagioniElm = document.getElementById('stagioni').children
+            console.log(document.getElementById('stagioni'))
+            var stagioniElm = document.getElementById('stagioni') ? document.getElementById('stagioni').children : []
             var stagioni = []
 
             for (let elem of stagioniElm) {
