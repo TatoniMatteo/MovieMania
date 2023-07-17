@@ -1,3 +1,18 @@
+function showToast(message, error = true) {
+    console.log(message);
+    var toastContainer = document.getElementById("toast-container")
+    if (toastContainer) {
+        toastContainer.textContent = message
+        toastContainer.classList.add("show")
+        toastContainer.classList.add(error ? "error" : "success")
+
+        setTimeout(function () {
+            toastContainer.classList.remove("show")
+        }, 3000)
+    }
+}
+
+
 async function getDatiCelebrita(id) {
     try {
         const response = await fetch(`../services/getDatiCelebrita.php?id=${id}`);
@@ -41,7 +56,7 @@ async function getNewImage(image) {
             }
         })
         .catch(function (error) {
-            alert(error);
+            showToast(error.message);
         });
 }
 
@@ -82,9 +97,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
     }
 
-    var submitBtn = document.getElementById('submitBtn')
-    if (submitBtn) {
-        submitBtn.addEventListener('click', (event) => {
+    var form = document.getElementById('createForm')
+    if (form) {
+        form.addEventListener('submit', (event) => {
             event.preventDefault();
 
             var formData = new FormData();
@@ -115,35 +130,34 @@ document.addEventListener('DOMContentLoaded', async () => {
                     .then(response => { return response.json() })
                     .then(response => {
                         if (response.success) {
-                            alert(id ? "Celebrità modificata con successo" : "Celebrità creata con successo")
-                            url = window.location.href
-                            var currentURL = new URL(url);
-                            currentURL.pathname = '/MovieMania/code/admin/src/pages/celebrita/celebrita.php';
-                            window.location.href = currentURL.href;
+                            showToast(id ? "Celebrità modificata con successo" : "Celebrità creata con successo", false)
+                            setTimeout(function () {
+                                url = window.location.href
+                                var currentURL = new URL(url);
+                                currentURL.pathname = '/MovieMania/code/admin/src/pages/celebrita/celebrita.php';
+                                window.location.href = currentURL.href;
+                            }, 2000)
                         }
                         else {
                             throw new Error(response.message);
                         }
                     })
                     .catch(error => {
-                        alert("Error: " + error.message);
+                        showToast("Errore: " + error.message);
                     })
             } else {
-                alert('Inserisci tutti i dati correttamente e riprova!')
+                showToast('Inserisci tutti i dati correttamente e riprova!')
             }
         })
     }
 
-    var exitBtn = document.getElementById('exitBtn')
-    if (exitBtn) {
-        exitBtn.addEventListener('click', event => {
-            event.preventDefault();
-            url = window.location.href
-            var currentURL = new URL(url);
-            currentURL.pathname = '/MovieMania/code/admin/src/pages/celebrita/celebrita.php';
-            window.location.href = currentURL.href;
-        })
-    }
+    form.addEventListener('reset', event => {
+        event.preventDefault();
+        url = window.location.href
+        var currentURL = new URL(url);
+        currentURL.pathname = '/MovieMania/code/admin/src/pages/celebrita/celebrita.php';
+        window.location.href = currentURL.href;
+    })
 })
 
 $(window).off('beforeunload');

@@ -21,7 +21,7 @@ if (isset($_SESSION['utente'])) {
 
 $filtro = (isset($_GET['filtro'])) ? $_GET['filtro'] : "";
 $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 0;
-$limit = 15;
+$limit = 20;
 $offset = $pagina * $limit;
 $personaggi = $statsController->getAllPersonaggi($offset, $limit, $filtro);
 $totale = $statsController->getNumeroPersonaggi($filtro);
