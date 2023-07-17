@@ -104,7 +104,7 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="<?php echo $utente['foto'] ? 'data:image/jpeg;base64,' . base64_encode($utente['foto']) : '../../images/icon/avatar-01.jpg'?>"
+                                            <img src="<?php echo 'data:image/jpeg;base64,' . base64_encode($utente['foto']) ?>"
                                                 alt="Foto profilo" />
                                         </div>
                                         <div class="content">
@@ -147,7 +147,7 @@
                                             </div>
                                             <div class="col-12 col-md-9">
                                                 <label for="fotoInput">
-                                                    <img id="foto" src="../../media/addImage.jpg"
+                                                    <img id="foto" src="../../media/addImage2.jpg"
                                                         style="aspect-ratio: 2/3; max-width: 250px;">
                                                 </label>
                                                 <input name="copertina" class="form-control-file" type="file"

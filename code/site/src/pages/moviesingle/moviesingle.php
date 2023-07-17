@@ -34,6 +34,10 @@ if (!isset($_GET['id'])) {
 
         $categorie = $filmController->getCategoriesOfFilm($filmId);
         $personaggi = $personaggiController->getPersonaggiByFilm($filmId);
+        $stars = getstars($personaggi);
+        $thereAreMembri = thereAreMembri($personaggi);
+        $thereAreScrittori = thereAreScrittori($personaggi);
+        $thereAreRegisti = thereAreRegisti($personaggi);
         $numero_recensioni = $recensioniController->getNumeroRecesioniByFilm($filmId);
         $pagine = ceil($numero_recensioni / $limit);
         $film_correlati = $filmController->getFilmCorrelati($filmId);

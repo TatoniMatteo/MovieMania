@@ -14778,7 +14778,7 @@ img {
 
 #toast-container {
     position: fixed;
-    bottom: 20px;
+    top: 50px;
     left: 60%;
     transform: translateX(-50%);
     background-color: #233a50;
@@ -14793,12 +14793,12 @@ img {
     font-weight: bold;
 }
 
-.success {
+.success-toast {
     border: 2px solid #12E601;
     color: #12E601;
 }
 
-.error {
+.error-toast {
     border: 2px solid red;
     color: red;
 }

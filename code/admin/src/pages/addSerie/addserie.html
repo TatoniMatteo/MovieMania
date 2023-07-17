@@ -36,6 +36,7 @@
 </head>
 
 <body class="animsition">
+    <div id="toast-container"></div>
     <div class="page-wrapper">
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
@@ -102,7 +103,7 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="<?php echo $utente['foto'] ? 'data:image/jpeg;base64,' . base64_encode($utente['foto']) : '../../images/icon/avatar-01.jpg'?>"
+                                            <img src="<?php echo 'data:image/jpeg;base64,' . base64_encode($utente['foto']) ?>"
                                                 alt="Foto profilo" />
                                         </div>
                                         <div class="content">
@@ -140,7 +141,7 @@
                                         <div class="row form-group">
                                             <div class="col col-md-3">
                                                 <label for="fotoInput" class=" form-control-label">
-                                                    Copertina*
+                                                    Copertina
                                                 </label>
                                             </div>
                                             <div class="col-12 col-md-9">

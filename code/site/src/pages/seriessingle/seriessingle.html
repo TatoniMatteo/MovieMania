@@ -357,16 +357,16 @@
 														</div>
 													</div>
 												</div>
+												<?php if(count($stars)>0){ ?>
 												<div class="title-hd-sm">
 													<h4>Cast</h4>
 													<a href="#cast" class="time link-to-tab">Scopri tutto il Cast e la
 														Troupe <i class="ion-ios-arrow-right"></i></a>
 												</div>
 												<!-- movie cast -->
+												<?php if(count($stars)>0){ ?>
 												<div class="mvcast-item">
-													<?php 
-                                                        foreach($personaggi as $personaggio){ 
-                                                            if($personaggio['star']){ ?>
+													<?php foreach($stars as $personaggio){ ?>
 													<div class="cast-it">
 														<div class="cast-left">
 															<?php
@@ -385,11 +385,12 @@
 															<?php echo '... ' . $personaggio['interpreta']; ?>
 														</p>
 													</div>
-													<?php 
-                                                            }
-                                                        } 
-                                                    ?>
+													<?php } ?>
 												</div>
+												<?php } ?>
+												<?php } ?>
+
+												<?php if (count($recensioni) > 0){?>
 												<div class="title-hd-sm">
 													<h4>Recensioni degli utenti</h4>
 													<a href="#reviews" class="time link-to-tab">
@@ -398,9 +399,7 @@
 													</a>
 												</div>
 												<!-- movie user review -->
-												<?php
-                                                    foreach ($recensioni as $recensione){
-                                                ?>
+												<?php foreach ($recensioni as $recensione){ ?>
 												<div class="mv-user-review-item">
 													<h3>
 														<?php echo $recensione['titolo']; ?>
@@ -432,8 +431,10 @@
 												</div>
 												<div style="height: 5vh;"></div>
 												<?php } ?>
+												<?php } ?>
 											</div>
 											<div class="col-md-4 col-xs-12 col-sm-12">
+												<?php if($thereAreRegisti) { ?>
 												<div class="sb-it">
 													<h6>Regista:</h6>
 													<p>
@@ -449,6 +450,9 @@
                                                         ?>
 													</p>
 												</div>
+												<?php } ?>
+
+												<?php if($thereAreScrittori) { ?>
 												<div class="sb-it">
 													<h6>Scrittore:</h6>
 													<p>
@@ -464,6 +468,9 @@
 														?>
 													</p>
 												</div>
+												<?php } ?>
+
+												<?php if(count($stars)>0){ ?>
 												<div class="sb-it">
 													<h6>Stars: </h6>
 													<p>
@@ -479,6 +486,8 @@
                                                         ?>
 													</p>
 												</div>
+												<?php } ?>
+
 												<div class="sb-it">
 													<h6>Generi:</h6>
 													<p>
@@ -512,6 +521,7 @@
 									<div id="reviews" class="tab review">
 										<div class="row">
 											<div style="height: 5vh;"></div>
+											<?php if(count($recensioni)>0){ ?>
 											<div class="topbar-filter">
 												<p>Trovate <span>
 														<?php echo $numero_recensioni?> recensioni
@@ -604,6 +614,11 @@
 													?>
 												</div>
 											</div>
+											<?php } else{?>
+											<div>
+												<h3>Non ci sono ancora recensioni per questa serie!</h3>
+											</div>
+											<?php } ?>
 										</div>
 									</div>
 									<div id="cast" class="tab">
@@ -616,7 +631,7 @@
 											<div class="mvcast-item">
 												<?php 
                                                     foreach($personaggi as $personaggio){ 
-                                                        if($personaggio['ruolo'] === 'Regista' || $personaggio['ruolo'] === 'Scrittore'){
+                                                        if($personaggio['categoria_ruolo'] == 1){
                                                 ?>
 												<div class="cast-it">
 													<div class="cast-left">
@@ -644,7 +659,7 @@
 											<div class="mvcast-item">
 												<?php 
                                                     foreach($personaggi as $personaggio){ 
-                                                        if($personaggio['ruolo'] === 'Attore'){
+                                                        if($personaggio['categoria_ruolo'] == 2){
                                                 ?>
 												<div class="cast-it">
 													<div class="cast-left">
@@ -666,13 +681,14 @@
                                                 ?>
 											</div>
 											<!-- //== -->
+											<?php if($thereAreMembri){ ?>
 											<div class="title-hd-sm">
 												<h4>Troupe</h4>
 											</div>
 											<div class="mvcast-item">
 												<?php 
                                                     foreach($personaggi as $personaggio){ 
-                                                        if($personaggio['ruolo'] !== 'Regista' && $personaggio['ruolo'] !== 'Scrittore' && $personaggio['ruolo'] !== 'Attore'){
+                                                        if($personaggio['categoria_ruolo'] == 3){
                                                 ?>
 												<div class="cast-it">
 													<div class="cast-left">
@@ -693,6 +709,7 @@
                                                     } 
                                                 ?>
 											</div>
+											<?php }?>
 										</div>
 									</div>
 									<div id="season" class="tab">
@@ -730,10 +747,12 @@
 									<div id="moviesrelated" class="tab">
 										<div class="row">
 											<div style="height: 5vh;"></div>
+											<?php if(count($serie_correlate) > 0) { ?>
 											<?php 
                                                 foreach($serie_correlate as $serie){
 													$personaggi = $personaggiController->getPersonaggiBySerie($serie['id']);
-													$numero_stagioni = count($serieController->getAllSeasonBySerieId($serie['id']))
+													$numero_stagioni = count($serieController->getAllSeasonBySerieId($serie['id']));
+													$stars = getstars($personaggi);
                                             ?>
 											<div class="movie-item-style-2">
 												<?php
@@ -775,22 +794,34 @@
 													</p>
 													<p>
 														<?php
-                                                            echo "Regia di: ";
-                                                            $registi = [];
-                                                            foreach ($personaggi as $personaggio) {
-                                                                if ($personaggio['ruolo'] === 'Regista') {
-                                                                    $registi[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
-                                                                        . $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
-                                                                }
-                                                            }
-                                                            echo implode(', ', $registi);
+															if(thereAreRegisti($personaggi)) {
+																echo "Regia di: ";
+																$registi = [];
+																foreach ($personaggi as $personaggio) {
+																	if ($personaggio['ruolo'] === 'Regista') {
+																		$registi[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
+																			. $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
+																	}
+																}
+																echo implode(', ', $registi);
+															}else{
+																echo "Scritto da: ";
+																$registi = [];
+																foreach ($personaggi as $personaggio) {
+																	if ($personaggio['ruolo'] === 'Scrittore') {
+																		$registi[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
+																			. $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
+																	}
+																}
+																echo implode(', ', $registi);
+															}
                                                         ?>
 													</p>
 													<p>
 														<?php
                                                             echo "Stars: ";
                                                             $star = [];
-                                                            foreach ($personaggi as $personaggio) {
+                                                            foreach ($stars as $personaggio) {
                                                                 if ($personaggio['star']) {
                                                                     $star[] = '<a href="../celebritysingle/celebritysingle.php?id=' . $personaggio['id'] . '">'
                                                                         . $personaggio['nome'] . ' ' . $personaggio['cognome'] . '</a>';
@@ -802,6 +833,11 @@
 												</div>
 											</div>
 											<div style="height: 5vh;"></div>
+											<?php } ?>
+											<?php } else {?>
+											<div>
+												<h3>Non abbiamo trovato serie correlate per questa serie!</h3>
+											</div>
 											<?php } ?>
 										</div>
 									</div>

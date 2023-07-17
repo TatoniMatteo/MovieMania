@@ -1,13 +1,13 @@
 function showToast(message, error = true) {
-    console.log(message);
     var toastContainer = document.getElementById("toast-container")
     if (toastContainer) {
         toastContainer.textContent = message
         toastContainer.classList.add("show")
-        toastContainer.classList.add(error ? "error" : "success")
-
+        toastContainer.classList.add(error ? "error-toast" : "success-toast")
         setTimeout(function () {
             toastContainer.classList.remove("show")
+            toastContainer.classList.remove("error-toast")
+            toastContainer.classList.remove("success-toast")
         }, 3000)
     }
 }
@@ -120,7 +120,6 @@ async function getStagioniSerie(id) {
     try {
         const response = await fetch(`../services/getDatiStagione.php?id=${id}`);
         const data = await response.json();
-        //console.log(await response.text());
 
         if (data.success) {
             return data.data;
@@ -720,7 +719,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             var formData = new FormData();
             var titoloProgramma = titolo.value
             var descrizioneProgramma = descrizione.value
-            var copertinaProgramma = copertina.src != "../../media/addImage.jpg" ? copertina.src : null;
+            var copertinaProgramma = copertina.src != "http://localhost/MovieMania/code/admin/src/media/addImage.jpg" ? copertina.src : "http://localhost/MovieMania/code/admin/src/media/noCopertina.jpg";
             var trailerProgramma = trailerLink.value
             if (!trailerProgramma) trailerProgramma = "https://www.youtube.com/embed/JuLxRYMjx9w"
             var durataFilm = null
@@ -767,7 +766,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             var selectedOptions = document.getElementById('selectedOptions').children;
             var categorie = Array.from(selectedOptions).map(option => option.getAttribute('id'));
 
-            console.log(document.getElementById('stagioni'))
             var stagioniElm = document.getElementById('stagioni') ? document.getElementById('stagioni').children : []
             var stagioni = []
 
@@ -806,7 +804,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 var currentURL = new URL(url);
                                 currentURL.pathname = '/MovieMania/code/admin/src/pages/film/film.php';
                                 window.location.href = currentURL.href;
-                            }, 2000)
+                            }, 1500)
                         }
                         else {
                             throw new Error(response.message);
@@ -835,7 +833,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     body: formData
                 })
                     .then(response => { return response.json() })
-                    //.then(response => { console.log(response.text()) })
                     .then(response => {
                         if (response.success) {
                             showToast(id ? "Serie modificata con successo" : "Serie creata con successo", false)
@@ -845,7 +842,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 currentURL.search = ""
                                 currentURL.pathname = '/MovieMania/code/admin/src/pages/serie/serie.php';
                                 window.location.href = currentURL.href;
-                            }, 2000)
+                            }, 1500)
                         }
                         else {
                             throw new Error(response.message);
@@ -856,20 +853,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     })
             }
             else {
-                /*
-                console.log('titolo', titoloProgramma)
-                console.log('descrizione', descrizioneProgramma)
-                console.log('copertina', copertinaProgramma)
-                console.log('trailer', trailerProgramma)
-                if (serieFinita != null) console.log('serieFinita', serieFinita)
-                if (durata) console.log('durata', durata)
-                if (dataFilm) console.log('data_pubblicazione', dataFilm)
-                console.log('produttori', JSON.stringify(produttori));
-                console.log('attori', JSON.stringify(attori));
-                console.log('membri', JSON.stringify(membri));
-                console.log('categorie', JSON.stringify(categorie));
-                if (id) console.log('id', id)
-                */
                 showToast('Inserisci tutti i dati correttamente e riprova!')
             }
         })

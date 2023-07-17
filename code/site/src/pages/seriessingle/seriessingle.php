@@ -36,6 +36,10 @@ if (!isset($_GET['id'])) {
         $ultima_stagione = $stagioni[count($stagioni) - 1];
         $categorie = $serieController->getCategoriesOfSerie($serieId);
         $personaggi = $personaggiController->getPersonaggiBySerie($serieId);
+        $stars = getstars($personaggi);
+        $thereAreMembri = thereAreMembri($personaggi);
+        $thereAreScrittori = thereAreScrittori($personaggi);
+        $thereAreRegisti = thereAreRegisti($personaggi);
         $numero_recensioni = $recensioniController->getNumeroRecesioniBySerie($serieId);
         $pagine = ceil($numero_recensioni / $limit);
         $recensioni = $recensioniController->getRecensioniBySerie($serieId, $offset, $limit, $ordinamento);

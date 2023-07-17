@@ -4,10 +4,11 @@ function showToast(message, error = true) {
     if (toastContainer) {
         toastContainer.textContent = message
         toastContainer.classList.add("show")
-        toastContainer.classList.add(error ? "error" : "success")
-
+        toastContainer.classList.add(error ? "error-toast" : "success-toast")
         setTimeout(function () {
             toastContainer.classList.remove("show")
+            toastContainer.classList.remove("error-toast")
+            toastContainer.classList.remove("success-toast")
         }, 3000)
     }
 }
@@ -110,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             var morte = morteInput.value
             var nazionalita = nazionalitaInput.value
             var sesso = pattern.test(sessoInput.value) ? sessoInput.value : null
-            var fotoValue = foto.src != "../../media/addImage.jpg" ? foto.src : '../../media/placeholder.jpg';
+            var fotoValue = foto.src != "http://localhost/MovieMania/code/admin/src/media/addImage2.jpg" ? foto.src : 'http://localhost/MovieMania/code/admin/src/media/placeholder.jpg';
 
             if (nome && cognome && fotoValue && biografia && nascita && nazionalita && sesso) {
                 formData.append('nome', nome)

@@ -10043,6 +10043,7 @@ footer.full-width-ft .ft-copyright {
   color: #fff;
   padding: 12px 20px;
   border-radius: 5px;
+  border: 2px solid white;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   z-index: 9999;

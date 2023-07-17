@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             currentURL.search = '?id=' + id_programma;
                             window.location.href = currentURL.href;
-                        }, 2000);
+                        }, 1500);
 
                     } else {
                         throw new Error(data.message)
