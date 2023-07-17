@@ -24,3 +24,6 @@ INSERT INTO moviemania.possiede (id, utente_id, permesso_id) VALUES (5, 5, 1);
 INSERT INTO moviemania.possiede (id, utente_id, permesso_id) VALUES (6, 5, 2);
 INSERT INTO moviemania.possiede (id, utente_id, permesso_id) VALUES (7, 5, 3);
 INSERT INTO moviemania.possiede (id, utente_id, permesso_id) VALUES (36, 1, 3);
+INSERT INTO moviemania.possiede (id, utente_id, permesso_id) VALUES (37, 6, 1);
+INSERT INTO moviemania.possiede (id, utente_id, permesso_id) VALUES (38, 7, 1);
+INSERT INTO moviemania.possiede (id, utente_id, permesso_id) VALUES (39, 8, 1);
